@@ -11,8 +11,8 @@ REDIRECT_FIELD_NAME = 'next'
 def login(request, user, backend=None):
     """
     Persist a user id and a backend in the request. This way a user doesn't
-    have to reauthenticate on every request. Note that data set during
-    the anonymous session is retained when the user logs in.
+    have to reauthuenticate on every request. Note that data set during
+    the anonymous seson is retained when the user logs in.
     """
     session_auth_hash = ''
     if user is None:
