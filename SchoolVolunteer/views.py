@@ -5,7 +5,7 @@ SESSION_KEY = '_auth_user_id'
 BACKEND_SESSION_KEY = '_auth_user_backend'
 HASH_SESSION_KEY = '_auth_user_hash'
 REDIRECT_FIELD_NAME = 'next'
-# Create your views here.
+# Create your vidsfsdews here.
 
 
 def login(request, user, backend=None):
