@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'voulnteers.apps.VoulnteersConfig',
+    'mainpage.apps.MainpageConfig',
+    'Admin.apps.AdminConfig',
 ]
 
 MIDDLEWARE = [
