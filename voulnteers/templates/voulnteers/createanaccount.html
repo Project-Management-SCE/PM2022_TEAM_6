@@ -11,9 +11,10 @@
 <body>
   <div class="mainpage">
 
-<form method="post" action="#">
+<form method="post" action="">
     {% csrf_token %}
     {{form.as_p}}
+    <p style="color:red;">{{message}}</p>
     <button class="btn btn-light" type="submit",name="save">Create a new account</button>
 
 </form>
