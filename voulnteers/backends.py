@@ -11,15 +11,14 @@ class volnteerBackend(BaseBackend):
     # Create an authentication method
     # This is called by the standard Django login procedure
 
-    def authenticate(self, username=None, psw=None):
-        print("******************************************")
-
+    def authenticate(self, request,username=None, psw=None,type=None):
+        print("********************************")
         try:
             # Try to find a user matching your username
             user = volnteer.objects.get(username=username)
 
             #  Check the password is the reverse of the username
-            if check_password(psw, user.password):
+            if psw==user.password:
                 # Yes? return the Django user object
                 return user
             else:

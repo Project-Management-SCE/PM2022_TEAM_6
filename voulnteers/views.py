@@ -1,11 +1,12 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import CreateNewVoulnteer,LoginVoulnteer
 from voulnteers.models import volnteer
-from django.contrib.auth import authenticate
 import sys
 sys.path.append('../')
 from funcs.voulnteerfuncs import addvoulnteer
+sys.path.append('/voulnteers')
 # Create your views here.
 def index(response):
     return HttpResponse("TESSST")

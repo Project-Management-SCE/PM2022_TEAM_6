@@ -33,7 +33,6 @@ AUTHENTICATION_BACKENDS = [
     'voulnteers.backends.volnteerBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-AUTH_USER_MODEL = 'voulnteers.volnteer'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
