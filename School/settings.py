@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'voulnteers.apps.VoulnteersConfig',
     'mainpage.apps.MainpageConfig',
-    'Admin.apps.AdminConfig',
+    'manger.apps.MangerConfig',
 ]
 
 MIDDLEWARE = [

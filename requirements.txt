@@ -17,3 +17,5 @@ requests==2.27.1
 six==1.15.0
 urllib3==1.26.9
 yarg==0.1.9
+
+Django==4.0.3
