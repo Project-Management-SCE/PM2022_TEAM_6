@@ -36,7 +36,7 @@ def loginaccount(response):
     form = LoginVoulnteer(response.POST)
     message="please login"
     if form.is_valid():
-       k=authenticate(username=form.cleaned_data["username"],password=form.cleaned_data["password"])
+       k=authenticate(response,username=form.cleaned_data["username"],psw=form.cleaned_data["password"])
        message=k
        print(k)
     return render(response, "voulnteers/loginaccount.html", {"form": form, 'message': message})
