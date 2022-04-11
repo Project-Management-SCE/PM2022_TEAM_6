@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'voulnteers.apps.VoulnteersConfig',
     'mainpage.apps.MainpageConfig',
     'manger.apps.MangerConfig',
+    'coordinator.app.CoordinatorConfig',
 
 ]
 
