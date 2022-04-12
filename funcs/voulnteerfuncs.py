@@ -5,3 +5,6 @@ def addvoulnteer(name,email,psw):
     ex=volnteer(username=name,password=psw,email=email)
     ex.save()
     return ex
+
+# def loadinfo():
+    

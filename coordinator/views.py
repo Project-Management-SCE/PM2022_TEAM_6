@@ -1,5 +1,6 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
-
+from voulnteers.models import volnteer
 # Create your views here.
 
 from django.contrib import messages
@@ -7,8 +8,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+from .forms import CreateUserForm
 from .models import *
-
 
 
 def registerPage(request):
@@ -26,7 +27,8 @@ def registerPage(request):
                 return redirect('login')
 
         context = {'form': form}
-        return render(request, 'accounts/register.html', context)
+        print(volnteer.objects.all())
+        return render(request, 'coordinator/register.html', context)
 
 
 def loginPage(request):
@@ -52,4 +54,3 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
-

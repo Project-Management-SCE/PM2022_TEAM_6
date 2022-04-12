@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL ='voulnteers.volnteer'
 # Application definition
 AUTHENTICATION_BACKENDS = [
     'voulnteers.backends.volnteerBackend',
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'voulnteers.apps.VoulnteersConfig',
     'mainpage.apps.MainpageConfig',
     'manger.apps.MangerConfig',
-    'coordinator.app.CoordinatorConfig',
+    'coordinator.apps.CoordinatorConfig',
 
 ]
 
@@ -120,7 +120,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-AUTH_USER_MODEL = 'voulnteers.volnteer'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'shosho.alohsh@gmail.com'
