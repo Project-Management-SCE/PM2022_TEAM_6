@@ -1,0 +1,344 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <meta content="en" http-equiv="Content-Language"/>
+    <meta content="#2d89ef" name="msapplication-TileColor">
+    <meta content="#4188c9" name="theme-color">
+    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="mobile-web-app-capable">
+    <meta content="True" name="HandheldFriendly">
+    <meta content="320" name="MobileOptimized">
+    <link href="./favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <!-- Generated: 2018-04-16 09:29:05 +0200 -->
+    <title>Profile</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext"
+          rel="stylesheet">
+    <script src="./assets/js/require.min.js"></script>
+    <script>
+      requirejs.config({
+          baseUrl: '.'
+      });
+
+    </script>
+    <!-- Dashboard Core -->
+    <link href="{%static 'core/dashboard.css'%}" rel="stylesheet"/>
+    <script src="./assets/js/dashboard.js"></script>
+    <!-- c3.js Charts Plugin -->
+
+<html lang="en">
+    <meta charset="UTF-8">
+    <title>Title</title>
+<body>
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card card-profile">
+                    <div class="card-header"
+
+                         style="background-image: url({% static 'core/images/default_card_background.jpg' %});"></div>
+                    <div class="card-body text-center">
+                        <img class="card-profile-img" src="{{ person.profile.profile_photo.url }}" alt="">
+                        <h3 class="mb-3">{{ person.username }}</h3>
+                        {% if person.profile.is_volunteer %}
+                            <h3 class="mb-3">מתנדב </h3>
+                        {% else %}
+                            <h3 class="mb-3">מבוגר נכבד</h3>
+                        {% endif %}
+                        {% if not person.profile.is_volunteer %}
+                            {% if not u_form %}
+                                {% if f %}
+
+                                    <form action="{% url 'follow_elderly' person.username %}"
+                                          enctype="multipart/form-data"
+                                          method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-outline-primary btn-sm">
+                                            <span class="fa fa-user"></span> התחל להשגחה
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    {#                                <form action="{% url 'unfollow_elderly' person.username%}" method="POST">#}
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary btn-sm">
+                                        <span class="fa fa-user"></span> ביטול השגחה
+                                    </button>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="m-0">מספר הטלפון</h4>
+                                <p class="text-muted mb-0">{{ person.profile.phone_number }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if person.profile.is_volunteer %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h4 class="m-0">דירוג המשגיח</h4>
+                                    <p class="text-muted mb-0">{{ person.profile.rating }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="m-0">סטטוס</h4>
+                                <p class="text-muted mb-0">{{ person.profile.status_info }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">הפרופיל שלי</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label">:כתובת דוא"ל</label>{{ person.email }}
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                {% if person.profile.is_volunteer %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">רשימת המבוגרים </h3>
+                        </div>
+                        <div class="card-body">
+                            {% for followers in my_followers %}
+
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <a class="text-default"
+                                               href="{% url 'profile' followers %}"><label
+                                                    class="form-label">{{ followers }}</label></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">כל המבוגרים</h3>
+                        </div>
+                        <div class="card-body">
+                            {% for elderly in all_elderly %}
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="text-default"
+                                           href="{% url 'profile' elderly.user.username %}"><label
+                                                class="form-label">{{ elderly.user.username }}</label></a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="text-default"><label
+                                                class="form-label">{{ elderly.address }}</label></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">רשימת משגיחים</h3>
+                        </div>
+                        <div class="card-body">
+
+                            {% for following in my_following %}
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <a class="text-default"
+                                               href="{% url 'profile' following %}"><label
+                                                    class="form-label">{{ following }}</label></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">כל המשגיחים</h3>
+                        </div>
+                        <div class="card-body">
+                            {% for volunteer in all_volunteers %}
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="text-default"
+                                           href="{% url 'profile' volunteer.user.username %}"><label
+                                                class="form-label">{{ volunteer.user.username }}</label></a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="text-default"><label
+                                                class="form-label">{{ volunteer.address }}</label></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                {% if u_form or p_form %}
+                    <form action="" class="card" enctype="multipart/form-data" method="post">
+                        <div class="card-body p-6">
+                            <div class="card-title">עדכן את פרטי הפרופיל</div>
+                            {% csrf_token %}
+                            {{ u_form|crispy }}
+                            {{ p_form|crispy }}
+                            <div class="form-footFer">
+                                <button class="btn btn-primary btn-block" name="Update" type="submit">Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    {% if u_form or p_form %}
+                        <div class="card-header">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <form action="{% url 'create_post' user.username %}"
+                                          enctype="multipart/form-data"
+                                          method="POST">
+                                        {% csrf_token %}
+                                        {{ post_form | crispy }}
+
+                                        <button class="btn btn-secondary" type="submit">
+                                            <i class="fa fa-camera"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <ul class="list-group card-list-group">
+                        {% for posts in person.post_set.all %}
+                            <li class="list-group-item py-5">
+                                <div class="media">
+                                    <div class="media-object avatar avatar-md mr-4"
+                                         style="background-image: url({{ user.profile.profile_photo.url }})"></div>
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <small class="float-right text-muted">{{ posts.created_at }}</small>
+                                            <h5>{{ posts.user.username }}</h5>
+                                        </div>
+                                        <div class="media-body">
+                                            {{ posts.post_text }}
+                                        </div>
+                                        <div>
+                                            <img src="{{ posts.post_picture.url }}">
+                                        </div>
+                                        <ul class="media-list">
+                                            {% for comment in posts.comment_set.all %}
+                                                <li class="media mt-4">
+                                                    <div class="media-object avatar mr-4"
+                                                         style="background-image: url({{ comment.user.profile.profile_photo.url }})"></div>
+                                                    <div class="media-body">
+                                                        <strong>{{ comment.user.username }}: </strong>
+                                                        {{ comment.comment_text }}
+                                                        <button class="btn Like"><i class="fa fa-thumbs-up"></i>Like
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+
+                                            <li class="media mt-4">
+                                                <div class="media-object avatar mr-4"
+                                                     style="background-image: url({{ user.profile.profile_photo.url }})"></div>
+                                                <div class="media-body">
+                                                    <strong>{{ user.username }}: </strong>
+                                                    <form action="{% url 'create_comment' person.username posts.pk %}"
+                                                          method="POST">
+                                                        {% csrf_token %}
+                                                        {{ comment_form|crispy }}
+                                                        <button class="btn btn-secondary" type="submit">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                        <button class="btn btn-secondary" type="submit">
+                                                            <i>אישור המבוגר </i>
+                                                        </button>
+                                                    </form>
+                                                    <!-- LIKES -->
+                                                    {% if user.is_authenticated %}
+                                                        <form action="{'blogpost_like' object.id}" method="POST">
+                                                            {% csrf_token %}
+
+                                                            {% if post_is_liked %}
+                                                                <button type="submit" name="blogpost_id"
+                                                                        value="{{ object.id }}" class="btn btn-info">
+                                                                    Unlike
+                                                                </button>
+                                                            {% else %}
+                                                                <button type="submit" name="blogpost_id"
+                                                                        value="{{ object.id }}" class="btn btn-info">
+                                                                    Like
+                                                                </button>
+                                                            {% endif %}
+                                                        </form>
+                                                    {% else %}
+                                                        <a class="btn btn-outline-info"
+                                                           href="{% url 'login' %}?next={{ request.path }}">Log in to
+                                                            like this article!</a><br>
+                                                    {% endif %}
+                                                    <strong class="text-secondary">{{ number_of_likes }}
+                                                        Like{{ number_of_likes|pluralize }}</strong>
+
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
