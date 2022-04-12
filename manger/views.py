@@ -23,8 +23,7 @@ def loginPage(response):
        return render(response, "manger/login.html", {"form": form, 'message': message})
 
 
-       message=k
-       print(k)
+       print("sucesssssssssss")
     return render(response, "manger/login.html", {"form": form, 'message': message})
 
 
@@ -33,5 +32,4 @@ def loginPage(response):
 def logoutUser(request):
     logout(request)
     return redirect('login')
-
 
