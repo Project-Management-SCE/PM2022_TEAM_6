@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.core.mail import EmailMessage
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import CreateNewVoulnteer,LoginVoulnteer
@@ -29,6 +30,15 @@ def createaccount(response):
                 message='that username exists on the site'
                 return render(response, "voulnteers/createanaccount.html", {"form": form,'message':message})
             user=addvoulnteer(name,email,psw)
+            email_subject='Account_activation'
+            email_body=''
+            email = EmailMessage(
+                email_subject,
+                email_body,
+                'noreply@voulnteering.com',
+                [email],
+            )
+
 
 
             if not user.is_verfied:

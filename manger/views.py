@@ -4,29 +4,34 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
 
+from funcs.managerfuncs import get_data
 
+from voulnteers.forms import LoginVoulnteer
 # Create your views here.
 
-def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+def loginPage(response):
+    form = LoginVoulnteer(response.POST)
+    message="please login"
+    if response.session.has_key('managerkey'):
+        return redirect('/voulnteer/mainpage')
+    if form.is_valid():
+       k=authenticate(response,username=form.cleaned_data["username"],psw=form.cleaned_data["password"])
+       if form.cleaned_data["username"]==get_data()[0] and form.cleaned_data["password"]==get_data()[1]:
+           response.session['managerkey'] = form.cleaned_data["username"]
+           return redirect('/voulnteer/mainpage')
 
-            user = authenticate(request, username=username, password=password)
+       return render(response, "manger/login.html", {"form": form, 'message': message})
 
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-            else:
-                messages.info(request, 'Username OR password is incorrect')
 
-        context = {}
-        return render(request, 'accounts/login.html', context)
+       message=k
+       print(k)
+    return render(response, "manger/login.html", {"form": form, 'message': message})
+
+
 
 
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+
