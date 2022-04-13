@@ -33,6 +33,8 @@ def loginPage(response):
 def mainpage(response):
     return render(response, "manager/base.html", {})
 
+def addschool(response):
+    return render(response, "manager/add_school.html", {})
 
 def logoutUser(request):
     try:
