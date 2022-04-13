@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'voulnteers.apps.VoulnteersConfig',
     'mainpage.apps.MainpageConfig',
-    'manger.apps.MangerConfig',
+    'manager.apps.MangerConfig',
     'coordinator.apps.CoordinatorConfig',
     'crispy_forms',
 
