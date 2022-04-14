@@ -42,3 +42,5 @@ def logoutUser(request):
     except:
         pass
     return HttpResponse("<strong>You are logged out.</strong>")
+def urgentrequest(response):
+    return  render(response,"manager/urgent.html",{})
