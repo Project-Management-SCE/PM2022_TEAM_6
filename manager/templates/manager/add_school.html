@@ -2,21 +2,33 @@
 {%load static %}
 
     {% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+    <script src="{% static 'manger/map.js' %}"></script>
+
     {% endblock %}
 
    {% block content %}
 <br>
 <h1 class="titles">Add a new school</h1>
 
-
+<form action="">
 <div class="add_school">
 
 <div class="twobes"><h4>School name:</h4> <input type="text"></div>
  <div class="twobes"><h4>School's town:</h4> <input type="text"></div>
-
+    <button class="btn btn-dark" type="submit",name="add">Add school</button>
+    <div class="twobes">     
+    <input type="text" id="lat" readonly="yes"><br>
+            <input type="text" id="lng" readonly="yes"> </div>
 
 
 
 </div>
+</form>
+
+<div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsUJ0P3eueaI2IdbInU6P4I6amqPyYHUI&callback=initMap&v=weekly" async></script>
+
     {% endblock %}

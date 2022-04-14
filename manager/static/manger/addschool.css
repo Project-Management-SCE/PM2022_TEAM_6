@@ -16,7 +16,7 @@ text-align: center;
  background-color: white;
 
 }
-#map{
+.mapclass{
 width:50%;
 text-align: center;
  margin: auto;
@@ -25,6 +25,19 @@ text-align: center;
  padding: 25px;
  background-color: white;
 
+}
+#map {
+  height: 100%;
+  width:50%;
+    border-radius: 25px;
+text-align: center;
+ margin: auto;
+ margin-top:1%;
+ margin-bottom:2%;
+ align-items: center;
+ justify-content: center;
+ padding: 300px;
+ background-color: white;
 }
 .twobes{
   text-align: center;
