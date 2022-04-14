@@ -11,3 +11,11 @@ class messegerequest(models.Model):
         return self.text
     def __str__(self):
         return self.urg
+
+
+class School(models.Model):
+    name=models.CharField(max_length=200)
+    town=models.CharField(max_length=200)
+    x_axis=models.FloatField()
+    y_axis=models.FloatField()
+    coord_id=models.FloatField()
