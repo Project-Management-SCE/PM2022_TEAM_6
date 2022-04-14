@@ -33,8 +33,14 @@ def loginPage(response):
 def mainpage(response):
     return render(response, "manager/base.html", {})
 
+
 def addschool(response):
     return render(response, "manager/add_school.html", {})
+
+
+def add_coordinator(response):
+    return render(response, "manager/add_coordinator.html", {})
+
 
 def logoutUser(request):
     try:
@@ -42,5 +48,7 @@ def logoutUser(request):
     except:
         pass
     return HttpResponse("<strong>You are logged out.</strong>")
+
+
 def urgentrequest(response):
-    return  render(response,"manager/urgent.html",{})
+    return render(response, "manager/urgent.html", {})

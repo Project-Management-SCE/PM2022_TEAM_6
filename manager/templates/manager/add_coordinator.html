@@ -1,0 +1,30 @@
+{% extends 'manager/base.html' %}
+{% load static %}
+
+{% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <br>
+    <h1 class="titles">Add new Coordinator</h1>
+
+    <form action="">
+        <div class="add_school">
+
+            <div class="twobes"><h4>Coordinator Name:</h4> <input type="text"></div>
+            <div class="twobes"><h4>School Name :</h4> <input type="text"></div>
+            <div class="twobes"><h4>Email :</h4> <input type="text"></div>
+            <div class="twobes"><h4>Password :</h4> <input type="text"></div>
+            <button class="btn btn-dark" type="submit" ,name="add">Add Coordinator</button>
+            <div class="types">
+            </div>
+
+    </form>
+
+
+
+{% endblock %}
