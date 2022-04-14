@@ -1,0 +1,41 @@
+.titles{
+
+padding:30px;
+
+}
+
+.add_school{
+width:50%;
+text-align: center;
+ margin: auto;
+ align-items: center;
+ justify-content: center;
+  border-radius: 25px;
+ border: 1px solid gray;
+ padding: 25px;
+ background-color: white;
+
+}
+#map{
+width:50%;
+text-align: center;
+ margin: auto;
+ align-items: center;
+ justify-content: center;
+ padding: 25px;
+ background-color: white;
+
+}
+.twobes{
+  text-align: center;
+  align-items: center;
+   margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  width:35%;
+  padding-top:15px;
+  padding-bottom:15px;
+
+
+}
