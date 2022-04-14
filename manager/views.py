@@ -6,8 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from funcs.managerfuncs import get_data
-
+from manager.models import School
 from voulnteers.forms import LoginVoulnteer
+from funcs.managerfuncs import addschooll
 
 
 # Create your views here.
@@ -34,7 +35,15 @@ def mainpage(response):
     return render(response, "manager/base.html", {})
 
 def addschool(response):
-    return render(response, "manager/add_school.html", {})
+    message='fill the information and pick a location'
+    if response.method=="POST":
+        name = response.POST.get("name")
+        town = response.POST.get("town")
+        xaxis = response.POST.get("lat")
+        yaxis = response.POST.get("lng")
+        addschooll(name,town,xaxis,yaxis)
+        message='a school is added!!'
+    return render(response, "manager/add_school.html", {'message':message})
 
 def logoutUser(request):
     try:
