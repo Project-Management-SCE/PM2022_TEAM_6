@@ -1,17 +1,23 @@
+from datetime import datetime
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
+from django.db.models import Q
 
-from funcs.managerfuncs import get_data
-from manager.models import School
+from django.utils import timezone
+from funcs.managerfuncs import get_data,getemptyschools
+from manager.models import School, messegerequest
 from voulnteers.forms import LoginVoulnteer
-from funcs.managerfuncs import addschooll
+from funcs.managerfuncs import addschooll,addcoordinator
 
 
 # Create your views here.
+from voulnteers.models import volnteer
+
 
 def loginPage(response):
     form = LoginVoulnteer(response.POST)
@@ -32,10 +38,16 @@ def loginPage(response):
 
 
 def mainpage(response):
+    if not response.session.has_key('managerkey'):
+      return HttpResponse("<strong>You are not logged.</strong>")
     return render(response, "manager/base.html", {})
 
 
+
+
 def addschool(response):
+    if not response.session.has_key('managerkey'):
+      return HttpResponse("<strong>You are not logged.</strong>")
     message='fill the information and pick a location'
     if response.method=="POST":
         name = response.POST.get("name")
@@ -48,7 +60,28 @@ def addschool(response):
 
 
 def add_coordinator(response):
-    return render(response, "manager/add_coordinator.html", {})
+    if not response.session.has_key('managerkey'):
+      return HttpResponse("<strong>You are not logged.</strong>")
+    message='fill the form to add a coordinator'
+    emptyschools=getemptyschools()
+    if response.method=="POST":
+        name = response.POST.get("name")
+        school_id = response.POST.get("schools")
+        email = response.POST.get("email")
+        psw = response.POST.get("password")
+        coords= Q(is_coordinator=True)
+        hasname= Q(username=name)
+        if volnteer.objects.filter(coords & hasname):
+           message = 'that username exists on the site'
+           return render(response, "manager/add_coordinator.html", {'sch': emptyschools,'message':message})
+        user=addcoordinator(name,email,psw,school_id)
+        c=School.objects.get(id=school_id)
+        print(c)
+        print("******************************************")
+        c.coord_id=user.id
+        c.save()
+    return render(response, "manager/add_coordinator.html", {'sch': emptyschools, 'message': message})
+
 
 
 def logoutUser(request):
@@ -60,4 +93,24 @@ def logoutUser(request):
 
 
 def urgentrequest(response):
-    return render(response, "manager/urgent.html", {})
+    if not response.session.has_key('managerkey'):
+      return HttpResponse("<strong>You are not logged.</strong>")
+    coor=volnteer.objects.filter(is_coordinator=True)
+    message='fill the form'
+    if response.method=="POST":
+        urgency=response.POST.get("urgency")
+        coorid=response.POST.get("coords")
+        text=response.POST.get("textarea")
+
+        print(text)
+        if urgency=='urgent':
+            urg=True
+        else:
+            urg=False
+        c=messegerequest(text=text,header='request from the admin',urg=urg,volid=int(coorid),timesent=datetime.now())
+        c.save()
+        message='an urgent request was sent!'
+
+
+
+    return render(response, "manager/urgent.html", {'coor':coor,'message':message})

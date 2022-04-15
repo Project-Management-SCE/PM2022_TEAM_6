@@ -1,0 +1,47 @@
+{% extends 'manager/base.html' %}
+{%load static %}
+
+    {% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'coordinator/addschool.css' %}">
+
+    {% endblock %}
+
+   {% block content %}
+<br>
+<h1 class="titles">Add a new school</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+
+<div class="add_school">
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Voulnteer name</th>
+      <th scope="col">Accept</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in schreq %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i.volnteer_name}}</td>
+      <td>    <button class="btn btn-dark" type="submit" name="agree_on" value="{{i.volnteer_id}},{{i.school_id}}" >Add school</button></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+
+</div>
+</form>
+
+
+
+    {% endblock %}

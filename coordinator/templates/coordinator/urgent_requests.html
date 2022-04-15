@@ -1,0 +1,57 @@
+{% extends 'manager/base.html' %}
+{%load static %}
+
+    {% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'coordinator/addschool.css' %}">
+
+    {% endblock %}
+
+   {% block content %}
+<br>
+<h1 class="titles">Requests from the manager</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+
+<div class="add_school">
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Header</th>
+      <th scope="col">request text</th>
+        <th scope="col">Urgency</th>
+         <th scope="col">Time sent</th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in urg %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i.header}}</td>
+        <td>{{i.text}}</td>
+        {% if i.urg %}
+        <td>Urgent</td>
+        {% else %}
+        <td>Not urgent</td>
+        {% endif %}
+        <td>{{i.timesent}}</td>
+      <td>    <button class="btn btn-dark" type="submit" name="mark" value="{{i.id}}" >Mark as read</button></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+
+</div>
+</form>
+
+
+
+    {% endblock %}

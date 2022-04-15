@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>mainpage</title>
-  </head>
-  <body>
-    test volnteer
-  </body>
-</html>
+{% extends 'coordinator/base.html' %}
+{% load static %}
+{% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'voulnteers/addschool.css' %}">
+{% endblock %}
+
+{% block content %}
+    <br>
+    <h1 class="titles">Wellcome {{coord.name}}</h1>
+
+    {% csrf_token %}
+        <div class="add_school">
+
+
+            </div>
+
+
+
+{% endblock %}
