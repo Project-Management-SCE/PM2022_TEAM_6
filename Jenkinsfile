@@ -1,42 +1,32 @@
 pipeline {
-    agent {
-        docker {
-            image 'androidsdk/android-30'
-        }
-    }
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Running build'
-                sh 'chmod +x gradlew && ./gradlew --no-daemon --stacktrace clean'
-                sh 'echo no | avdmanager create avd -n first_avd --abi google_apis/x86_64 -k "system-images;android-30;google_apis;x86_64"'
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh 'adb devices'
+   agent any
+
+   tools {
+      // Install the Maven version configured as "M3" and add it to the path.
+      maven "M3"
+   }
+
+   stages {
+      stage('Build') {
+         steps {
+            // Get some code from a GitHub repository
+            git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+
+            // Run Maven on a Unix agent.
+            sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+            // To run Maven on a Windows agent, use
+            // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+         }
+
+         post {
+            // If Maven was able to run the tests, even if some of the test
+            // failed, record the test results and archive the jar file.
+            success {
+               junit '**/target/surefire-reports/TEST-*.xml'
+               archiveArtifacts 'target/*.jar'
             }
-        }
-        /*stage('Test') {
-            steps {
-                echo 'Running Test'
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew test'
-            }
-            post {
-                always {
-                    echo 'Running post-test'
-                }
-            }
-        }
-        stage('Deliver') {
-            steps {
-                echo 'Running Deliver'
-                echo 'Connecting to FireBase... '
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-                echo 'Connecting to Data Base... '
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-                sh 'adb devices'
-            }
-        }*/
-    }
+         }
+      }
+   }
 }
