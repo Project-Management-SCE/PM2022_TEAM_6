@@ -6,6 +6,7 @@ urlpatterns= [
     path("create", views.createaccount, name="createaccount"),
     path("login", views.loginaccount, name="loginaccount"),
     path("mainpage", views.mainpage, name="mainpage"),
+    path("request", views.requestpage, name="request"),
     path("logout", views.logoutvoulnteer, name="logoutvoulnteer"),
     path('activate/<uidb64>/<token>',VerficationView.as_view(),name="activate")
 

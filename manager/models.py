@@ -7,10 +7,8 @@ class messegerequest(models.Model):
     header=models.CharField(max_length=200)
     urg=models.BooleanField()
     volid=models.IntegerField(default=-1)
-    def __str__(self):
-        return self.text
-    def __str__(self):
-        return self.urg
+    timesent=models.DateTimeField()
+
 
 
 class School(models.Model):
@@ -18,4 +16,17 @@ class School(models.Model):
     town=models.CharField(max_length=200)
     x_axis=models.FloatField()
     y_axis=models.FloatField()
-    coord_id=models.FloatField()
+    coord_id=models.IntegerField()
+
+
+class schoolrequest(models.Model):
+    accepted=models.BooleanField()
+    school_id=models.IntegerField()
+    volnteer_id=models.IntegerField()
+    volnteer_name=models.CharField(max_length=200)
+
+
+
+
+
+

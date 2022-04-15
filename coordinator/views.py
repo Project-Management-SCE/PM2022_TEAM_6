@@ -1,6 +1,12 @@
 from django.contrib.auth import authenticate
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from voulnteers.forms import LoginVoulnteer
 from voulnteers.models import volnteer
+from manager.models import School, schoolrequest, messegerequest
+from django.db.models import Q
+
 # Create your views here.
 
 from django.contrib import messages
@@ -11,46 +17,66 @@ from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm
 from .models import *
 
-
-def registerPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        form = CreateUserForm()
-        if request.method == 'POST':
-            form = CreateUserForm(request.POST)
-            if form.is_valid():
-                form.save()
-                user = form.cleaned_data.get('username')
-                messages.success(request, 'Account was created for ' + user)
-
-                return redirect('login')
-
-        context = {'form': form}
-        print(volnteer.objects.all())
-        return render(request, 'coordinator/register.html', context)
-
-
-def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-            else:
-                messages.info(request, 'Username OR password is incorrect')
-
-        context = {}
-        return render(request, 'accounts/login.html', context)
-
-
 def logoutUser(request):
-    logout(request)
-    return redirect('login')
+    try:
+        del request.session['coorkey']
+    except:
+        pass
+    return HttpResponse("<strong>You are logged out.</strong>")
+def loginaccount(response):
+    form = LoginVoulnteer(response.POST)
+    message="please login"
+    if response.session.has_key('coorkey'):
+        return redirect('/coordinator/mainpage')
+    if form.is_valid():
+       k=authenticate(response,username=form.cleaned_data["username"],psw=form.cleaned_data["password"])
+       user=volnteer.objects.get(username=form.cleaned_data["username"])
+       if k:
+           response.session['coorkey'] = form.cleaned_data["username"]
+           return redirect('/coordinator/mainpage')
+
+       return render(response, "coordinator/loginaccount.html", {"form": form, 'message': message})
+
+
+       message=k
+       print(k)
+    return render(response, "coordinator/loginaccount.html", {"form": form, 'message': message})
+
+def school_requests(response):
+    coor=volnteer.objects.get(username=response.session['coorkey'])
+    requestss= list(schoolrequest.objects.filter(Q(school_id=coor.school_id) & Q(accepted=False)))
+    print(requestss)
+    if response.method=="POST":
+        req=response.POST.get("agree_on").split(',')
+        print(req)
+        volnteerid=int(req[0])
+        schid=int(req[1])
+        print(volnteerid,'***',schid)
+        voll = Q(volnteer_id=volnteerid)
+        schh = Q(school_id=schid)
+        c=schoolrequest.objects.get(voll & schh)
+        c.accepted=True
+        c.save()
+
+
+    return render(response, "coordinator/school_requests.html", {'schreq':requestss})
+def urgentreq(response):
+    coor=volnteer.objects.get(username=response.session['coorkey'])
+    urg= list(messegerequest.objects.filter(volid=coor.id))
+    if response.method=="POST":
+        mark=int(response.POST.get("mark"))
+        cc=messegerequest.objects.filter(id=mark)
+        print('****',cc)
+        cc.delete()
+        #cc.save()
+
+
+    return render(response, "coordinator/urgent_requests.html", {'urg':urg})
+
+
+def mainpage(response):
+    coord=volnteer.objects.get(username=response.session['coorkey'])
+    sch=School.objects.get(coord_id=coord.id)
+
+    return render(response,"coordinator/mainpage.html",{'coord':coord,'sch':sch})
+
