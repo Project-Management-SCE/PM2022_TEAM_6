@@ -1,42 +1,30 @@
 pipeline {
-    agent {
-        docker {
-            image 'androidsdk/android-30'
-        }
-    }
+    agent none
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }
             steps {
-                echo 'Running build'
-                sh 'chmod +x gradlew && ./gradlew --no-daemon --stacktrace clean'
-                sh 'echo no | avdmanager create avd -n first_avd --abi google_apis/x86_64 -k "system-images;android-30;google_apis;x86_64"'
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh 'adb devices'
+                sh 'python -m py_compile sources/add2vals.py sources/calc.py'
             }
         }
-        /*stage('Test') {
+        stage('Test') {
+            agent {
+                docker {
+                    image 'qnib/pytest'
+                }
+            }
             steps {
-                echo 'Running Test'
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew test'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             post {
                 always {
-                    echo 'Running post-test'
+                    junit 'test-reports/results.xml'
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                echo 'Running Deliver'
-                echo 'Connecting to FireBase... '
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-                echo 'Connecting to Data Base... '
-                sh 'emulator -avd first_avd -no-window -no-audio &'
-                sh './gradlew'
-                sh 'adb devices'
-            }
-        }*/
     }
 }
