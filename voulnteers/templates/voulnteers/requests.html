@@ -8,7 +8,7 @@
 
 {% block content %}
     <br>
-    <h1 class="titles">Add new Coordinator</h1>
+    <h1 class="titles">Request to be at a school</h1>
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -18,7 +18,7 @@
                 <select name="schools" id="schools">
                     <option value="-1">Pickone</option>
                     {% for i in sch%}
-                      <option value="{{i.id}}">{{i.name}}</option>
+                      <option value="{{i.id}}">{{i.name}} , {{i.town}}</option>
 
                     {% endfor %}
 >

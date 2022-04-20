@@ -1,0 +1,27 @@
+{% extends 'voulnteers/base.html' %}
+{% load static %}
+{% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'voulnteers/addschool.css' %}">
+    <script src="{% static 'voulnteers/map.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <br>
+
+    {% csrf_token %}
+        <div class="add_school">
+
+            <div class="twobes"><h4>School Name:</h4> {{sch.name}} </div>
+            <div class="twobes"><h4>School Town:</h4>{{sch.town}}</div>
+                <input type="text" id="lat" name="lat"  value="{{sch.x_axis}}"readonly="yes">
+            <input type="text" id="lng" name="lng" value="{{sch.y_axis}}" readonly="yes"> </div>
+            <div class="types">
+            </div>
+
+
+<div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsUJ0P3eueaI2IdbInU6P4I6amqPyYHUI&callback=initMap&v=weekly" async></script>
+
+{% endblock %}

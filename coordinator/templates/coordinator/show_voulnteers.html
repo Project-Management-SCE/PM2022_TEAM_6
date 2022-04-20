@@ -10,7 +10,7 @@
 
    {% block content %}
 <br>
-<h1 class="titles">Requests from the manager</h1>
+<h1 class="titles">Voulnteers at the school</h1>
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -22,26 +22,16 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Header</th>
-      <th scope="col">request text</th>
-        <th scope="col">Urgency</th>
-         <th scope="col">Time sent</th>
-        <th scope="col"></th>
+      <th scope="col">Name</th>
+      <th scope="col">email</th>
     </tr>
   </thead>
   <tbody>
-  {% for i in urg %}
+  {% for i in vol %}
     <tr>
       <th scope="row">{{forloop.counter}}</th>
-      <td>{{i.header}}</td>
-        <td>{{i.text}}</td>
-        {% if i.urg %}
-        <td>Urgent</td>
-        {% else %}
-        <td>Not urgent</td>
-        {% endif %}
-        <td>{{i.timesent}}</td>
-      <td>    <button class="btn btn-dark" type="submit" name="mark" value="{{i.id}}" >Mark as read</button></td>
+      <td>{{i.username}}</td>
+        <td>{{i.email}}</td>
     </tr>
   {% endfor %}
   </tbody>

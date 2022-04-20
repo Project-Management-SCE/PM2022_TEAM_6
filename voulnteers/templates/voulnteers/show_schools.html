@@ -1,4 +1,4 @@
-{% extends 'coordinator/base.html' %}
+{% extends 'voulnteers/base.html' %}
 {%load static %}
 
     {% block head %}
@@ -10,7 +10,7 @@
 
    {% block content %}
 <br>
-<h1 class="titles">Add a new voulnteer</h1>
+<h1 class="titles">All schools</h1>
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -22,16 +22,16 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Voulnteer name</th>
-      <th scope="col">Accept</th>
+      <th scope="col">School name</th>
+      <th scope="col">more info</th>
     </tr>
   </thead>
   <tbody>
-  {% for i in schreq %}
+  {% for i in sch %}
     <tr>
       <th scope="row">{{forloop.counter}}</th>
-      <td>{{i.volnteer_name}}</td>
-      <td>    <button class="btn btn-dark" type="submit" name="agree_on" value="{{i.volnteer_id}},{{i.school_id}}" >Confirm voulnteer</button></td>
+      <td>{{i.name}}</td>
+      <td>  <a href="/voulnteer/schools/{{i.id}}">{{i.name}} info</a>
     </tr>
   {% endfor %}
   </tbody>

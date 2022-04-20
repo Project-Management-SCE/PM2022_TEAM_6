@@ -44,8 +44,20 @@ def getcoordinators():
     return list(volnteer.objects.filter(is_coordinator=True))
 
 def requestnondub(vol_id,sch_id):
-    print(vol_id,sch_id)
     k=schoolrequest.objects.filter(Q(school_id=int(sch_id)) & Q(volnteer_id=int(vol_id)))
     if k:
         return True
     return False
+def getvols(schoolid):
+    k=list(schoolrequest.objects.filter(Q(school_id=int(schoolid)) & Q(accepted=True)))
+    z=[]
+    for i in k:
+        z.append(volnteer.objects.get(id=i.volnteer_id))
+    return z
+def getschools(volid):
+    k=list(schoolrequest.objects.filter(Q(volnteer_id=int(volid)) & Q(accepted=True)))
+    z=[]
+    for i in k:
+        z.append(School.objects.get(id=i.school_id))
+    return z
+

@@ -1,8 +1,7 @@
-<!doctype html>
 {% load static %}
 {% load crispy_forms_tags %}
-
-<html dir="ltr" lang="en">s
+<!doctype html>
+<html dir="ltr" lang="en">
 <head>
 
     <meta charset="UTF-8">
@@ -30,12 +29,13 @@
             baseUrl: '.'
         });
 
+
     </script>
     <!-- Dashboard Core -->
-     <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
+    <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
     <script src="./assets/js/dashboard.js"></script>
 
-        {% block head %}
+    {% block head %}
     {% endblock %}
     <!-- c3.js Charts Plugin -->
 
@@ -46,12 +46,12 @@
         <div class="header py-4">
             <div class="container">
                 <div class="d-flex">
-                    {#                    <a type="button" class="btn btn-info" href="{% url 'mainpage/index.html' %}">הדף הראשי</a>#}
+                    {# <a type="button" class="btn btn-info" href="{% url 'mainpage/index.html' %}">הדף הראשי</a>#}
                     <div class="d-flex order-lg-2 ml-auto">
                         <div class="dropdown">
                             <a class="nav-link pr-0 leading-none" data-toggle="dropdown"
 
-                            {#                                                          </a>href="{%url 'profile' user.username%}">#}
+
                             <span class="avatar"
                                   style="background-image: url({{ user.profile.profile_photo.url }})"></span>
                             <span class="ml-2 d-none d-lg-block">
@@ -77,54 +77,28 @@
                     <div class="col-lg order-lg-first">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                             <li class="nav-item">
-                                {#                                <a class="nav-link" href="{%url 'home'%}"><i class="fa fa-home"></i> דף בית</a>#}
+                                <a class="nav-link" href="/voulnteer/mainpage"><i class="fa fa-home"></i> Main-page</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> התנתק </a>
+                                <a class="nav-link" href="/voulnteer/logout"><i class="fa fa-sign-out"></i> Logout </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Contact_us/"><i class="fa fa-phone"></i> צור קשר </a>
+                                <a class="nav-link" href="/voulnteer/request"><i class="fa fa-phone"></i> Apply for a
+                                    school </a>
                             </li>
-                            {#                            {% if user.profile.is_admin %}#}
+
                             <li class="nav-item">
-                                <a class="nav-link" href="/all_profiles/"><i class="fa fa-users"></i> כל המשתמשים
+                                <a class="nav-link" href="/voulnteer/schools"><i class="fa fa-users"></i> Schools
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/all_profiles/"><i class="fa fa-wrench "></i>מחיקת
-                                    מתנדב</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/all_UrgentRequests/"><i class="fa fa-paper-plane"></i> כל
-                                    הבקשות </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/updates/"><i class="fa fa-bell"></i>שינוי דף תחזוקת האתר
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/all_contact_us/"><i class="fa fa-users"></i> יצרו קשר עם
-                                    האתר </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href=" "><i class="fa fa-users"></i> עריכת דף אודות האתר </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/manager/addschool "><i class="fas fa-school"></i> הוספת בית ספר </a>
 
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href=" /manager/addcoordinator"><i class="fas fa-school"></i> הוספת רכז  </a>
-
-                            </li>
-                            {#                              {% endif %}#}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-           {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
     </div>
 </div>
 

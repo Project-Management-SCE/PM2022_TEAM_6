@@ -13,7 +13,7 @@ from .forms import CreateNewVoulnteer, LoginVoulnteer
 from voulnteers.models import volnteer
 from voulnteers.utils import token_generator
 import sys
-
+from funcs.managerfuncs import getschools
 sys.path.append('../')
 from funcs.voulnteerfuncs import addvoulnteer
 
@@ -30,7 +30,9 @@ def logoutvoulnteer(request):
 
 
 def index(response):
-    return HttpResponse("TESSST")
+    if response.session.has_key('voulnteerkey'):
+        return redirect('/voulnteer/mainpage')
+    return redirect('/voulnteer/login')
 
 
 def createaccount(response):
@@ -92,7 +94,19 @@ def loginaccount(response):
 
 
 def mainpage(response):
-    return render(response, "voulnteers/mainpage.html", {})
+    if response.session.has_key('voulnteerkey'):
+        return render(response, "voulnteers/mainpage.html", {})
+    return redirect('/voulnteer/login')
+
+def showschools(response):
+    if not response.session.has_key('voulnteerkey'):
+        return redirect('/voulnteer/login')
+    usr=volnteer.objects.get(username=response.session['voulnteerkey'])
+    sch=getschools(usr.id)
+    return render(response, "voulnteers/show_schools.html", {'sch':sch})
+def schoolinfo(response,id):
+    sch=School.objects.get(coord_id=id)
+    return render(response, "voulnteers/specific_school.html", {'sch':sch})
 
 
 def requestpage(response):
