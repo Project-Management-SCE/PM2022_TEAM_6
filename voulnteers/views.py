@@ -18,7 +18,7 @@ sys.path.append('../')
 from funcs.voulnteerfuncs import addvoulnteer
 
 sys.path.append('/voulnteers')
-
+#test
 
 # Create your views here.
 def logoutvoulnteer(request):
