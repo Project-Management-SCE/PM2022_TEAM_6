@@ -114,3 +114,8 @@ def urgentrequest(response):
 
 
     return render(response, "manager/urgent.html", {'coor':coor,'message':message})
+
+
+def changepic(response):
+    return render(response, "manager/changepic.html",{})
+

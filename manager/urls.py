@@ -8,6 +8,7 @@ urlpatterns = [
     path('addschool/', views.addschool, name="addschool"),
     path('addcoordinator/', views.add_coordinator, name="addcoordinator"),
     path('urgent/', views.urgentrequest, name="urgent"),
+    path('changepic/',views.changepic,name="changepic"),
 
 
 ]
