@@ -6,7 +6,7 @@ from manager.models import School
 import sys
 
 from voulnteers.models import volnteer
-
+import os
 sys.path.append('../')
 
 def get_data():
@@ -60,4 +60,23 @@ def getschools(volid):
     for i in k:
         z.append(School.objects.get(id=i.school_id))
     return z
+
+def uploadpic(image):
+    f = open('manager/auth_data/picname.txt','r')
+    data = f.readlines()
+    oldimage = data[0].strip()
+    os.remove("media/"+oldimage)
+
+    f.close()
+    f=open('manager/auth_data/picname.txt','w')
+    f.write(image)
+    f.close()
+
+def getpicname():
+    f = open('manager/auth_data/picname.txt', 'r')
+    data = f.readlines()
+    oldimage = data[0].strip()
+    return oldimage
+
+
 

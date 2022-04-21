@@ -1,7 +1,8 @@
 from datetime import datetime
-
+from django_jinja import library
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
 
 from django.contrib.auth import authenticate, login, logout
 
@@ -12,13 +13,13 @@ from django.utils import timezone
 from funcs.managerfuncs import get_data,getemptyschools
 from manager.models import School, messegerequest
 from voulnteers.forms import LoginVoulnteer
-from funcs.managerfuncs import addschooll,addcoordinator
+from funcs.managerfuncs import addschooll,addcoordinator,uploadpic,getpicname
 
 
 # Create your views here.
 from voulnteers.models import volnteer
 
-
+library.global_function(getpicname)
 def loginPage(response):
     form = LoginVoulnteer(response.POST)
     message = "please login"
@@ -117,5 +118,19 @@ def urgentrequest(response):
 
 
 def changepic(response):
+    library.global_function(getpicname)
+    if response.method == "POST" :
+        image=response.FILES["myfile"]
+        fc=FileSystemStorage()
+        type=image.name.split('.')[1]
+        imagename="admin"+"."+type
+        uploadpic(imagename)
+        filename=fc.save(imagename,image)
+
+
+        upload=fc.url(filename)
+
+
+
     return render(response, "manager/changepic.html",{})
 
