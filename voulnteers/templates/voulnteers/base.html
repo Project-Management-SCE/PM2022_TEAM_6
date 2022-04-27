@@ -1,5 +1,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
+{% load vol_funcs %}
+
 <!doctype html>
 <html dir="ltr" lang="en">
 <head>
@@ -55,7 +57,7 @@
                             <span class="avatar"
                                   style="background-image: url({{ user.profile.profile_photo.url }})"></span>
                             <span class="ml-2 d-none d-lg-block">
-                      <span class="text-default">{{ user.username }}</span>
+                      <span class="text-default">{{55|loadname}}</span>
                       <small class="text-muted d-block mt-1">Your Account</small>
                     </span>
                             </a>

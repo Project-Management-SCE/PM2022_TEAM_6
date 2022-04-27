@@ -7,7 +7,7 @@ class school_request(admin.ModelAdmin):
     search_fields = ('volnteer_id','accepted')
 
 class volnteer_class(admin.ModelAdmin):
-    list_display=('username','email','password','is_coordinator','school_id')
+    list_display=('username','email','password',"is_verfied",'is_coordinator','school_id','pfp')
     search_fields = ('username','password')
 
 class school_class(admin.ModelAdmin):

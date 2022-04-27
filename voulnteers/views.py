@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from funcs.managerfuncs import getfullschools, requestnondub
 from manager.models import School, schoolrequest
+from voulnteers.templatetags.vol_funcs import  gname
 from .forms import CreateNewVoulnteer, LoginVoulnteer
 from voulnteers.models import volnteer
 from voulnteers.utils import token_generator
@@ -94,6 +95,7 @@ def loginaccount(response):
 
 
 def mainpage(response):
+    gname('set')(response.session['voulnteerkey'])
     if response.session.has_key('voulnteerkey'):
         return render(response, "voulnteers/mainpage.html", {})
     return redirect('/voulnteer/login')
