@@ -7,7 +7,7 @@ class volnteer(AbstractUser):
     is_coordinator=models.BooleanField(default=False)
     school_id=models.IntegerField(default=-1)
     #schools = models.ManyToManyField(School)
-    pfp=models.ImageField(null=True,blank=True,upload_to = "media/vols")
+    pfp=models.ImageField(null=True,blank=True,upload_to = "vols")
     def is_verfied_func(self):
         return self.is_verfied
     def __str__(self):

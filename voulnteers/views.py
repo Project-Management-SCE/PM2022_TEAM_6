@@ -9,7 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from funcs.managerfuncs import getfullschools, requestnondub
 from manager.models import School, schoolrequest
-from voulnteers.templatetags.vol_funcs import  gname
+from voulnteers.templatetags.vol_funcs import setname,setpfp
 from .forms import CreateNewVoulnteer, LoginVoulnteer
 from voulnteers.models import volnteer
 from voulnteers.utils import token_generator
@@ -95,12 +95,15 @@ def loginaccount(response):
 
 
 def mainpage(response):
-    gname('set')(response.session['voulnteerkey'])
+    user = volnteer.objects.get(username=response.session['voulnteerkey'])
+    setname(user.username)
+    setpfp(user.pfp)
     if response.session.has_key('voulnteerkey'):
         return render(response, "voulnteers/mainpage.html", {})
     return redirect('/voulnteer/login')
 
 def showschools(response):
+
     if not response.session.has_key('voulnteerkey'):
         return redirect('/voulnteer/login')
     usr=volnteer.objects.get(username=response.session['voulnteerkey'])
@@ -131,6 +134,13 @@ def requestpage(response):
 
     return render(response, "voulnteers/requests.html", {'sch': sch, 'message':message})
 
+def changepic(response):
+    if response.method == "POST":
+        user = volnteer.objects.get(username=response.session['voulnteerkey'])
+        user.pfp = response.FILES["myfile"]
+        user.save()
+
+    return render(response, "voulnteers/changepic.html",{})
 class VerficationView(View):
     def get(self, request, uidb64, token):
         try:

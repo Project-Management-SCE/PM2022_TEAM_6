@@ -1,40 +1,40 @@
 {% extends 'manager/base.html' %}
-{% load static %}
+{%load static %}
 
-{% block head %}
+
+    {% block head %}
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
 
-{% endblock %}
+    {% endblock %}
+
 
 {% block content %}
-    <br>
+    <div class="mainbody">
     <h1 class="titles">Add new Coordinator</h1>
 
-<form action="" method="POST">
-    {% csrf_token %}
+    <form action="" method="POST">
+        {% csrf_token %}
         <div class="add_school">
 
             <div class="twobes"><h4>Coordinator Name:</h4> <input name="name" type="text"></div>
             <div class="twobes"><h4>School :</h4>
                 <select name="schools" id="schools">
                     <option value="-1">Pickone</option>
-                    {% for i in sch%}
-                      <option value="{{i.id}}">{{i.name}}</option>
+                    {% for i in sch %}
+                        <option value="{{ i.id }}">{{ i.name }}</option>
 
                     {% endfor %}
->
-               </select></div>
+                </select></div>
             <div class="twobes"><h4>Email :</h4> <input name="email" type="text"></div>
-            <div class="twobes"><h4 >Password :</h4> <input  name="password" type="text"></div>
+            <div class="twobes"><h4>Password :</h4> <input name="password" type="text"></div>
             <button class="btn btn-dark" type="submit" ,name="add">Add Coordinator</button>
-              <div class="twobes"><h5 >{{message}}</h5></div>
-            <div class="types">
-            </div>
+            <div class="twobes"><h5>{{ message }}</h5></div>
+        </div>
 
     </form>
-
+</div>
 
 
 {% endblock %}

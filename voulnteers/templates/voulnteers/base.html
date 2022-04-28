@@ -51,16 +51,13 @@
                     {# <a type="button" class="btn btn-info" href="{% url 'mainpage/index.html' %}">הדף הראשי</a>#}
                     <div class="d-flex order-lg-2 ml-auto">
                         <div class="dropdown">
-                            <a class="nav-link pr-0 leading-none" data-toggle="dropdown"
+                            <a class="nav-link pr-0 leading-none" data-toggle="dropdown"</a>
 
 
-                            <span class="avatar"
-                                  style="background-image: url({{ user.profile.profile_photo.url }})"></span>
-                            <span class="ml-2 d-none d-lg-block">
+                             <img class="avatar" src=" {% static '' %}{{55|getpic}}"  alt="avatar"  width="200" height="200">
                       <span class="text-default">{{55|loadname}}</span>
                       <small class="text-muted d-block mt-1">Your Account</small>
                     </span>
-                            </a>
 
                         </div>
                     </div>
@@ -93,6 +90,10 @@
                                 <a class="nav-link" href="/voulnteer/schools"><i class="fa fa-users"></i> Schools
                                 </a>
                             </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="/voulnteer/changepic"><i class="fa fa-picture-o"></i> change pfp </a>
+                            </li>
+
 
                         </ul>
                     </div>

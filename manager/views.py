@@ -118,7 +118,6 @@ def urgentrequest(response):
 
 
 def changepic(response):
-    library.global_function(getpicname)
     if response.method == "POST" :
         image=response.FILES["myfile"]
         fc=FileSystemStorage()

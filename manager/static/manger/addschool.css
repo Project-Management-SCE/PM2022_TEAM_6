@@ -3,7 +3,9 @@
 padding:30px;
 
 }
-
+.mainbody{
+    position: relative;
+}
 .add_school{
 width:50%;
 text-align: center;
