@@ -103,5 +103,8 @@ def changepic(response):
         user = volnteer.objects.get(username=response.session['coorkey'])
         user.pfp = response.FILES["myfile"]
         user.save()
+        return redirect('/coordinator/mainpage')
+
+
     return render(response, "coordinator/changepic.html",{})
 

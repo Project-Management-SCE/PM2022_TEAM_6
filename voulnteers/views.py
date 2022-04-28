@@ -9,17 +9,20 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from funcs.managerfuncs import getfullschools, requestnondub
 from manager.models import School, schoolrequest
-from voulnteers.templatetags.vol_funcs import setname,setpfp
+from voulnteers.templatetags.vol_funcs import setname, setpfp
 from .forms import CreateNewVoulnteer, LoginVoulnteer
 from voulnteers.models import volnteer
 from voulnteers.utils import token_generator
 import sys
 from funcs.managerfuncs import getschools
+
 sys.path.append('../')
 from funcs.voulnteerfuncs import addvoulnteer
 
 sys.path.append('/voulnteers')
-#test
+
+
+# test
 
 # Create your views here.
 def logoutvoulnteer(request):
@@ -102,45 +105,51 @@ def mainpage(response):
         return render(response, "voulnteers/mainpage.html", {})
     return redirect('/voulnteer/login')
 
-def showschools(response):
 
+def showschools(response):
     if not response.session.has_key('voulnteerkey'):
         return redirect('/voulnteer/login')
-    usr=volnteer.objects.get(username=response.session['voulnteerkey'])
-    sch=getschools(usr.id)
-    return render(response, "voulnteers/show_schools.html", {'sch':sch})
-def schoolinfo(response,id):
-    sch=School.objects.get(coord_id=id)
-    return render(response, "voulnteers/specific_school.html", {'sch':sch})
+    usr = volnteer.objects.get(username=response.session['voulnteerkey'])
+    sch = getschools(usr.id)
+    return render(response, "voulnteers/show_schools.html", {'sch': sch})
+
+
+def schoolinfo(response, id):
+    sch = School.objects.get(coord_id=id)
+    return render(response, "voulnteers/specific_school.html", {'sch': sch})
 
 
 def requestpage(response):
     sch = getfullschools()
-    message='choose a school'
+    message = 'choose a school'
     if response.method == "POST":
         schh = int(response.POST.get("schools"))
         if schh == -1:
-            message='this school isn\'t valid'
-            return render(response, "voulnteers/requests.html", {'sch':sch,'message':message})
+            message = 'this school isn\'t valid'
+            return render(response, "voulnteers/requests.html", {'sch': sch, 'message': message})
         k = volnteer.objects.get(username=response.session['voulnteerkey'])
-        if requestnondub(k.id,schh):
-            message='you already sent a request to the same school'
-            return render(response, "voulnteers/requests.html", {'sch':sch,'message':message})
+        if requestnondub(k.id, schh):
+            message = 'you already sent a request to the same school'
+            return render(response, "voulnteers/requests.html", {'sch': sch, 'message': message})
 
-        cc = schoolrequest(school_id=schh, volnteer_id=k.id, volnteer_name=k.username,accepted=False)
+        cc = schoolrequest(school_id=schh, volnteer_id=k.id, volnteer_name=k.username, accepted=False)
         cc.save()
-        message='a request got sent!'
+        message = 'a request got sent!'
 
+    return render(response, "voulnteers/requests.html", {'sch': sch, 'message': message})
 
-    return render(response, "voulnteers/requests.html", {'sch': sch, 'message':message})
 
 def changepic(response):
     if response.method == "POST":
         user = volnteer.objects.get(username=response.session['voulnteerkey'])
         user.pfp = response.FILES["myfile"]
         user.save()
+        return redirect('/coordinator/mainpage')
 
-    return render(response, "voulnteers/changepic.html",{})
+
+    return render(response, "voulnteers/changepic.html", {})
+
+
 class VerficationView(View):
     def get(self, request, uidb64, token):
         try:
