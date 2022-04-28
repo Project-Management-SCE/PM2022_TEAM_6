@@ -6,7 +6,7 @@ from voulnteers.forms import LoginVoulnteer
 from voulnteers.models import volnteer
 from manager.models import School, schoolrequest, messegerequest
 from django.db.models import Q
-
+from coordinator.templatetags.cor_funcs import setname,setpfp
 # Create your views here.
 
 from django.contrib import messages
@@ -93,6 +93,15 @@ def mainpage(response):
     if not response.session.has_key('coorkey'):
         return redirect('/coordinator/login')
     coord = volnteer.objects.get(username=response.session['coorkey'])
+    setname(coord.username)
+    setpfp(coord.pfp)
     sch = School.objects.get(coord_id=coord.id)
 
     return render(response, "coordinator/mainpage.html", {'coord': coord, 'sch': sch})
+def changepic(response):
+    if response.method == "POST":
+        user = volnteer.objects.get(username=response.session['coorkey'])
+        user.pfp = response.FILES["myfile"]
+        user.save()
+    return render(response, "coordinator/changepic.html",{})
+
