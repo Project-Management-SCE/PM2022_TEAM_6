@@ -131,5 +131,5 @@ def changepic(response):
 
 
 
-    return render(response, "manager/changepic.html",{})
+    return render(response, "manager/changepic.html",{'picname':getpicname()})
 
