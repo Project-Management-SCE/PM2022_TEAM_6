@@ -1,3 +1,4 @@
+import sys
 from django.contrib.auth import authenticate
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
@@ -10,10 +11,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from funcs.managerfuncs import getfullschools, requestnondub
 from manager.models import School, schoolrequest
 from voulnteers.templatetags.vol_funcs import setname, setpfp
-from .forms import CreateNewVoulnteer, LoginVoulnteer
+
+from . import models
+from .forms import CreateNewVoulnteer, LoginVoulnteer, FeedbackForm
 from voulnteers.models import volnteer
 from voulnteers.utils import token_generator
-import sys
 from funcs.managerfuncs import getschools
 
 sys.path.append('../')
@@ -146,7 +148,6 @@ def changepic(response):
         user.save()
         return redirect('/coordinator/mainpage')
 
-
     return render(response, "voulnteers/changepic.html", {})
 
 
@@ -174,3 +175,16 @@ class VerficationView(View):
             pass
 
         return redirect('login')
+
+
+def voulnteer_feedback_view(request):
+    user = volnteer.objects.get(username=request.session['voulnteerkey'])
+    feedback = FeedbackForm()
+    if request.method == 'POST':
+        feedback = FeedbackForm(request.POST)
+        if feedback.is_valid():
+            feedback.save()
+        else:
+            print("form is invalid")
+        return render(request, 'voulnteers/feedback_sent_by_volnteer.html', {'user': user})
+    return render(request, 'voulnteers/voulnteers_feedback.html', {'feedback': feedback, 'user': user})

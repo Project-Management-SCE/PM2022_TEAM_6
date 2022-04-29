@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'manager.apps.MangerConfig',
     'coordinator.apps.CoordinatorConfig',
     'crispy_forms',
+    'widget_tweaks',
 
 ]
 
@@ -131,7 +132,7 @@ EMAIL_PORT = 587
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-  os.path.join(BASE_DIR, 'media'),
+    os.path.join(BASE_DIR, 'media'),
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
