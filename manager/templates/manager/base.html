@@ -32,10 +32,10 @@
 
     </script>
     <!-- Dashboard Core -->
-     <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
+    <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
     <script src="./assets/js/dashboard.js"></script>
 
-        {% block head %}
+    {% block head %}
     {% endblock %}
     <!-- c3.js Charts Plugin -->
 
@@ -82,19 +82,29 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/manager/logout"><i class="fa fa-sign-out"></i> Log out </a>
                             </li>
-                               <li class="nav-item">
-                                <a class="nav-link" href="/manager/addschool "><i class="fas fa-school"></i> Add school </a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/manager/addschool "><i class="fas fa-school"></i> Add school
+                                </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href=" /manager/addcoordinator"><i class="fas fa-school"></i> Add coordinator </a>
+                                <a class="nav-link" href=" /manager/addcoordinator"><i class="fas fa-school"></i> Add
+                                    coordinator </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/manager/urgent"><i class="fa fa-phone"></i> Send urgent requests </a>
+                                <a class="nav-link" href="/manager/urgent"><i class="fa fa-phone"></i> Send urgent
+                                    requests </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/manager/changepic"><i class="fa fa-picture-o"></i> change pfp
+                                </a>
                             </li>
                              <li class="nav-item">
-                                <a class="nav-link" href="/manager/changepic"><i class="fa fa-picture-o"></i> change pfp </a>
-                            </li>
+                                <a class="nav-link" href="/manager/feedback"><i class="fa fa-comments-o"></i> Volunteers Feedback </a>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/manager/feedback"><i class="fa fa-comments-o"></i> Coordinator Feedback </a>
+                            </li> </li>
 
 
                         </ul>
@@ -102,11 +112,11 @@
                 </div>
             </div>
         </div>
-        <img src="{{getpicname()}}"  alt="avatar"  width="200" height="200">
-        </div>
-           {% block content %}
-    {% endblock %}
+{#        <img src="{{ getpwnam() }}" alt="avatar" width="200" height="200">#}
     </div>
+    {% block content %}
+    {% endblock %}
+</div>
 </div>
 
 </body>

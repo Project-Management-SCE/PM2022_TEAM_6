@@ -10,16 +10,17 @@ from django.contrib import messages
 from django.db.models import Q
 
 from django.utils import timezone
-from funcs.managerfuncs import get_data,getemptyschools
+from funcs.managerfuncs import get_data, getemptyschools
 from manager.models import School, messegerequest
 from voulnteers.forms import LoginVoulnteer
-from funcs.managerfuncs import addschooll,addcoordinator,uploadpic,getpicname
-
+from funcs.managerfuncs import addschooll, addcoordinator, uploadpic, getpicname
 
 # Create your views here.
-from voulnteers.models import volnteer
+from voulnteers.models import volnteer,Feedback
 
 library.global_function(getpicname)
+
+
 def loginPage(response):
     form = LoginVoulnteer(response.POST)
     message = "please login"
@@ -40,49 +41,46 @@ def loginPage(response):
 
 def mainpage(response):
     if not response.session.has_key('managerkey'):
-      return HttpResponse("<strong>You are not logged.</strong>")
+        return HttpResponse("<strong>You are not logged.</strong>")
     return render(response, "manager/base.html", {})
-
-
 
 
 def addschool(response):
     if not response.session.has_key('managerkey'):
-      return HttpResponse("<strong>You are not logged.</strong>")
-    message='fill the information and pick a location'
-    if response.method=="POST":
+        return HttpResponse("<strong>You are not logged.</strong>")
+    message = 'fill the information and pick a location'
+    if response.method == "POST":
         name = response.POST.get("name")
         town = response.POST.get("town")
         xaxis = response.POST.get("lat")
         yaxis = response.POST.get("lng")
-        addschooll(name,town,xaxis,yaxis)
-        message='a school is added!!'
-    return render(response, "manager/add_school.html", {'message':message})
+        addschooll(name, town, xaxis, yaxis)
+        message = 'a school is added!!'
+    return render(response, "manager/add_school.html", {'message': message})
 
 
 def add_coordinator(response):
     if not response.session.has_key('managerkey'):
-      return HttpResponse("<strong>You are not logged.</strong>")
-    message='fill the form to add a coordinator'
-    emptyschools=getemptyschools()
-    if response.method=="POST":
+        return HttpResponse("<strong>You are not logged.</strong>")
+    message = 'fill the form to add a coordinator'
+    emptyschools = getemptyschools()
+    if response.method == "POST":
         name = response.POST.get("name")
         school_id = response.POST.get("schools")
         email = response.POST.get("email")
         psw = response.POST.get("password")
-        coords= Q(is_coordinator=True)
-        hasname= Q(username=name)
+        coords = Q(is_coordinator=True)
+        hasname = Q(username=name)
         if volnteer.objects.filter(coords & hasname):
-           message = 'that username exists on the site'
-           return render(response, "manager/add_coordinator.html", {'sch': emptyschools,'message':message})
-        user=addcoordinator(name,email,psw,school_id)
-        c=School.objects.get(id=school_id)
+            message = 'that username exists on the site'
+            return render(response, "manager/add_coordinator.html", {'sch': emptyschools, 'message': message})
+        user = addcoordinator(name, email, psw, school_id)
+        c = School.objects.get(id=school_id)
         print(c)
         print("******************************************")
-        c.coord_id=user.id
+        c.coord_id = user.id
         c.save()
     return render(response, "manager/add_coordinator.html", {'sch': emptyschools, 'message': message})
-
 
 
 def logoutUser(request):
@@ -95,41 +93,41 @@ def logoutUser(request):
 
 def urgentrequest(response):
     if not response.session.has_key('managerkey'):
-      return HttpResponse("<strong>You are not logged.</strong>")
-    coor=volnteer.objects.filter(is_coordinator=True)
-    message='fill the form'
-    if response.method=="POST":
-        urgency=response.POST.get("urgency")
-        coorid=response.POST.get("coords")
-        text=response.POST.get("textarea")
+        return HttpResponse("<strong>You are not logged.</strong>")
+    coor = volnteer.objects.filter(is_coordinator=True)
+    message = 'fill the form'
+    if response.method == "POST":
+        urgency = response.POST.get("urgency")
+        coorid = response.POST.get("coords")
+        text = response.POST.get("textarea")
 
         print(text)
-        if urgency=='urgent':
-            urg=True
+        if urgency == 'urgent':
+            urg = True
         else:
-            urg=False
-        c=messegerequest(text=text,header='request from the admin',urg=urg,volid=int(coorid),timesent=datetime.now())
+            urg = False
+        c = messegerequest(text=text, header='request from the admin', urg=urg, volid=int(coorid),
+                           timesent=datetime.now())
         c.save()
-        message='an urgent request was sent!'
+        message = 'an urgent request was sent!'
 
-
-
-    return render(response, "manager/urgent.html", {'coor':coor,'message':message})
+    return render(response, "manager/urgent.html", {'coor': coor, 'message': message})
 
 
 def changepic(response):
-    if response.method == "POST" :
-        image=response.FILES["myfile"]
-        fc=FileSystemStorage()
-        type=image.name.split('.')[1]
-        imagename="admin"+"."+type
+    if response.method == "POST":
+        image = response.FILES["myfile"]
+        fc = FileSystemStorage()
+        type = image.name.split('.')[1]
+        imagename = "admin" + "." + type
         uploadpic(imagename)
-        filename=fc.save(imagename,image)
+        filename = fc.save(imagename, image)
+
+        upload = fc.url(filename)
+
+    return render(response, "manager/changepic.html", {'picname': getpicname()})
 
 
-        upload=fc.url(filename)
-
-
-
-    return render(response, "manager/changepic.html",{'picname':getpicname()})
-
+def feedback_view(request):
+    feedback = Feedback.objects.all().order_by('-id')
+    return render(request, 'manager/manager_feedback.html', {'feedback': feedback})
