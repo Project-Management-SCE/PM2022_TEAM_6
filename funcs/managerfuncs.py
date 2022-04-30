@@ -76,7 +76,7 @@ def getpicname():
     f = open('manager/auth_data/picname.txt', 'r')
     data = f.readlines()
     oldimage = data[0].strip()
-    return 'media/'+oldimage
+    return oldimage
 
 
 

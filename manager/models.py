@@ -26,7 +26,19 @@ class schoolrequest(models.Model):
     volnteer_name=models.CharField(max_length=200)
 
 
+class feedbacks(models.Model):
+    volnteer_id=models.IntegerField()
+    timesent=models.DateTimeField()
+    text=models.CharField(max_length=400)
+    header=models.CharField(max_length=200)
 
+
+class contactus(models.Model):
+    name=models.CharField(max_length=200)
+    cons=models.CharField(max_length=200)
+    timesent=models.DateTimeField()
+    text=models.CharField(max_length=400)
+    email=models.EmailField(max_length = 255)
 
 
 

@@ -11,6 +11,8 @@ urlpatterns = [
     path('urgent/', views.urgentrequest, name="urgent"),
     path('changepic/', views.changepic, name="changepic"),
     path('feedback/', views.feedback_view, name='view-volunteers-feedback'),
+    path('contactus/', views.contact_us, name="contactus"),
+    path('contactus/<int:id>', views.contactuspage, name="contactuspage"),
     path("", index, name="index"),
 
 ]

@@ -1,8 +1,8 @@
 from datetime import datetime
-from django_jinja import library
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import EmailMessage
 
 from django.contrib.auth import authenticate, login, logout
 
@@ -11,14 +11,13 @@ from django.db.models import Q
 
 from django.utils import timezone
 from funcs.managerfuncs import get_data, getemptyschools
-from manager.models import School, messegerequest
+from manager.models import School, messegerequest,contactus
 from voulnteers.forms import LoginVoulnteer
 from funcs.managerfuncs import addschooll, addcoordinator, uploadpic, getpicname
 
 # Create your views here.
 from voulnteers.models import volnteer,Feedback
 
-library.global_function(getpicname)
 
 
 def loginPage(response):
@@ -128,6 +127,27 @@ def changepic(response):
     return render(response, "manager/changepic.html", {'picname': getpicname()})
 
 
+
 def feedback_view(request):
     feedback = Feedback.objects.all().order_by('-id')
     return render(request, 'manager/manager_feedback.html', {'feedback': feedback})
+def contact_us(request):
+    req=contactus.objects.all()
+    return render(request, 'manager/contactus.html', {'req': req})
+
+def contactuspage(request,id):
+    req = contactus.objects.get(id=id)
+    message=''
+    if request.method == "POST":
+        header = request.POST.get("header")
+        text = request.POST.get("text")
+        email = EmailMessage(
+          header,
+          text,
+          'noreply@voulnteering.com',
+          [req.email],)
+        email.send(fail_silently=False)
+        message = "you replied back!! "
+        req.delete()
+
+    return render(request, 'manager/contact_us_page.html', {'req': req,'message':message})
