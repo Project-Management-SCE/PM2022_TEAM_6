@@ -32,7 +32,7 @@ def logoutvoulnteer(request):
         del request.session['voulnteerkey']
     except:
         pass
-    return HttpResponse("<strong>You are logged out.</strong>")
+    return render(request, "voulnteers/logout.html", {})
 
 
 def index(response):

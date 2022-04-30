@@ -88,7 +88,7 @@ def logoutUser(request):
         del request.session['managerkey']
     except:
         pass
-    return HttpResponse("<strong>You are logged out.</strong>")
+    return render(request, "manager/logout.html", {})
 
 
 def urgentrequest(response):

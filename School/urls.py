@@ -25,6 +25,7 @@ urlpatterns = [
     path('voulnteer/', include("voulnteers.urls")),
     path('coordinator/', include("coordinator.urls")),
     path('manager/', include("manager.urls")),
+    path('mainpage/', include("mainpage.urls")),
     path('', include("mainpage.urls")),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -29,7 +29,7 @@ def logoutUser(request):
         del request.session['coorkey']
     except:
         pass
-    return HttpResponse("<strong>You are logged out.</strong>")
+    return render(request, "coordinator/logout.html", {})
 
 
 def loginaccount(response):
