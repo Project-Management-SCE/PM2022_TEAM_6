@@ -86,13 +86,12 @@ WSGI_APPLICATION = 'School.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'manager',  # as named on server
-        'HOST': 'mongodb+srv://mo:n799@cluster0.bloax.mongodb.net/manager?ssl=true&ssl_cert_reqs=CERT_NONE',
+        'NAME': 'djangodb',  # as named on server
+        'HOST': 'mongodb+srv://mo:n799@django.bloax.mongodb.net/djangodb?ssl=true&ssl_cert_reqs=CERT_NONE',
         'USER': 'mo',
         'PASSWORD': 'n799',
-        'ENFORCE_SCHEMA': False,
         'CLIENT': {
-           'host':  'mongodb+srv://mo:n799@cluster0.bloax.mongodb.net/manager?ssl=true&ssl_cert_reqs=CERT_NONE',
+           'host':  'mongodb+srv://mo:n799@django.bloax.mongodb.net/djangodb?ssl=true&ssl_cert_reqs=CERT_NONE',
         }
 
     }

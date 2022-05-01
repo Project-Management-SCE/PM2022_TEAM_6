@@ -17,11 +17,14 @@ class MyTestCase(unittest.TestCase):
     def test_something2(self):
         c = addschooll(name="kkkkk", town="test", xaxis=0, yaxis=0)
         print(c)
-        cc = School.objects.get(name="kkkk")
+        c.save()
+        cc = School.objects.get(name="kkkkk")
+        print(cc)
         self.assertEqual(cc.town, "test")
         self.assertEqual(cc.x_axis, 0)
         self.assertEqual(cc.y_axis, 0)
-        c.delete()
+        School.objects.get(name="kkkkk").delete()
+
 
 
 if __name__ == '__main__':
