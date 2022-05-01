@@ -1,0 +1,39 @@
+{% extends 'manager/base.html' %}
+{% load static %}
+{% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <br>
+
+    {% csrf_token %}
+        <div class="add_school">
+
+            <div class="twobes"><h5>Contact us sender's name:</h5> {{req.name}} </div>
+            <div class="twobes"><h5>Contact us sender's organization:</h5>{{req.cons}}</div>
+              <div class="twobes"><textarea readonly style="height:200px;width:400px;"> {{req.text}}</textarea></div>
+
+                   </div>
+
+
+<br>
+       <div class="add_school">
+               <form action="" method="POST">
+        {% csrf_token %}
+           <div class="twobes">  <input name="header" type="text" placeholder="Header" style="width:400px;"> </div>
+           <div class="twobes"> <textarea id="text" name="text" placeholder="Reply back to the Contact us sender" style="height:200px;width:400px;"></textarea></div>
+         <button class="btn btn-dark" type="submit" ,name="reply">Reply back</button>
+            <div class="twobes"><h5>{{ message }}</h5></div>
+               </form>
+
+       </div>
+
+
+
+
+
+{% endblock %}
