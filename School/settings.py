@@ -87,9 +87,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'manager',  # as named on server
-        'HOST': 'mongodb+srv://mo:n799@cluster0.bloax.mongodb.net/manager?retryWrites=true&w=majority',
+        'HOST': 'mongodb+srv://mo:n799@cluster0.bloax.mongodb.net/manager?ssl=true&ssl_cert_reqs=CERT_NONE',
         'USER': 'mo',
         'PASSWORD': 'n799',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+           'host':  'mongodb+srv://mo:n799@cluster0.bloax.mongodb.net/manager?ssl=true&ssl_cert_reqs=CERT_NONE',
+        }
 
     }
 }
