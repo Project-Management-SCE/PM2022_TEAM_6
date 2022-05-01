@@ -53,7 +53,7 @@ def loginaccount(response):
 
 def school_requests(response):
     coor = volnteer.objects.get(username=response.session['coorkey'])
-    requestss = list(schoolrequest.objects.filter(Q(school_id=coor.school_id) & Q(accepted=False)))
+    requestss = list(schoolrequest.objects.filter(Q(school_id=coor.school_id) & Q(accepted__in=[False])))
     print(requestss)
     if response.method == "POST":
         req = response.POST.get("agree_on").split(',')

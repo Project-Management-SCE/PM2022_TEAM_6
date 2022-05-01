@@ -49,13 +49,13 @@ def requestnondub(vol_id,sch_id):
         return True
     return False
 def getvols(schoolid):
-    k=list(schoolrequest.objects.filter(Q(school_id=int(schoolid)) & Q(accepted=True)))
+    k=list(schoolrequest.objects.filter(Q(school_id=int(schoolid)) & Q(accepted__in=[True])))
     z=[]
     for i in k:
         z.append(volnteer.objects.get(id=i.volnteer_id))
     return z
 def getschools(volid):
-    k=list(schoolrequest.objects.filter(Q(volnteer_id=int(volid)) & Q(accepted=True)))
+    k=list(schoolrequest.objects.filter(Q(volnteer_id=int(volid)) & Q(accepted__in=[True])))
     z=[]
     for i in k:
         z.append(School.objects.get(id=i.school_id))

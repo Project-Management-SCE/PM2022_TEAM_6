@@ -68,7 +68,7 @@ def add_coordinator(response):
         school_id = response.POST.get("schools")
         email = response.POST.get("email")
         psw = response.POST.get("password")
-        coords = Q(is_coordinator=True)
+        coords = Q(is_coordinator__in=[True])
         hasname = Q(username=name)
         if volnteer.objects.filter(coords & hasname):
             message = 'that username exists on the site'
