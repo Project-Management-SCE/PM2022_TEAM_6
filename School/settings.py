@@ -85,8 +85,12 @@ WSGI_APPLICATION = 'School.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME': 'manager',  # as named on server
+        'HOST': 'mongodb+srv://mo:n799@cluster0.bloax.mongodb.net/manager?retryWrites=true&w=majority',
+        'USER': 'mo',
+        'PASSWORD': 'n799',
+
     }
 }
 
