@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 from django.utils import timezone
-from funcs.managerfuncs import get_data, getemptyschools, getaboutus
+from funcs.managerfuncs import get_data, getemptyschools, getaboutus, changeaboutus
 from manager.models import School, messegerequest,contactus
 from voulnteers.forms import LoginVoulnteer
 from funcs.managerfuncs import addschooll, addcoordinator, uploadpic, getpicname
@@ -155,4 +155,10 @@ def aboutus(response):
     c = getaboutus()
     mainbody = c[0]
     quote = c[1]
-    return render(response, 'manager/aboutus.html', {'mainbody':mainbody,'quote':quote})
+    message=''
+    if response.method == "POST":
+        quote = response.POST.get("header")
+        mainbody = response.POST.get("text")
+        changeaboutus(mainbody,quote)
+        message = "The page got updated "
+    return render(response, 'manager/aboutus.html', {'mainbody':mainbody,'quote':quote,'message':message})

@@ -24,9 +24,9 @@
        <div class="add_school">
                <form action="" method="POST">
         {% csrf_token %}
-           <div class="twobes">  <input name="header" type="text" placeholder="Header" style="width:400px;"> </div>
-           <div class="twobes"> <textarea id="text" name="text" placeholder="Reply back to the Contact us sender" style="height:200px;width:400px;"></textarea></div>
-         <button class="btn btn-dark" type="submit" ,name="reply">Reply back</button>
+           <div class="twobes">  <input name="header" type="text" placeholder="Quote" style="width:400px;"> </div>
+           <div class="twobes"> <textarea id="text" name="text" placeholder="Main Body" style="height:200px;width:400px;"></textarea></div>
+         <button class="btn btn-dark" type="submit" ,name="change">Change content</button>
             <div class="twobes"><h5>{{ message }}</h5></div>
                </form>
 
