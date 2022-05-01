@@ -3,14 +3,18 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                docker {
-                    image 'python:3.8-alpine'
-                }
             }
             steps {
-                 sh 'python3 -m manage.py'
+                 sh    """ docker build -t hello_there ."""
             }
         }
+         stage("run") {
+      steps {
+        sh """
+          docker run --rm hello_there
+        """
+      }
+    }
     /*    stage('Test') {
             agent {
                 docker {
