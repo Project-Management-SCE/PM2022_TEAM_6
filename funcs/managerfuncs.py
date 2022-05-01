@@ -79,4 +79,17 @@ def getpicname():
     return oldimage
 
 
+def getaboutus():
+    f = open('manager/about_us/aboutus.txt')
+    data = f.readlines()
+    mainbody = data[0].strip()
+    quote = data[1].strip()
+    return (mainbody, quote)
 
+
+def changeaboutus(mainbody,quote):
+    f = open('manager/about_us/aboutus.txt', 'w')
+    f.write(mainbody)
+    f.write('\n')
+    f.write(quote)
+    f.close()

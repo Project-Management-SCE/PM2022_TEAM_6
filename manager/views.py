@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 from django.utils import timezone
-from funcs.managerfuncs import get_data, getemptyschools
+from funcs.managerfuncs import get_data, getemptyschools, getaboutus
 from manager.models import School, messegerequest,contactus
 from voulnteers.forms import LoginVoulnteer
 from funcs.managerfuncs import addschooll, addcoordinator, uploadpic, getpicname
@@ -151,3 +151,8 @@ def contactuspage(request,id):
         req.delete()
 
     return render(request, 'manager/contact_us_page.html', {'req': req,'message':message})
+def aboutus(response):
+    c = getaboutus()
+    mainbody = c[0]
+    quote = c[1]
+    return render(response, 'manager/aboutus.html', {'mainbody':mainbody,'quote':quote})

@@ -13,9 +13,9 @@
     {% csrf_token %}
         <div class="add_school">
 
-            <div class="twobes"><h5>Contact us sender's name:</h5> {{req.name}} </div>
-            <div class="twobes"><h5>Contact us sender's organization:</h5>{{req.cons}}</div>
-              <div class="twobes"><textarea readonly style="height:200px;width:400px;"> {{req.text}}</textarea></div>
+            <div class="twobes"><p>The quote and main body:</p></div>
+                       <div class="twobes">  <input name="header" type="text" value="{{quote}}" style="width:400px;" readonly> </div>
+              <div class="twobes"><textarea readonly style="height:200px;width:400px;"> {{mainbody}}</textarea></div>
 
                    </div>
 
