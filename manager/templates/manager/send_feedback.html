@@ -1,0 +1,72 @@
+{% extends 'manager/base.html' %}
+{% load static %}
+{% block head %}
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'manger/urgent.css' %}">
+{% endblock %}
+{% block content %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <br><br>
+        <div class="container">
+
+            <div class="col-xs-12">
+                <h1>Send feedbacks</h1>
+            </div>
+
+            <div class="row input-container">
+                <div class="col-xs-12">
+                    <div class="styled-input wide">
+                        <select name="users" id="users">
+                            <optgroup label="Coordinators">
+                                {% for i in coords %}
+                                    <option value="{{ i.id }}">{{ i.username }}</option>
+
+                                {% endfor %}
+                            </optgroup>
+                            <optgroup label="Voulnteers">
+                                {% for i in vols %}
+                                    <option value="{{ i.id }}">{{ i.username }}</option>
+
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div><h6 for="urgent">Urgent|</h6><input type="radio" id="urgent" name="urgency" value="urgent"></div>
+                <br>
+                <div><h6 for="nonurgent">Non urgent</h6><input type="radio" id="nonurgent" name="urgency"
+                                                               value="nonurgent">
+                </div>
+                <div class="col-xs-12">
+                    <div class="styled-input wide">
+                        <input name="header" type="text">
+                        <label>Title</label>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="styled-input wide">
+                        <textarea name="textarea" required></textarea>
+                        <label>Message</label>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <button class="btn-lrg submit-btn" type="submit" name="add">Send feedback</button>
+                </div>
+
+
+            </div>
+            <div class="container">
+                <div class="col-xs-12">
+
+                    <h6>{{ message }}</h6>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+{% endblock %}

@@ -13,7 +13,7 @@ from manager.models import School, schoolrequest
 from voulnteers.templatetags.vol_funcs import setname, setpfp
 
 from . import models
-from .forms import CreateNewVoulnteer, LoginVoulnteer, FeedbackForm
+from .forms import CreateNewVoulnteer, LoginVoulnteer
 from voulnteers.models import volnteer
 from voulnteers.utils import token_generator
 from funcs.managerfuncs import getschools

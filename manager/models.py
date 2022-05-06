@@ -27,10 +27,13 @@ class schoolrequest(models.Model):
 
 
 class feedbacks(models.Model):
-    volnteer_id=models.IntegerField()
+    is_read=models.BooleanField(default=False)
+    reciever_id=models.IntegerField()
+    sender_id=models.IntegerField()
     timesent=models.DateTimeField()
     text=models.CharField(max_length=400)
     header=models.CharField(max_length=200)
+    urg=models.BooleanField()
 
 
 class contactus(models.Model):

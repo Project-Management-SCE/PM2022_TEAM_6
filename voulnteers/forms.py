@@ -1,6 +1,5 @@
 from django import forms
-from voulnteers.models import volnteer,Feedback
-
+from voulnteers.models import volnteer
 
 class CreateNewVoulnteer(forms.Form):
     username = forms.CharField(label="Name", max_length=200)
@@ -21,10 +20,3 @@ class LoginVoulnteer(forms.Form):
         fields = ['username', 'password']
 
 
-class FeedbackForm(forms.Form):
-    class Meta:
-        model = Feedback
-        fields = ['by', 'message']
-        widgets = {
-            'message': forms.Textarea(attrs={'rows': 6, 'cols': 30})
-        }

@@ -11,13 +11,12 @@ from django.db.models import Q
 
 from django.utils import timezone
 from funcs.managerfuncs import get_data, getemptyschools, getaboutus, changeaboutus
-from manager.models import School, messegerequest,contactus
+from manager.models import School, messegerequest, contactus, feedbacks
 from voulnteers.forms import LoginVoulnteer
 from funcs.managerfuncs import addschooll, addcoordinator, uploadpic, getpicname
 
 # Create your views here.
-from voulnteers.models import volnteer,Feedback
-
+from voulnteers.models import volnteer
 
 
 def loginPage(response):
@@ -93,7 +92,7 @@ def logoutUser(request):
 def urgentrequest(response):
     if not response.session.has_key('managerkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
-    coor = volnteer.objects.filter(is_coordinator=True)
+    coor = volnteer.objects.filter(is_coordinator__in=[True])
     message = 'fill the form'
     if response.method == "POST":
         urgency = response.POST.get("urgency")
@@ -127,38 +126,100 @@ def changepic(response):
     return render(response, "manager/changepic.html", {'picname': getpicname()})
 
 
-
-def feedback_view(request):
-    feedback = Feedback.objects.all().order_by('-id')
-    return render(request, 'manager/manager_feedback.html', {'feedback': feedback})
 def contact_us(request):
-    req=contactus.objects.all()
+    if not request.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    req = contactus.objects.all()
     return render(request, 'manager/contactus.html', {'req': req})
 
-def contactuspage(request,id):
+
+def contactuspage(request, id):
+    if not request.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
     req = contactus.objects.get(id=id)
-    message=''
+    message = ''
     if request.method == "POST":
         header = request.POST.get("header")
         text = request.POST.get("text")
         email = EmailMessage(
-          header,
-          text,
-          'noreply@voulnteering.com',
-          [req.email],)
+            header,
+            text,
+            'noreply@voulnteering.com',
+            [req.email], )
         email.send(fail_silently=False)
         message = "you replied back!! "
         req.delete()
 
-    return render(request, 'manager/contact_us_page.html', {'req': req,'message':message})
+    return render(request, 'manager/contact_us_page.html', {'req': req, 'message': message})
+
+
 def aboutus(response):
+    if not response.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
     c = getaboutus()
     mainbody = c[0]
     quote = c[1]
-    message=''
+    message = ''
     if response.method == "POST":
         quote = response.POST.get("header")
         mainbody = response.POST.get("text")
-        changeaboutus(mainbody,quote)
+        changeaboutus(mainbody, quote)
         message = "The page got updated "
-    return render(response, 'manager/aboutus.html', {'mainbody':mainbody,'quote':quote,'message':message})
+    return render(response, 'manager/aboutus.html', {'mainbody': mainbody, 'quote': quote, 'message': message})
+
+
+def send_feedback(response):
+    if not response.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    message = ''
+    coords = volnteer.objects.filter(is_coordinator__in=[True])
+    vols = volnteer.objects.filter(Q(is_coordinator__in=[False]) & Q(is_verfied__in=[True]))
+    if response.method == "POST":
+        urgency = response.POST.get("urgency")
+        users = response.POST.get("users")
+        text = response.POST.get("textarea")
+        header = response.POST.get("header")
+
+        print(text)
+        if urgency == 'urgent':
+            urg = True
+        else:
+            urg = False
+        c = feedbacks(text=text, header='request from the admin', urg=urg, sender_id=-1, reciever_id=int(users),
+                      timesent=datetime.now())
+        c.save()
+        message = 'an urgent request was sent!'
+
+    return render(response, 'manager/send_feedback.html', {'coords': coords, 'vols': vols, 'message': message})
+
+
+def feedback_view(request):
+    if not request.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    sentfeedbacks = list(feedbacks.objects.filter(sender_id=-1))
+    recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=-1) & Q(is_read__in=[False])))
+
+    return render(request, 'manager/view_feedbacks.html', {'recieved': recievedfeedbacks, 'sent': sentfeedbacks})
+
+def oldfeedbacks(request):
+    if not request.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=-1) & Q(is_read__in=[True])))
+    return render(request, 'manager/old_feedbacks.html', {'recieved': recievedfeedbacks})
+
+
+def spfeedback(request, id):
+    if not request.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    feedback = feedbacks.objects.get(id=id)
+    if request.method == "POST":
+        if request.POST.get("delete"):
+            print('kkk')
+            feedbacks.objects.get(id=id).delete()
+
+        if request.POST.get("mark"):
+            feedback.is_read=True
+            feedback.save()
+        return redirect('/manager/viewfeedbacks')
+
+    return render(request, 'manager/spcfeedback.html', {'feedback': feedback, 'currentid': -1})

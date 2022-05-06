@@ -12,10 +12,7 @@ class volnteer(AbstractUser):
     pfp = models.ImageField(null=True, blank=True, upload_to="vols")
 
 
-class Feedback(models.Model):
-    date = models.DateField(auto_now=True)
-    by = models.CharField(max_length=40)
-    message = models.CharField(max_length=500)
+
 
 
 def is_verfied_func(self):

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db import models
-from manager.models import schoolrequest,contactus
-from voulnteers.models import volnteer, School, Feedback
+from manager.models import schoolrequest,contactus,feedbacks
+from voulnteers.models import volnteer, School
 
 
 class school_request(admin.ModelAdmin):
@@ -25,14 +25,14 @@ class school_class(admin.ModelAdmin):
 
 
 class feedback_class(admin.ModelAdmin):
-    list_display = ('date', 'by', 'message')
-    search_fields = ('date', 'by')
+    list_display = ('id','reciever_id', 'sender_id', 'timesent','text','header','is_read','urg')
+    search_fields = ('reciever_id', 'sender_id')
 
 
 admin.site.register(schoolrequest, school_request)
 admin.site.register(volnteer, volnteer_class)
 admin.site.register(School, school_class)
-admin.site.register(Feedback, feedback_class)
+admin.site.register(feedbacks, feedback_class)
 admin.site.register(contactus, contact_us)
 
 # Register your models here.

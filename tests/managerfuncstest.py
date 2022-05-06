@@ -1,5 +1,6 @@
 import sys
 import unittest
+from django.test import TestCase
 
 from manager.models import School
 

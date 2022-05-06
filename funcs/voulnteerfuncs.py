@@ -6,6 +6,9 @@ def addvoulnteer(name,email,psw):
     ex.save()
     ex.is_verfied = False
     return ex
+def getvolname(id):
+    c=volnteer.objects.get(id=id)
+    return c.username
 
 # def loadinfo():
     

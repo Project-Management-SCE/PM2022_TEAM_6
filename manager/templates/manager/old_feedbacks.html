@@ -1,0 +1,54 @@
+{% extends 'manager/base.html' %}
+{%load static %}
+{% load manager_funcs %}
+
+{% block head %}
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<br>
+<h1 class="titles">Old feedbacks sent to me</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+
+    <div class="add_school">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">From</th>
+                <th scope="col">Urgency</th>
+                <th scope="col">Header</th>
+                <th scope="col">Time sent</th>
+                <th scope="col"></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in recieved %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.sender_id|getname}}</td>
+                <td>{{i.urg}}</td>
+                <td>{{i.header}}</td>
+                <td>{{i.timesent}}</td>
+                <td><a href="/manager/feedback/{{i.id}}"> Expand...</a>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+
+</form>
+
+
+{% endblock %}

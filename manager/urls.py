@@ -10,10 +10,13 @@ urlpatterns = [
     path('addcoordinator/', views.add_coordinator, name="addcoordinator"),
     path('urgent/', views.urgentrequest, name="urgent"),
     path('changepic/', views.changepic, name="changepic"),
-    path('feedback/', views.feedback_view, name='view-volunteers-feedback'),
+    path('viewfeedbacks/', views.feedback_view, name='viewfeedbacks'),
+    path('oldfeedbacks/', views.oldfeedbacks, name='oldfeedbacks'),
+    path('sendfeedback/', views.send_feedback, name='send-feedback'),
     path('contactus/', views.contact_us, name="contactus"),
     path('aboutus/', views.aboutus, name="aboutus"),
     path('contactus/<int:id>', views.contactuspage, name="contactuspage"),
+    path('feedback/<int:id>', views.spfeedback, name="spfeedback"),
     path("", index, name="index"),
 
 ]
