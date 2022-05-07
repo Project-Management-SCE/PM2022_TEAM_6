@@ -8,7 +8,7 @@ pipeline {
                 }
             }
             steps {
-                sh '/usr/local/bin/python3 -m pip install --upgrade pip'
+                sh 'sudo /usr/local/bin/python3 -m pip install --upgrade pip'
                 sh 'python -m pip install --upgrade Pillow'
                 sh 'pip install evdev'
                 sh 'pip install -r requirements.txt'
