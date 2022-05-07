@@ -13,6 +13,9 @@ urlpatterns = [
     path('changepic/', views.changepic, name="changepic"),
     path('activate/<uidb64>/<token>', VerficationView.as_view(), name="activate"),
     path('schools/<int:id>', views.schoolinfo, name="schoolinfo"),
-    path('feedback/', views.voulnteer_feedback_view, name='voulnteerfeedback'),
+    path('viewfeedbacks/', views.feedback_view, name='viewfeedbacks'),
+    path('oldfeedbacks/', views.oldfeedbacks, name='oldfeedbacks'),
+    path('sendfeedback/', views.send_feedback, name='send-feedback'),
+    path('feedback/<int:id>', views.spfeedback, name="spfeedback"),
 
 ]

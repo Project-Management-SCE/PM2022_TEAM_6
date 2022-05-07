@@ -1,0 +1,49 @@
+{% extends 'voulnteers/base.html' %}
+{%load static %}
+{% load vol_funcs %}
+
+{% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <br>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="add_school">
+
+            <div class="twobes"><h5>Sent by:</h5>{{ feedback.sender_id|getname }}  </div>
+            <div class="twobes"><h5>Sent to:</h5>{{ feedback.reciever_id|getname }}</div>
+            <div class="twobes"><input name="header" type="text" value="{{ feedback.header }}" style="width:400px;"
+                                       readonly></div>
+
+
+            <div class="twobes"><textarea readonly style="height:200px;width:400px;"> {{ feedback.text }}</textarea>
+            </div>
+            {% if currentid == feedback.sender_id %}
+                <button class="btn btn-danger" type="submit" name="delete" id="delete" value="delete">Delete</button>
+            {% else %}
+                {% if feedback.is_read == True %}
+                    <h6 style="color:darkgreen;"> is read</h6>
+                {% else %}
+                    <button class="btn btn-dark" type="submit" name="mark" id="mark" value="mark">Mark as read</button>
+
+
+                {% endif %}
+
+
+
+            {% endif %}
+
+
+        </div>
+
+    </form>
+    <br>
+
+
+
+{% endblock %}

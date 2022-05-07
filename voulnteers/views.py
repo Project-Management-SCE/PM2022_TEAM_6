@@ -1,6 +1,7 @@
 import sys
 from django.contrib.auth import authenticate
 from django.core.mail import EmailMessage
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -8,9 +9,10 @@ from django.urls import reverse
 from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
-from funcs.managerfuncs import getfullschools, requestnondub
-from manager.models import School, schoolrequest
+from funcs.managerfuncs import getfullschools, requestnondub, getcoords
+from manager.models import School, schoolrequest, feedbacks
 from voulnteers.templatetags.vol_funcs import setname, setpfp
+from datetime import datetime
 
 from . import models
 from .forms import CreateNewVoulnteer, LoginVoulnteer
@@ -150,6 +152,64 @@ def changepic(response):
 
     return render(response, "voulnteers/changepic.html", {})
 
+def feedback_view(request):
+    if not request.session.has_key('voulnteerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['voulnteerkey'])
+    sentfeedbacks = list(feedbacks.objects.filter(sender_id=user.id))
+    recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=user.id) & Q(is_read__in=[False])))
+
+    return render(request, 'voulnteers/view_feedbacks.html', {'recieved': recievedfeedbacks, 'sent': sentfeedbacks})
+
+def oldfeedbacks(request):
+    if not request.session.has_key('voulnteerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['voulnteerkey'])
+    recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=user.id) & Q(is_read__in=[True])))
+    return render(request, 'voulnteers/old_feedbacks.html', {'recieved': recievedfeedbacks})
+
+
+def spfeedback(request, id):
+    if not request.session.has_key('voulnteerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    feedback = feedbacks.objects.get(id=id)
+    user = volnteer.objects.get(username=request.session['voulnteerkey'])
+    print('**********************')
+    if request.method == "POST":
+        if request.POST.get("delete"):
+            print('kkk')
+            feedbacks.objects.get(id=id).delete()
+
+        if request.POST.get("mark"):
+            feedback.is_read=True
+            feedback.save()
+        return redirect('/voulnteers/viewfeedbacks')
+
+    return render(request, 'voulnteers/spcfeedback.html', {'feedback': feedback, 'currentid': user.id})
+
+def send_feedback(response):
+    if not response.session.has_key('voulnteerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    message = ''
+    user = volnteer.objects.get(username=response.session['voulnteerkey'])
+    coords = getcoords(user.id)
+
+    if response.method == "POST":
+        urgency = response.POST.get("urgency")
+        users = response.POST.get("users")
+        text = response.POST.get("textarea")
+        header = response.POST.get("header")
+
+        print(text)
+        if urgency == 'urgent':
+            urg = True
+        else:
+            urg = False
+        c = feedbacks(text=text, header=header, urg=urg, sender_id=user.id, reciever_id=int(users),
+                      timesent=datetime.now())
+        c.save()
+        message = 'a feedback was sent!'
+    return render(response, 'voulnteers/send_feedback.html', {'coords': coords, 'message': message})
 
 class VerficationView(View):
     def get(self, request, uidb64, token):
@@ -176,18 +236,6 @@ class VerficationView(View):
 
         return redirect('login')
 
-
-def voulnteer_feedback_view(request):
-    user = volnteer.objects.get(username=request.session['voulnteerkey'])
-    feedback = FeedbackForm()
-    if request.method == 'POST':
-        feedback = FeedbackForm(request.POST)
-        if feedback.is_valid():
-            feedback.save()
-        else:
-            print("form is invalid")
-        return render(request, 'voulnteers/feedback_sent_by_volnteer.html', {'user': user})
-    return render(request, 'voulnteers/voulnteers_feedback.html', {'feedback': feedback, 'user': user})
 
 
 

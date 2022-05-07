@@ -185,10 +185,10 @@ def send_feedback(response):
             urg = True
         else:
             urg = False
-        c = feedbacks(text=text, header='request from the admin', urg=urg, sender_id=-1, reciever_id=int(users),
+        c = feedbacks(text=text, header=header, urg=urg, sender_id=-1, reciever_id=int(users),
                       timesent=datetime.now())
         c.save()
-        message = 'an urgent request was sent!'
+        message = 'a feedback was sent!'
 
     return render(response, 'manager/send_feedback.html', {'coords': coords, 'vols': vols, 'message': message})
 

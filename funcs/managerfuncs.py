@@ -60,6 +60,12 @@ def getschools(volid):
     for i in k:
         z.append(School.objects.get(id=i.school_id))
     return z
+def getcoords(volid):
+    k=list(schoolrequest.objects.filter(Q(volnteer_id=int(volid)) & Q(accepted__in=[True])))
+    z=[]
+    for i in k:
+        z.append(volnteer.objects.get(school_id=i.school_id))
+    return z
 
 def uploadpic(image):
     f = open('manager/auth_data/picname.txt','r')
