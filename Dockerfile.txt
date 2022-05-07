@@ -1,2 +1,2 @@
-FROM python:3.7-albine
+FROM python:3.8-albine
 CMD["python","-c","print('Hi There')"]
