@@ -8,6 +8,8 @@ pipeline {
                 }
             }
             steps {
+                sh 'virtualenv projectrun -p python'
+                sh 'source projectrun/bin/activate'
                 sh 'pip list --no-cache-dir'
                 sh 'python -m pip install --upgrade Pillow --no-cache-dir'
                 sh 'pip install evdev'
