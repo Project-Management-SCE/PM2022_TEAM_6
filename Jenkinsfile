@@ -8,6 +8,7 @@ pipeline {
                 }
             }
             steps {
+                sh 'pip install -r requirements.txt'
                 sh 'python -m py_compile manage.py'
             }
         }
