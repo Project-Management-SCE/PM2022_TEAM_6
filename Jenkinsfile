@@ -8,11 +8,11 @@ pipeline {
                 }
             }
             steps {
-                sh 'python3 -m pip install --upgrade pip'
-                sh 'python3 -m pip install --upgrade Pillow'
-                sh 'pip3 install evdev'
-                sh 'pip3 install -r requirements.txt'
-                sh 'python3 -m py_compile manage.py'
+                sh '/usr/local/bin/python3 -m pip install --upgrade pip'
+                sh 'python -m pip install --upgrade Pillow'
+                sh 'pip install evdev'
+                sh 'pip install -r requirements.txt'
+                sh 'python -m py_compile manage.py'
             }
         }
 //         stage('Test') {
