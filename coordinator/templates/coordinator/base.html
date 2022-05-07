@@ -32,10 +32,10 @@
 
     </script>
     <!-- Dashboard Core -->
-     <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
+    <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
     <script src="./assets/js/dashboard.js"></script>
 
-        {% block head %}
+    {% block head %}
     {% endblock %}
     <!-- c3.js Charts Plugin -->
 
@@ -51,9 +51,10 @@
                         <div class="dropdown">
                             <a class="nav-link pr-0 leading-none" data-toggle="dropdown"</a>
 
-                            <img class="avatar" src=" {% static '' %}{{55|getpic}}"  alt="avatar"  width="200" height="200">
+                            <img class="avatar" src=" {% static '' %}{{ 55|getpic }}" alt="avatar" width="200"
+                                 height="200">
                             <span class="ml-2 d-none d-lg-block">
-                      <span class="text-default">{{55|loadname}}</span>
+                      <span class="text-default">{{ 55|loadname }}</span>
                       <small class="text-muted d-block mt-1">Your Account</small>
                     </span>
                             </a>
@@ -75,36 +76,55 @@
                     <div class="col-lg order-lg-first">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                             <li class="nav-item">
-                                                            <a class="nav-link" href="/coordinator/mainpage"><i class="fa fa-home"></i> Home</a>
+                                <a class="nav-link" href="/coordinator/mainpage"><i class="fa fa-home"></i> Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/coordinator/logout"><i class="fa fa-sign-out"></i> Logout </a>
+                                <a class="nav-link" href="/coordinator/logout"><i class="fa fa-sign-out"></i> Logout
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/coordinator/schoolrequests"><i class="fa fa-phone"></i> School requests </a>
+                                <a class="nav-link" href="/coordinator/schoolrequests"><i class="fa fa-phone"></i>
+                                    School requests </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="/coordinator/voulnteers"><i class="fa fa-users"></i> Voulnteers
+                                <a class="nav-link" href="/coordinator/voulnteers"><i class="fa fa-users"></i>
+                                    Voulnteers
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/coordinator/urgent"><i class="fa fa-users"></i> Urgent-requests fr:Admin
+                                <a class="nav-link" href="/coordinator/urgent"><i class="fa fa-users"></i>
+                                    Urgent-requests fr:Admin
                                 </a>
                             </li>
-                              <li class="nav-item">
-                                <a class="nav-link" href="/coordinator/changepic"><i class="fa fa-picture-o"></i> change pfp </a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/coordinator/changepic"><i class="fa fa-picture-o"></i> change
+                                    pfp </a>
                             </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="/coordinator/feedback"><i class="fa fa-comments-o"></i> Send Feedback </a>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/coordinator/sendfeedback"><i class="fa fa-comments-o"></i> Send
+                                    Feedback </a>
                             </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/coordinator/viewfeedbacks"><i class="fa fa-comments-o"></i>
+                                    View Feedbacks </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/coordinator/oldfeedbacks"><i class="fa fa-comments-o"></i>
+                                    Old Feedbacks </a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-           {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
     </div>
 </div>
 

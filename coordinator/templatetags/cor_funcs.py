@@ -1,5 +1,7 @@
 from django import template
 
+from funcs.voulnteerfuncs import getvolname
+
 register = template.Library()
 
 
@@ -24,3 +26,8 @@ def loadname(value):
 def getpic(value):
     global profpic
     return profpic
+@register.filter(name='getname')
+def volname(value):
+    if int(value)==-1:
+        return 'Admin'
+    return getvolname(int(value))

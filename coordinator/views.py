@@ -4,9 +4,10 @@ from django.shortcuts import render, redirect
 from funcs.managerfuncs import getvols
 from voulnteers.forms import LoginVoulnteer
 from voulnteers.models import volnteer
-from manager.models import School, schoolrequest, messegerequest
+from manager.models import School, schoolrequest, messegerequest, feedbacks
 from django.db.models import Q
 from coordinator.templatetags.cor_funcs import setname,setpfp
+from datetime import datetime
 # Create your views here.
 
 from django.contrib import messages
@@ -108,3 +109,59 @@ def changepic(response):
 
     return render(response, "coordinator/changepic.html",{})
 
+def feedback_view(request):
+    if not request.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['coorkey'])
+    sentfeedbacks = list(feedbacks.objects.filter(sender_id=user.id))
+    recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=user.id) & Q(is_read__in=[False])))
+
+    return render(request, 'coordinator/view_feedbacks.html', {'recieved': recievedfeedbacks, 'sent': sentfeedbacks})
+
+def oldfeedbacks(request):
+    if not request.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['coorkey'])
+    recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=user.id) & Q(is_read__in=[True])))
+    return render(request, 'coordinator/old_feedbacks.html', {'recieved': recievedfeedbacks})
+
+
+def spfeedback(request, id):
+    if not request.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    feedback = feedbacks.objects.get(id=id)
+    user = volnteer.objects.get(username=request.session['coorkey'])
+    if request.method == "POST":
+        if request.POST.get("delete"):
+            print('kkk')
+            feedbacks.objects.get(id=id).delete()
+
+        if request.POST.get("mark"):
+            feedback.is_read=True
+            feedback.save()
+        return redirect('/coordinator/viewfeedbacks')
+
+    return render(request, 'coordinator/spcfeedback.html', {'feedback': feedback, 'currentid': user.id})
+
+def send_feedback(response):
+    if not response.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    message = ''
+    user = volnteer.objects.get(username=response.session['coorkey'])
+    vols=getvols(user.school_id) 
+    if response.method == "POST":
+        urgency = response.POST.get("urgency")
+        users = response.POST.get("users")
+        text = response.POST.get("textarea")
+        header = response.POST.get("header")
+
+        print(text)
+        if urgency == 'urgent':
+            urg = True
+        else:
+            urg = False
+        c = feedbacks(text=text, header=header, urg=urg, sender_id=user.id, reciever_id=int(users),
+                      timesent=datetime.now())
+        c.save()
+        message = 'a feedback was sent!'
+    return render(response, 'coordinator/send_feedback.html', {'vols': vols, 'message': message})

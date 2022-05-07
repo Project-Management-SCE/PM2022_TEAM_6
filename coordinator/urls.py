@@ -10,5 +10,9 @@ urlpatterns = [
     path('schoolrequests/', views.school_requests, name="schoolrequests"),
     path('urgent/', views.urgentreq, name="urgent"),
     path('changepic/', views.changepic, name="changepic"),
+    path('viewfeedbacks/', views.feedback_view, name='viewfeedbacks'),
+    path('oldfeedbacks/', views.oldfeedbacks, name='oldfeedbacks'),
+    path('sendfeedback/', views.send_feedback, name='send-feedback'),
+    path('feedback/<int:id>', views.spfeedback, name="spfeedback"),
 
 ]
