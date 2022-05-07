@@ -8,7 +8,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'python -m pip install --upgrade Pillow --user'
+                sh 'sudo -H python -m pip install --upgrade Pillow'
                 sh 'pip install evdev'
                 sh 'pip install -r requirements.txt'
                 sh 'python -m py_compile manage.py'
