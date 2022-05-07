@@ -2,7 +2,7 @@ certifi==2021.10.8
 charset-normalizer==2.0.12
 idna==3.3
 MouseInfo
-Pillow==9.1.0
+Pillow
 pipreqs==0.4.11
 PyAutoGUI==0.9.53
 PyGetWindow==0.0.8
