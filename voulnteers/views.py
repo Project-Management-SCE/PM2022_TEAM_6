@@ -21,7 +21,7 @@ from voulnteers.utils import token_generator
 from funcs.managerfuncs import getschools
 
 sys.path.append('../')
-from funcs.voulnteerfuncs import addvoulnteer
+from funcs.voulnteerfuncs import addvoulnteer, checkpic
 
 sys.path.append('/voulnteers')
 
@@ -146,7 +146,12 @@ def requestpage(response):
 def changepic(response):
     if response.method == "POST":
         user = volnteer.objects.get(username=response.session['voulnteerkey'])
-        user.pfp = response.FILES["myfile"]
+        image = response.FILES["myfile"]
+        type = image.name.split('.')[1]
+        if checkpic(type)==False:
+            return HttpResponse("<strong>FILE FORMAT WRONG</strong>")
+        user.pfp=image
+
         user.save()
         return redirect('/coordinator/mainpage')
 

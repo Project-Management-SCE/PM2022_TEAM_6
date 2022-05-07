@@ -4,7 +4,7 @@ import unittest
 from voulnteers.models import  volnteer
 
 sys.path.append('../')
-from funcs.voulnteerfuncs import addvoulnteer,getvolname
+from funcs.voulnteerfuncs import addvoulnteer,getvolname,checkpic
 
 class TestModel(unittest.TestCase):
 
@@ -20,6 +20,10 @@ class TestModel(unittest.TestCase):
         test=getvolname(1)
         testbase=volnteer.objects.get(id=1)
         self.assertEqual(testbase.username, test)
+    def test_checkpic(self):
+        self.assertEqual(True,checkpic("jpg"))
+        self.assertNotEqual(True,checkpic("mp4"))
+
 
 
 
