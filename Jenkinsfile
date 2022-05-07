@@ -8,8 +8,8 @@ pipeline {
                 }
             }
             steps {
-                sh 'pip list'
-                sh 'python -m pip install --upgrade Pillow'
+                sh 'pip list --no-cache-dir'
+                sh 'python -m pip install --upgrade Pillow --no-cache-dir'
                 sh 'pip install evdev'
                 sh 'pip install -r requirements.txt'
                 sh 'python -m py_compile manage.py'
