@@ -8,7 +8,6 @@ pipeline {
                 }
             }
             steps {
-                sh 'sudo python -m pip install -U --force-reinstall pip'
                 sh 'python -m pip install --upgrade Pillow'
                 sh 'pip install evdev'
                 sh 'pip install -r requirements.txt'
