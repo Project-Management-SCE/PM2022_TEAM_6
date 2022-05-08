@@ -1,17 +1,14 @@
 pipeline {
     agent none
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'python:3.7-alpine'
-                }
-            }
+        stage('Build') {    
             steps {
-                sh 'pip install -r requirements.txt'
-                sh 'python -m py_compile manage.py'
+                sh 'docker build -t hello_world .'
             }
-        }
+        stage('run') {    
+            steps {
+                sh 'docker run --rm hello_world'
+            }
 //         stage('Test') {
 //             agent {
 //                 docker {
