@@ -1,12 +1,12 @@
 pipeline {
     agent none
     stages {
-        stage("build") {    
+        stage('Build') {    
             steps {
                 sh 'docker build -t hello_world .'
             }
          }
-        stage("run") {    
+        stage('run') {    
             steps {
                 sh 'docker run --rm hello_world'
             }
