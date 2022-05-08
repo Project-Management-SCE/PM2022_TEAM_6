@@ -3,12 +3,9 @@ pipeline {
     stages {
         stage('Build') { 
          agent {
-               dockerfile {
-               filename 'Dockerfile'
-                          }
-               }
+                  sh ' docker build -t hello_world -f Dockerfile .'
             steps {
-                   sh ' docker build -t hello_world -f Dockerfile .'
+                   sh ' '
                   }
          }
 //         stage('run') {
