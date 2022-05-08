@@ -14,8 +14,8 @@ pipeline {
         stage('test') {
 
             steps {
-                sh 'python manage.py tests.managerfuncstest'
-                sh 'python manage.py tests.voulntererfuncs'
+                sh 'python manage.py test tests.managerfuncstest'
+                sh 'python manage.py test tests.voulntererfuncs'
 
 
             }
