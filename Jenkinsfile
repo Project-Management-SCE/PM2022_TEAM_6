@@ -18,7 +18,7 @@ pipeline {
                           }
             }   
             steps {
-                sh 'sudo docker run --rm f9ff0430bc122c205477aa4128c7a955befd5647'
+                sh 'docker run --rm f9ff0430bc122c205477aa4128c7a955befd5647'
             }
           }
 //         stage('Test') {
