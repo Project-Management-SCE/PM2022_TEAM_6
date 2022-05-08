@@ -13,8 +13,8 @@ pipeline {
          }
         stage('run') { 
          agent {
-               dockerfile {
-               docker 'hello_world'
+               docker {
+               image 'hello_world'
                           }
             }   
             steps {
