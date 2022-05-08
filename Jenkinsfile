@@ -8,19 +8,19 @@ pipeline {
                           }
                }
             steps {
-                sh ''
+                   sh 'docker run --rm f9ff0430bc122c205477aa4128c7a955befd5647'
                   }
          }
-        stage('run') { 
-         agent {
-               docker {
-               image 'f9ff0430bc122c205477aa4128c7a955befd5647'
-                          }
-            }   
-            steps {
-                sh 'docker run --rm f9ff0430bc122c205477aa4128c7a955befd5647'
-            }
-          }
+//         stage('run') {
+//          agent {
+//                docker {
+//                image 'f9ff0430bc122c205477aa4128c7a955befd5647'
+//                           }
+//             }
+//             steps {
+//                 sh 'docker run --rm f9ff0430bc122c205477aa4128c7a955befd5647'
+//             }
+//           }
 //         stage('Test') {
 //             agent {
 //                 docker {
