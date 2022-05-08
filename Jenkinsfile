@@ -5,6 +5,7 @@ pipeline {
          agent {
                dockerfile {
                filename 'Dockerfile'
+               image 'hello_world'
                           }
                }
             steps {
