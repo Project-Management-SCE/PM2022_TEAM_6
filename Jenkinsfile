@@ -14,7 +14,7 @@ pipeline {
         stage('run') { 
          agent {
                dockerfile {
-               filename 'Dockerfile'
+               docker 'hello_world'
                           }
             }   
             steps {
