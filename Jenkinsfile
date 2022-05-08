@@ -1,14 +1,16 @@
 pipeline {
-    agent none
+    agent {label "linux"}
     stages {
-        stage('Build') {    
+        stage("build") {    
             steps {
                 sh 'docker build -t hello_world .'
             }
-        stage('run') {    
+         }
+        stage("run") {    
             steps {
                 sh 'docker run --rm hello_world'
             }
+          }
 //         stage('Test') {
 //             agent {
 //                 docker {
