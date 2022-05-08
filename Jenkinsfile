@@ -5,12 +5,11 @@ pipeline {
          agent {
                dockerfile {
                filename 'Dockerfile'
-               image 'hello_world'
+               label 'hello_world'
+
                           }
                }
-            steps {
-                sh 'sudo docker build -t hello_world .'
-                  }
+
          }
         stage('run') { 
          agent {
