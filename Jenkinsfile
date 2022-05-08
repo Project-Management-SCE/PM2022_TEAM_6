@@ -8,7 +8,7 @@ pipeline {
                           }
                }
             steps {
-                sh 'docker build -t hello_world .'
+                sh 'sudo docker build -t hello_world .'
                   }
          }
         stage('run') { 
