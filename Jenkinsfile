@@ -8,7 +8,7 @@ pipeline {
         stage('Build') {
             steps {
                     sh 'wget -O - -q https://checkip.amazonaws.com'
-                    sh 'python manage.py runserver'
+                    sh 'python manage.py jenkins'
                   }
          }
         stage('run') {
