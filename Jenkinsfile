@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                    sh 'ipconfig'
+                    sh 'wget -O - -q https://checkip.amazonaws.com'
                     sh 'python manage.py runserver'
                   }
          }
