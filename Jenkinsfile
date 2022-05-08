@@ -5,7 +5,6 @@ pipeline {
          agent {
                dockerfile {
                filename 'Dockerfile'
-               args 'hello_world'
                           }
                }
             steps {
@@ -15,11 +14,11 @@ pipeline {
         stage('run') { 
          agent {
                docker {
-               image 'hello_world'
+               image 'f9ff0430bc122c205477aa4128c7a955befd5647'
                           }
             }   
             steps {
-                sh 'sudo docker run --rm hello_world'
+                sh 'sudo docker run --rm f9ff0430bc122c205477aa4128c7a955befd5647'
             }
           }
 //         stage('Test') {
