@@ -6,10 +6,11 @@ pipeline {
                dockerfile {
                filename 'Dockerfile'
                label 'hello_world'
-
                           }
                }
-
+            steps {
+                sh ''
+                  }
          }
         stage('run') { 
          agent {
