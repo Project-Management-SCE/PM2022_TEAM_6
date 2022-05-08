@@ -8,7 +8,7 @@ pipeline {
                           }
                }
             steps {
-                   sh ' docker build -t hello_world -f Dockerfile .'
+                    sh 'docker run --rm '
                   }
          }
 //         stage('run') {
@@ -18,7 +18,7 @@ pipeline {
 //                           }
 //             }
 //             steps {
-//                 sh 'docker run --rm f9ff0430bc122c205477aa4128c7a955befd5647'
+//                 sh 'docker run --rm '
 //             }
 //           }
 //         stage('Test') {
