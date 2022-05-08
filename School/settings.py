@@ -25,7 +25,11 @@ SECRET_KEY = '9&j%&8jlg6d^r93jmvcyn(7hh5l^bl3ow9w0ep(qu0=7heq(!y'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pep8',
+    'django_jenkins.tasks.run_pyflakes',
 
+)
 AUTH_USER_MODEL = 'voulnteers.volnteer'
 # Application definition
 AUTHENTICATION_BACKENDS = [
@@ -33,6 +37,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 INSTALLED_APPS = [
+    'django_jenkins',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

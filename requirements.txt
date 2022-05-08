@@ -16,9 +16,12 @@ requests==2.27.1
 six==1.15.0
 urllib3==1.26.9
 yarg==0.1.9
-django
+django==3.2.13
 django-crispy-forms
 djongo
 pymongo==3.12.1
 django-widget-tweaks
 pytz
+django-jenkins
+pep8
+pyflakes

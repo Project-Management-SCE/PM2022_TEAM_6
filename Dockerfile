@@ -14,8 +14,11 @@ EXPOSE 8000
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /requirements.txt && \
-    adduser --disabled-password --no-create-home app
+    adduser --disabled-password --no-create-home app \
+RUN npm install jshint
+RUN npm install csslint
 RUN /py/bin/python -m pip install "pymongo[srv]"
 ENV PATH="/py/bin:$PATH"
 USER app
-CMD ["python","-c","print('Hi There')"]
+RUN apt-get -y install docker-ce
+
