@@ -18,7 +18,7 @@ pipeline {
                           }
             }   
             steps {
-                sh 'docker run --rm hello_world'
+                sh 'sudo docker run --rm hello_world'
             }
           }
 //         stage('Test') {
