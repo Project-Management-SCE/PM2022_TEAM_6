@@ -8,7 +8,7 @@ pipeline {
                           }
                }
             steps {
-                    sh 'docker run --rm '
+                    sh 'docker run --rm ca0bcf53dec5f0510a76b1d0b33a17f7657a5d97'
                   }
          }
 //         stage('run') {
