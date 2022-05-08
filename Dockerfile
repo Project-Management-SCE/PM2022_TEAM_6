@@ -18,5 +18,4 @@ RUN python -m venv /py && \
 RUN /py/bin/python -m pip install "pymongo[srv]"
 ENV PATH="/py/bin:$PATH"
 USER app
-RUN apt-get -y install docker-ce
 
