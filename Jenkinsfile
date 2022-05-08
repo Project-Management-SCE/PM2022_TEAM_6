@@ -1,12 +1,22 @@
 pipeline {
     agent none
     stages {
-        stage('Build') {    
+        stage('Build') { 
+         agent {
+               dockerfile {
+               filename 'Dockerfile'
+                          }
+               }
             steps {
                 sh 'docker build -t hello_world .'
-            }
+                  }
          }
-        stage('run') {    
+        stage('run') { 
+         agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }   
             steps {
                 sh 'docker run --rm hello_world'
             }
