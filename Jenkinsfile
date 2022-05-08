@@ -4,6 +4,7 @@ pipeline {
         stage('Build') { 
          agent {
                   sh ' docker build -t hello_world -f Dockerfile .'
+                  }
             steps {
                    sh ' '
                   }
