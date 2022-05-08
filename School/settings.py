@@ -36,7 +36,13 @@ AUTHENTICATION_BACKENDS = [
     'voulnteers.backends.volnteerBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=manager,voulnteers,coordinator,funcs',
+]
 INSTALLED_APPS = [
+    'django_nose',
     'django_jenkins',
     'django.contrib.admin',
     'django.contrib.auth',

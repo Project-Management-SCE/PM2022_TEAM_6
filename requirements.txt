@@ -25,3 +25,4 @@ pytz
 django-jenkins
 pep8
 pyflakes
+django_nose
