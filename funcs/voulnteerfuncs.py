@@ -11,4 +11,8 @@ def getvolname(id):
     return c.username
 
 # def loadinfo():
-    
+def checkpic(type):
+    list=["png","gif","webp","tiff","psd","raw","bmp","jpeg","jpg"]
+    if type in list:
+        return True
+    return False

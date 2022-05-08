@@ -11,6 +11,7 @@ from django.db.models import Q
 
 from django.utils import timezone
 from funcs.managerfuncs import get_data, getemptyschools, getaboutus, changeaboutus
+from funcs.voulnteerfuncs import checkpic
 from manager.models import School, messegerequest, contactus, feedbacks
 from voulnteers.forms import LoginVoulnteer
 from funcs.managerfuncs import addschooll, addcoordinator, uploadpic, getpicname
@@ -117,6 +118,9 @@ def changepic(response):
         image = response.FILES["myfile"]
         fc = FileSystemStorage()
         type = image.name.split('.')[1]
+        if checkpic(type)==False:
+            return HttpResponse("<strong>FILE FORMAT WRONG</strong>")
+
         imagename = "admin" + "." + type
         uploadpic(imagename)
         filename = fc.save(imagename, image)
