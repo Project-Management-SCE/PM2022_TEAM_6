@@ -7,6 +7,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                    sh 'ipconfig'
                     sh 'python manage.py runserver'
                   }
          }
