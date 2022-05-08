@@ -1,12 +1,14 @@
 pipeline {
-    agent none
+    agent any
     stages {
         stage('Build') { 
          agent {
-                  sh ' docker build -t hello_world -f Dockerfile .'
-                  }
+               dockerfile {
+               filename 'Dockerfile'
+                          }
+               }
             steps {
-                   sh ' '
+                   sh ' docker build -t hello_world -f Dockerfile .'
                   }
          }
 //         stage('run') {
