@@ -17,10 +17,10 @@ RUN python -m venv /py && \
     adduser --disabled-password --no-create-home app \
 RUN /py/bin/python -m pip install "pymongo[srv]"
 
-RUN apt install npm
-RUN npm install jshint
-RUN npm install csslint
 ENV PATH="/py/bin:$PATH"
 USER app
 RUN apt-get -y install docker-ce
+RUN apt-get install npm
+RUN npm install jshint
+RUN npm install csslint
 
