@@ -13,9 +13,9 @@ pipeline {
          }
         stage('run') { 
          agent {
-                docker {
-                    image 'python:2-alpine'
-                }
+               dockerfile {
+               filename 'Dockerfile'
+                          }
             }   
             steps {
                 sh 'docker run --rm hello_world'
