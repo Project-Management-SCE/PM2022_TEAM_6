@@ -1,0 +1,41 @@
+..\..\AppData\Local\Programs\Python\Python38\lib\site-packages\django\contrib\messages\__init__.py:1:1 'from django.contrib.messages.api import *' used; unable to detect undefined names
+..\..\AppData\Local\Programs\Python\Python38\lib\site-packages\django\contrib\messages\__init__.py:1:1 'django.contrib.messages.api.*' imported but unused
+..\..\AppData\Local\Programs\Python\Python38\lib\site-packages\django\contrib\messages\__init__.py:2:1 'from django.contrib.messages.constants import *' used; unable to detect undefined names
+..\..\AppData\Local\Programs\Python\Python38\lib\site-packages\django\contrib\messages\__init__.py:2:1 'django.contrib.messages.constants.*' imported but unused
+voulnteers\admin.py:1:1 'django.contrib.admin' imported but unused
+voulnteers\backends.py:1:1 'django.contrib.auth.hashers.check_password' imported but unused
+voulnteers\backends.py:2:1 'django.contrib.auth.backends.ModelBackend' imported but unused
+voulnteers\backends.py:4:1 'django.contrib.auth.models.User' imported but unused
+voulnteers\models.py:2:1 'django.contrib.auth.models.BaseUserManager' imported but unused
+voulnteers\models.py:3:1 'manager.models.School' imported but unused
+voulnteers\tests.py:1:1 'django.test.TestCase' imported but unused
+voulnteers\views.py:9:1 'django.utils.encoding.DjangoUnicodeDecodeError' imported but unused
+voulnteers\views.py:17:1 '.models' imported but unused
+voulnteers\views.py:238:9 local variable 'ex' is assigned to but never used
+voulnteers\templatetags\vol_funcs.py:2:1 'funcs.managerfuncs.getpicname' imported but unused
+mainpage\admin.py:1:1 'django.contrib.admin' imported but unused
+mainpage\models.py:1:1 'django.db.models' imported but unused
+mainpage\tests.py:1:1 'django.test.TestCase' imported but unused
+mainpage\views.py:1:1 'django.http.HttpResponse' imported but unused
+manager\admin.py:1:1 'django.contrib.admin' imported but unused
+manager\tests.py:1:1 'django.test.TestCase' imported but unused
+manager\views.py:7:1 'django.contrib.auth.login' imported but unused
+manager\views.py:7:1 'django.contrib.auth.logout' imported but unused
+manager\views.py:9:1 'django.contrib.messages' imported but unused
+manager\views.py:12:1 'django.utils.timezone' imported but unused
+manager\views.py:128:9 local variable 'upload' is assigned to but never used
+coordinator\admin.py:2:1 'django.db.models' imported but unused
+coordinator\forms.py:1:1 'django.forms.ModelForm' imported but unused
+coordinator\forms.py:4:1 'django.forms' imported but unused
+coordinator\models.py:1:1 'django.contrib.auth.models.AbstractUser' imported but unused
+coordinator\models.py:2:1 'django.db.models' imported but unused
+coordinator\tests.py:1:1 'django.test.TestCase' imported but unused
+coordinator\views.py:13:1 'django.contrib.messages' imported but unused
+coordinator\views.py:15:1 'django.contrib.auth.decorators.login_required' imported but unused
+coordinator\views.py:18:1 '.forms.CreateUserForm' imported but unused
+coordinator\views.py:19:1 'from .models import *' used; unable to detect undefined names
+coordinator\views.py:19:1 '.models.*' imported but unused
+coordinator\views.py:43:9 local variable 'user' is assigned to but never used
+..\..\AppData\Local\Programs\Python\Python38\lib\site-packages\crispy_forms\templatetags\crispy_forms_tags.py:14:1 'from crispy_forms.templatetags.crispy_forms_filters import *' used; unable to detect undefined names
+..\..\AppData\Local\Programs\Python\Python38\lib\site-packages\crispy_forms\templatetags\crispy_forms_tags.py:14:1 'crispy_forms.templatetags.crispy_forms_filters.*' imported but unused
+..\..\AppData\Local\Programs\Python\Python38\lib\site-packages\widget_tweaks\templatetags\widget_tweaks.py:173:9 local variable 'tag_name' is assigned to but never used
