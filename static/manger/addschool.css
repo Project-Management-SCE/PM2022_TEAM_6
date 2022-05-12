@@ -1,0 +1,56 @@
+.titles{
+
+padding:30px;
+
+}
+.mainbody{
+    position: relative;
+}
+.add_school{
+width:50%;
+text-align: center;
+ margin: auto;
+ align-items: center;
+ justify-content: center;
+  border-radius: 25px;
+ border: 1px solid gray;
+ padding: 25px;
+ background-color: white;
+
+}
+.mapclass{
+width:50%;
+text-align: center;
+ margin: auto;
+ align-items: center;
+ justify-content: center;
+ padding: 25px;
+ background-color: white;
+
+}
+#map {
+  height: 100%;
+  width:50%;
+    border-radius: 25px;
+text-align: center;
+ margin: auto;
+ margin-top:1%;
+ margin-bottom:2%;
+ align-items: center;
+ justify-content: center;
+ padding: 300px;
+ background-color: white;
+}
+.twobes{
+  text-align: center;
+  align-items: center;
+   margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  width:35%;
+  padding-top:15px;
+  padding-bottom:15px;
+
+
+}
