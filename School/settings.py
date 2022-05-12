@@ -42,7 +42,6 @@ NOSE_ARGS = [
     '--cover-package=manager,voulnteers,coordinator,funcs',
 ]
 INSTALLED_APPS = [
-    'django_nose',
     'django_jenkins',
     'django.contrib.admin',
     'django.contrib.auth',
