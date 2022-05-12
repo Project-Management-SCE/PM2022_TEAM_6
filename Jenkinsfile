@@ -26,7 +26,8 @@ pipeline {
             steps {
               sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
-                    heroku config:add EROKU_OAUTH_ID=09261dc3-b4cf-477b-b237-cf2f61e4c8e7  HEROKU_OAUTH_SECRET=7caac8e8-1dc6-4a26-aeab-58e7208be634
+                    heroku config:add HEROKU_OAUTH_ID=09261dc3-b4cf-477b-b237-cf2f61e4c8e7
+                    heroku config:add HEROKU_OAUTH_SECRET=7caac8e8-1dc6-4a26-aeab-58e7208be634
                     heroku container:login
                     heroku container:push web --app djang-project
                     heroku container:release web --app djang-project
