@@ -2,7 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.core.management.commands.runserver import Command as runserver
 
+port = int(os.environ.get("PORT", 8080))
+runserver.default_port = port
+runserver.default_addr='0.0.0.0'
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'School.settings')

@@ -1,21 +1,16 @@
-
-
 FROM python:3.9
 ENV PYTHONUNBUFFERED 1
 WORKDIR /code
 COPY requirements.txt /requirements.txt
-COPY ./School /code
-COPY ./manager .
-COPY ./voulnteers .
-COPY ./coordinator .
-COPY ./mainpage .
-COPY ./tests .
-EXPOSE 8000
+ADD . /code
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /requirements.txt && \
     adduser --disabled-password --no-create-home app
 RUN /py/bin/python -m pip install "pymongo[srv]"
+curl https://cli-assets.heroku.com/install.sh | sh;
 ENV PATH="/py/bin:$PATH"
 USER app
+CMD ["python", "manage.py", "runserver"]
+EXPOSE 5000
 

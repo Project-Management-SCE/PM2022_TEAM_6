@@ -26,3 +26,5 @@ django-jenkins
 pep8
 pyflakes
 django_nose
+decouple
+gunicorn
