@@ -8,7 +8,6 @@ RUN python -m venv /py && \
     /py/bin/pip install -r /requirements.txt && \
     adduser --disabled-password --no-create-home app
 RUN /py/bin/python -m pip install "pymongo[srv]"
-curl https://cli-assets.heroku.com/install.sh | sh;
 ENV PATH="/py/bin:$PATH"
 USER app
 CMD ["python", "manage.py", "runserver"]

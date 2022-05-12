@@ -21,6 +21,17 @@ pipeline {
 
             }
           }
+        stage('Deploy to Heroku') {
+
+            steps {
+              sh '''
+                    curl https://cli-assets.heroku.com/install.sh | sh;
+                    heroku container:login
+                    heroku container:push web --app djang-project
+                    heroku container:release web --app djang-project
+                '''
+            }
+          }
 
     }
 }
