@@ -22,6 +22,13 @@ pipeline {
             }
           }
         stage('Deploy to Heroku') {
+            agent  {
+            docker {
+                    image 'cimg/base:stable'
+                    args '-u root'
+                }
+               }
+
 
             steps {
               sh '''
