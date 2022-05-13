@@ -8,10 +8,13 @@ pipeline {
                     args '-u root'    }
                       }
             steps {
+            echo 'Building a new image'
+            script {
                     checkout scm
                     def djangoproj = docker.build("djangoproj:${env.BUILD_ID}")
                     djangoproj.push()
                     djangoproj.push('latest')
+                    }
                   }
          }
 
