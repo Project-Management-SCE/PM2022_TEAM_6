@@ -52,7 +52,7 @@ pipeline {
 
 
             steps {
-              echo '////Deploying the site'
+              echo '//Deploying the site'
               sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
                     heroku container:login
