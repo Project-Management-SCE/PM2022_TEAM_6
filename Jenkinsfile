@@ -12,8 +12,8 @@ pipeline {
             script {
                     checkout scm
                     def djangoproj = docker.build("djangoproj:${env.BUILD_ID}")
-                    djangoproj.push('latest')
                     }
+             sh 'docker push djangoproj:latest'
                   }
          }
 
