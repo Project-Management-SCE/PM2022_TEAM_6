@@ -1,10 +1,10 @@
 pipeline {
     agent  {
-                docker {
-                    image 'cimg/base:stable'
-                    args '-u root'
-                }
-         }
+               dockerfile {
+               filename 'Dockerfile'
+                args '-u root'
+                          }
+               }
     stages {
         stage('run') {
             steps {
