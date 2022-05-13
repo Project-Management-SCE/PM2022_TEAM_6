@@ -14,7 +14,7 @@ pipeline {
                     def djangoproj = docker.build("djangoproj:${env.BUILD_ID}")
                     }
              sh 'docker login -u "mohmmdgaber" -p "sY~_wW(=s2sR@BS" docker.io'
-             sh 'docker tag djangoproj:latest  mohmmdgaber/djangoprohect:${env.BUILD_ID}'
+             sh 'docker tag djangoproj:latest  mohmmdgaber/djangoprohect:$BUILD_ID'
              sh 'docker push  mohmmdgaber/djangoprohect:${env.BUILD_ID}'
                   }
          }
