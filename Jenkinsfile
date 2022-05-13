@@ -52,7 +52,7 @@ pipeline {
               sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
                     heroku container:login
-                    docker tag djangoproj:latest registry.heroku.com/djang-project/web
+                    docker tag djangoproj:$BUILD_ID registry.heroku.com/djang-project/web
                     docker push registry.heroku.com/djang-project/web
                     heroku container:release web --app djang-project
                 '''
