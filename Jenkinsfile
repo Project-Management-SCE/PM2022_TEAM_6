@@ -4,6 +4,7 @@ pipeline {
                     image 'cimg/base:stable'
                     args '-u root'
                 }
+         }
     stages {
         stage('run') {
             steps {
