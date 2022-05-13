@@ -24,10 +24,12 @@ pipeline {
         stage('Deploy to Heroku') {
 
             steps {
+            withCredentials([string(credentialsId: 'heroku-api-cred', variable: 'herokuRegistryApiCred')]) {
+                                     sh "docker login -u email@example.com -p ${herokuRegistryApiCred} registry.heroku.com"
+                                        }
               sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
-                    heroku config:add --app HEROKU_OAUTH_ID=09261dc3-b4cf-477b-b237-cf2f61e4c8e7
-                    heroku config:add --app HEROKU_OAUTH_SECRET=7caac8e8-1dc6-4a26-aeab-58e7208be634
+                    heroku container:login
                     heroku container:push web --app djang-project
                     heroku container:release web --app djang-project
                 '''
