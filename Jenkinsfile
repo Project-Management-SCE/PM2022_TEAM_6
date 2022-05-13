@@ -1,33 +1,26 @@
 pipeline {
-    agent  {
-               dockerfile {
-               filename 'Dockerfile'
-                args '-u root'
-                          }
-               }
+    agent none
     stages {
         stage('run') {
+               agent  {
+                  dockerfile {
+                      filename 'Dockerfile'
+                      args '-u root'     }
+                      }
             steps {
                     sh 'wget -O - -q https://checkip.amazonaws.com'
                     sh 'python manage.py jenkins'
+                    sh 'python manage.py test tests.managerfuncstest'
+                    sh 'python manage.py test tests.voulntererfuncs'
                   }
          }
-        stage('test') {
-
-            steps {
-                sh 'python manage.py test tests.managerfuncstest'
-                sh 'python manage.py test tests.voulntererfuncs'
-
-
-            }
-          }
         stage('Deploy to Heroku') {
-            agent  {
-            docker {
+                 agent {
+                docker {
                     image 'cimg/base:stable'
                     args '-u root'
                 }
-               }
+            }
 
 
             steps {
