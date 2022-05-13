@@ -23,10 +23,7 @@ pipeline {
           }
         stage('Deploy to Heroku') {
 
-            steps {
-            withCredentials([string(credentialsId: 'heroku-api-cred', variable: 'herokuRegistryApiCred')]) {
-                                     sh "docker login -u email@example.com -p ${herokuRegistryApiCred} registry.heroku.com"
-                                        }
+
               sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
                     heroku container:login
