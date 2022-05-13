@@ -13,7 +13,7 @@ pipeline {
                     checkout scm
                     def djangoproj = docker.build("djangoproj:${env.BUILD_ID}")
                     }
-             sh 'docker tag djangoproj:latest mohmmdgaber/repository_name:latest'
+             sh 'docker tag djangoproj:latest  mohmmdgaber/djangoprohect:latest'
              sh 'docker push  mohmmdgaber/djangoprohect:latest'
                   }
          }
