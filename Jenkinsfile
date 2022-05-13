@@ -1,11 +1,24 @@
 pipeline {
     agent none
     stages {
+        stage('Build'){
+               agent  {
+                  docker {
+                    image 'python:3.9'
+                    args '-u root'    }
+                      }
+            steps {
+                    checkout scm
+                    def djangoproj = docker.build("djangoproj:${env.BUILD_ID}")
+                    djangoproj.push()
+                    djangoproj.push('latest')
+                  }
+         }
+
         stage('run') {
                agent  {
-                  dockerfile {
-                      filename 'Dockerfile'
-                      args '-u root'     }
+                   docker {
+                    image 'djangoproj:latest'}
                       }
             steps {
                     sh 'wget -O - -q https://checkip.amazonaws.com'
