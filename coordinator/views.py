@@ -165,3 +165,20 @@ def send_feedback(response):
         c.save()
         message = 'a feedback was sent!'
     return render(response, 'coordinator/send_feedback.html', {'vols': vols, 'message': message})
+
+def removeuser(response):
+    try:
+        del response.session['coorkey']
+    except:
+        pass
+    form = LoginVoulnteer(response.POST)
+    message = "are you shure you want to delete youre account"
+    if form.is_valid():
+        user = volnteer.objects.get(username=form.cleaned_data["username"])
+        if not user.is_verfied:
+            message = "you are not verfied"
+            return render(response, "coordinator/removeuser.html", {"form": form, 'message': message})
+        volnteer.objects.filter(username=form.cleaned_data["username"]).delete()
+        return render(response, "coordinator/logout.html", {"form": form, 'message': message})
+
+    return render(response, "coordinator/removeuser.html", {"form": form, 'message': message})

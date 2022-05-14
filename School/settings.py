@@ -25,7 +25,7 @@ SECRET_KEY = '9&j%&8jlg6d^r93jmvcyn(7hh5l^bl3ow9w0ep(qu0=7heq(!y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','djang-project.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0','djang-project.herokuapp.com','127.0.0.1']
 JENKINS_TASKS = (
     'django_jenkins.tasks.run_pep8',
     'django_jenkins.tasks.run_pyflakes',

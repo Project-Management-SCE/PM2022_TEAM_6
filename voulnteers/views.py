@@ -241,7 +241,18 @@ class VerficationView(View):
 
         return redirect('login')
 
+def removeuser(response):
+    form = LoginVoulnteer(response.POST)
+    message = "are you shure you want to delete youre account"
+    if form.is_valid():
+        user = volnteer.objects.get(username=form.cleaned_data["username"])
+        if not user.is_verfied:
+            message = "you are not verfied"
+            return render(response, "voulnteers/removeuser.html", {"form": form, 'message': message})
+        volnteer.objects.filter(username=form.cleaned_data["username"]).delete()
+        return render(response, "voulnteers/logout.html", {"form": form, 'message': message})
 
+    return render(response, "voulnteers/removeuser.html", {"form": form, 'message': message})
 
 
 
