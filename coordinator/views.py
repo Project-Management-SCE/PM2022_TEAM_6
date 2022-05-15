@@ -179,6 +179,6 @@ def removeuser(response):
             message = "you are not verfied"
             return render(response, "coordinator/removeuser.html", {"form": form, 'message': message})
         volnteer.objects.filter(username=form.cleaned_data["username"]).delete()
-        return render(response, "coordinator/logout.html", {"form": form, 'message': message})
+        return render(response, "coordinator/remove.html", {"form": form, 'message': message})
 
     return render(response, "coordinator/removeuser.html", {"form": form, 'message': message})
