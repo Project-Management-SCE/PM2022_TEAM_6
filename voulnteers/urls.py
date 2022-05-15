@@ -17,6 +17,7 @@ urlpatterns = [
     path('oldfeedbacks/', views.oldfeedbacks, name='oldfeedbacks'),
     path('sendfeedback/', views.send_feedback, name='send-feedback'),
     path('feedback/<int:id>', views.spfeedback, name="spfeedback"),
-    # path('removeuser/',views.removeuser,name="removeuser"),
+    path('removeuser/',views.removeuser,name="removeuser"),
+    path('base/',views.online,name="online"),
 
 ]
