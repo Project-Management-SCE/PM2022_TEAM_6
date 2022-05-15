@@ -260,7 +260,6 @@ def removeuser(response):
 
 
 def online(response):
-
     user = volnteer.objects.get(username=response.session['voulnteerkey'])
     if (user.online==False):
         user.online=True
