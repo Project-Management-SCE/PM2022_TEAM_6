@@ -24,6 +24,7 @@
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">email</th>
+      <th scope="col">status</th>
     </tr>
   </thead>
   <tbody>
@@ -32,6 +33,11 @@
       <th scope="row">{{forloop.counter}}</th>
       <td>{{i.username}}</td>
         <td>{{i.email}}</td>
+        {% if i.online %}
+        <td><span class="greendot"></span></td>
+        {% else %}
+        <td><span class="reddot"></span></td>
+        {% endif %}
     </tr>
   {% endfor %}
   </tbody>

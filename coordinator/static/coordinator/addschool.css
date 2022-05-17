@@ -39,6 +39,20 @@ text-align: center;
  padding: 300px;
  background-color: white;
 }
+.greendot {
+  height: 20px;
+  width: 20px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+.reddot {
+  height: 20px;
+  width: 20px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
 .twobes{
   text-align: center;
   align-items: center;
