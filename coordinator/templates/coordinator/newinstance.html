@@ -1,0 +1,73 @@
+{% extends 'coordinator/base.html' %}
+{%load static %}
+{% load cor_funcs %}
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'coordinator/urgent.css' %}">
+{% endblock %}
+{% block content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <br><br>
+    <div class="container">
+
+        <div class="col-xs-12">
+            <h1>New Voulnteering event</h1>
+        </div>
+
+        <div class="row input-container">
+            <div class="col-xs-12">
+                <h5>Start time</h5>
+                <div class="styled-input wide">
+                    <input type="datetime-local" id="start" name="start">
+
+                </div>
+                <h5>End time</h5>
+                <div class="col-xs-12">
+                    <div class="styled-input wide">
+                        <input type="datetime-local" id="end" name="end">
+
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="styled-input wide">
+                        <input name="header" type="text">
+                        <label>Title of event</label>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="styled-input wide">
+                        <textarea name="textarea" required></textarea>
+                        <label>Description</label>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+
+                <div class="flipswitch">
+                    <input type="checkbox" name="flipswitch" class="flipswitch-cb" id="fs" value="online">
+                    <label class="flipswitch-label" for="fs">
+                        <div class="flipswitch-inner"></div>
+                        <div class="flipswitch-switch"></div>
+                    </label>
+                </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <button class="btn-lrg submit-btn" type="submit" name="add">Send feedback</button>
+                </div>
+
+
+            </div>
+            <div class="container">
+                <div class="col-xs-12">
+
+                    <h6>{{ message }}</h6>
+                </div>
+            </div>
+        </div>
+
+
+</form>
+{% endblock %}

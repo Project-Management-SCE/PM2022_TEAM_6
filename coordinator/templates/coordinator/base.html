@@ -28,6 +28,7 @@
             baseUrl: '.'
         });
 
+
     </script>
     <!-- Dashboard Core -->
     <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
@@ -44,7 +45,7 @@
         <div class="header py-4">
             <div class="container">
                 <div class="d-flex">
-                    {#                    <a type="button" class="btn btn-info" href="{% url 'mainpage/index.html' %}">הדף הראשי</a>#}
+                    {# <a type="button" class="btn btn-info" href="{% url 'mainpage/index.html' %}">הדף הראשי</a>#}
                     <div class="d-flex order-lg-2 ml-auto">
                         <div class="dropdown">
                             <a class="nav-link pr-0 leading-none" data-toggle="dropdown"</a>
@@ -101,7 +102,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="/coordinator/sendfeedback"><i class="fa fa-comments-o"></i> Send
+                                <a class="nav-link" href="/coordinator/sendfeedback"><i class="fa fa-comments-o"></i>
+                                    Send
                                     Feedback </a>
                             </li>
 
@@ -115,7 +117,15 @@
                                 <a class="nav-link" href="/coordinator/oldfeedbacks"><i class="fa fa-comments-o"></i>
                                     Old Feedbacks </a>
                             </li>
-                             <li class="nav-item">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/coordinator/newinstance"><i class="fa fa-comments-o"></i>
+                                    Add Occasion </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/coordinator/event"><i class="fa fa-comments-o"></i>
+                                    View Occasion </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/coordinator/removeuser"><i class="fa fa-remove"></i>
                                     remove user </a>
                             </li>

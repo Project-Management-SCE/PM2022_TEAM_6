@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 class messegerequest(models.Model):
@@ -34,6 +33,15 @@ class feedbacks(models.Model):
     text=models.CharField(max_length=400)
     header=models.CharField(max_length=200)
     urg=models.BooleanField()
+
+class volinstances(models.Model):
+    title=models.CharField(max_length=200)
+    description=models.CharField(max_length=400)
+    school_id=models.IntegerField()
+    cor_id=models.IntegerField()
+    volnteers = models.ManyToManyField('voulnteers.volnteer', related_name='volnteer')
+    starttime=models.DateTimeField()
+    endttime=models.DateTimeField()
 
 
 class contactus(models.Model):

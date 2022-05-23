@@ -29,12 +29,17 @@
         requirejs.config({
             baseUrl: '.'
         });
+        document.getElementById("fs").disabled = true;
+
+
+
 
 
     </script>
     <!-- Dashboard Core -->
     <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
     <script src="./assets/js/dashboard.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'voulnteers/style.css' %}">
 
     {% block head %}
     {% endblock %}
@@ -49,14 +54,23 @@
                 <div class="d-flex">
                     <div class="d-flex order-lg-2 ml-auto">
                         <div class="dropdown">
-                              <a class="nav-link pr-0 leading-none" data-toggle="dropdown"></a>
+                            <a class="nav-link pr-0 leading-none" data-toggle="dropdown"></a>
 
 
-                             <img class="avatar" src=" {% static '' %}{{55|getpic}}"  alt="avatar"  width="200" height="200">
-                      <span class="text-default">{{55|loadname}}</span>
-                      <small class="text-muted d-block mt-1">Your Account</small>
-                            <h5>{{message}}</h5>
-                    </span>
+                            <img class="avatar" src=" {% static '' %}{{55|getpic}}" alt="avatar" width="200"
+                                 height="200">
+                            <span class="text-default">{{55|loadname}}</span>
+                            <small class="text-muted d-block mt-1">Your Account</small>
+                            <div class="flipswitch">
+                                <input type="checkbox" name="flipswitch" class="flipswitch-cb" id="fs" {{55|active}} onchange="window.location.href='/voulnteer/base'">
+                                <label class="flipswitch-label" for="fs">
+                                    <div class="flipswitch-inner"></div>
+                                    <div class="flipswitch-switch"></div>
+                                </label>
+                            </div>
+
+
+                            </span>
 
                         </div>
                     </div>
@@ -89,15 +103,15 @@
                                 <a class="nav-link" href="/voulnteer/schools"><i class="fa fa-users"></i> Schools
                                 </a>
                             </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="/voulnteer/changepic"><i class="fa fa-picture-o"></i> change pfp </a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/voulnteer/changepic"><i class="fa fa-picture-o"></i> change
+                                    pfp </a>
                             </li>
 
-                                                        <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/voulnteer/sendfeedback"><i class="fa fa-comments-o"></i> Send
                                     Feedback </a>
                             </li>
-
 
 
                             <li class="nav-item">
@@ -109,13 +123,9 @@
                                 <a class="nav-link" href="/voulnteer/oldfeedbacks"><i class="fa fa-comments-o"></i>
                                     Old Feedbacks </a>
                             </li>
-                             <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/voulnteer/removeuser"><i class="fa fa-remove"></i>
                                     remove user</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="/voulnteer/base"><i class="fa fa-bullhorn"></i>
-                                    online/offline</a>
                             </li>
 
 

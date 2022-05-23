@@ -6,11 +6,14 @@ register = template.Library()
 
 c = 'test'
 profpic = ''
-
+kk="checked"
 
 def setname(l):
     global c
     c = l
+def setactive(l):
+    global kk
+    kk = l
 
 
 def setpfp(l):
@@ -35,3 +38,8 @@ def volname(value):
     if int(value) == -1:
         return 'Admin'
     return getvolname(int(value))
+
+@register.filter(name='active')
+def active(value):
+    return kk
+

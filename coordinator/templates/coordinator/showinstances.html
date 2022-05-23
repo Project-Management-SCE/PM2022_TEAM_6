@@ -1,0 +1,50 @@
+{% extends 'coordinator/base.html' %}
+{%load static %}
+{% load cor_funcs %}
+{% block head %}
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<br>
+<h1 class="titles">Booked events</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+
+    <div class="add_school">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col"></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in events %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.title}}</td>
+                <td>{{i.starttime}}</td>
+                <td>{{i.endttime}}</td>
+                <td><a href="/coordinator/event/{{i.id}}"> Expand...</a>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+
+{% endblock %}

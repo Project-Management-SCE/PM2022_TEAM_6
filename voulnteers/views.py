@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from funcs.managerfuncs import getfullschools, requestnondub, getcoords
 from manager.models import School, schoolrequest, feedbacks
-from voulnteers.templatetags.vol_funcs import setname, setpfp
+from voulnteers.templatetags.vol_funcs import setname, setpfp,setactive
 from datetime import datetime
 
 from . import models
@@ -263,11 +263,13 @@ def online(response):
     user = volnteer.objects.get(username=response.session['voulnteerkey'])
     if (user.online==False):
         user.online=True
+        setactive("checked")
         user.save()
         message="you are online"
     elif (user.online == True):
         user.online = False
+        setactive("unchecked")
         user.save()
         message = "you are offline"
 
-    return render(response, "voulnteers/mainpage.html", { 'message': message})
+    return redirect(response.META.get('HTTP_REFERER'))

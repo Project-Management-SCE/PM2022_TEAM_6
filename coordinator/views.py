@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from funcs.managerfuncs import getvols
+from funcs.managerfuncs import getvols,getonlinevols
 from voulnteers.forms import LoginVoulnteer
 from voulnteers.models import volnteer
-from manager.models import School, schoolrequest, messegerequest, feedbacks
+from manager.models import School, schoolrequest, messegerequest, feedbacks,volinstances
 from django.db.models import Q
 from coordinator.templatetags.cor_funcs import setname,setpfp
 from datetime import datetime
@@ -182,3 +182,41 @@ def removeuser(response):
         return render(response, "coordinator/remove.html", {"form": form, 'message': message})
 
     return render(response, "coordinator/removeuser.html", {"form": form, 'message': message})
+
+def newinstance(response):
+    if not response.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=response.session['coorkey'])
+
+    if response.method == "POST":
+        start = response.POST.get("start")
+        end = response.POST.get("end")
+        text = response.POST.get("textarea")
+        header = response.POST.get("header")
+        onoff = response.POST.get("flipswitch")
+        k=volinstances(starttime=start,endttime=end,cor_id=user.id,school_id=user.school_id,title=header,description=text)
+        k.save()
+        if onoff:
+         k.volnteers.set(getonlinevols(user.school_id))
+        else:
+         k.volnteers.set(getvols(user.school_id))
+        k.save()
+    return render(response, "coordinator/newinstance.html")
+
+def event(request, id):
+    user = volnteer.objects.get(username=request.session['coorkey'])
+    eventt=volinstances.objects.get(id=id)
+    vols=eventt.volnteers.all()
+    print("*****",vols,"******")
+    return render(request, 'coordinator/event.html', { 'currentid': user.id,'event':eventt,'vols':vols})
+
+
+def view_events(request):
+    if not request.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['coorkey'])
+    events = list(volinstances.objects.filter(school_id=user.school_id))
+
+    return render(request, 'coordinator/showinstances.html', {'events': events})
+
+

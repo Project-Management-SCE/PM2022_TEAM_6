@@ -14,6 +14,10 @@ urlpatterns = [
     path('oldfeedbacks/', views.oldfeedbacks, name='oldfeedbacks'),
     path('sendfeedback/', views.send_feedback, name='send-feedback'),
     path('feedback/<int:id>', views.spfeedback, name="spfeedback"),
+    path('event/<int:id>', views.event, name="event"),
+    path('event/', views.view_events, name="view_events"),
     path('removeuser/', views.removeuser, name="removeuser"),
+    path('newinstance/', views.newinstance, name="newinstance"),
+
 
 ]
