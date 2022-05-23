@@ -15,7 +15,7 @@ pipeline {
                     }
              echo '////Pushing a tag to Docker.io'
              sh 'docker login -u "mohmmdgaber" -p "sY~_wW(=s2sR@BS" docker.io'
-             sh 'docker tag djangoproj:latest  mohmmdgaber/djangoprohect:$BUILD_ID'
+             sh 'docker tag djangoproj:$BUILD_ID  mohmmdgaber/djangoprohect:$BUILD_ID'
              sh 'docker push  mohmmdgaber/djangoprohect:$BUILD_ID'
                   }
          }
@@ -23,7 +23,7 @@ pipeline {
         stage('Run') {
                agent  {
                    docker {
-                    image 'djangoproj:latest'}
+                    image 'djangoproj:$BUILD_ID'}
                       }
             steps {
                     echo '////Running the project'
@@ -34,7 +34,7 @@ pipeline {
         stage('Test') {
                agent  {
                    docker {
-                    image 'djangoproj:latest'}
+                    image 'djangoproj:$BUILD_ID'}
                       }
             steps {
                     echo '////Testing pytests'
