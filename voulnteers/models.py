@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from manager.models import School
+from manager.models import School, volinstances
 
 
 # Create your models here.
@@ -9,6 +9,7 @@ class volnteer(AbstractUser):
     is_coordinator = models.BooleanField(default=False)
     school_id = models.IntegerField(default=-1)
     online=models.BooleanField(default=False)
+    volinstance=models.ForeignKey(volinstances,on_delete=models.DO_NOTHING)
     # schools = models.ManyToManyField(School)
     pfp = models.ImageField(null=True, blank=True, upload_to="vols")
 

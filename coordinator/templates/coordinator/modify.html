@@ -1,0 +1,71 @@
+{% extends 'coordinator/base.html' %}
+{%load static %}
+{% load cor_funcs %}
+
+{% block head %}
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+
+{% endblock %}
+
+{% block content %}
+<br>
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="add_school">
+
+        <div class="twobes"><h5>Start time:</h5>
+            <div class="styled-input wide">
+                <input type="datetime-local" id="start" value="{{ event.starttime| totime}}" name="start">
+
+            </div>
+        </div>
+        <div class="twobes"><h5>End time to:</h5>
+            <div class="styled-input wide">
+                <input type="datetime-local" value="{{ event.endttime |totime}}" id="end" name="end">
+
+            </div>
+        </div>
+        <div class="twobes"><input name="header" type="text" value="{{ event.title }}" style="width:400px;"></div>
+
+
+        <div class="twobes"><textarea name="textarea" style="height:200px;width:400px;">{{ event.description }}</textarea>
+        </div>
+
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">In</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in vols %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.username}}</td>
+                 <td><input type="checkbox" id="volk" name="volk" {% inevent event.id i.id %} value="{{i.id}}"></td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="twobes">
+             <button class="btn-lrg submit-btn" type="submit" name="add">Update</button>
+        </div>
+
+
+
+    </div>
+
+</form>
+<br>
+
+
+{% endblock %}

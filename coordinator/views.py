@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from funcs.managerfuncs import getvols,getonlinevols
+from funcs.voulnteerfuncs import idstovols
 from voulnteers.forms import LoginVoulnteer
 from voulnteers.models import volnteer
 from manager.models import School, schoolrequest, messegerequest, feedbacks,volinstances
@@ -219,4 +220,25 @@ def view_events(request):
 
     return render(request, 'coordinator/showinstances.html', {'events': events})
 
+def modify(response, id):
+    user = volnteer.objects.get(username=response.session['coorkey'])
+    eventt=volinstances.objects.get(id=id)
+    vols=getvols(user.school_id)
+    if response.method == "POST":
+        start = response.POST.get("start")
+        end = response.POST.get("end")
+        text = response.POST.get("textarea")
+        header = response.POST.get("header")
+        eventt.starttime=datetime.strptime(start,"%Y-%m-%dT%H:%M")
+        eventt.endttime=datetime.strptime(end,"%Y-%m-%dT%H:%M")
+        eventt.title=header
+        eventt.description=text
+        k=idstovols(response.POST.getlist("volk"))
+        eventt.volnteers.set(k)
+        eventt.save()
+    return render(response, 'coordinator/modify.html', { 'currentid': user.id,'event':eventt,'vols':vols})
 
+def deleteevent(response,id):
+    eventt=volinstances.objects.get(id=id)
+    eventt.delete()
+    return redirect('/coordinator/event/')
