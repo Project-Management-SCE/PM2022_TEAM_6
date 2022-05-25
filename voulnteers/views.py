@@ -10,7 +10,7 @@ from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeErr
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from funcs.managerfuncs import getfullschools, requestnondub, getcoords
-from manager.models import School, schoolrequest, feedbacks
+from manager.models import School, schoolrequest, feedbacks, volinstances
 from voulnteers.templatetags.vol_funcs import setname, setpfp,setactive
 from datetime import datetime
 
@@ -273,3 +273,24 @@ def online(response):
         message = "you are offline"
 
     return redirect(response.META.get('HTTP_REFERER'))
+
+def spf_event(response,schoolid,eventid):
+    user = volnteer.objects.get(username=response.session['voulnteerkey'])
+    eventt=volinstances.objects.get(id=eventid)
+    return render(response, 'voulnteers/event.html', { 'currentid': user.id,'event':eventt})
+
+def show_events(response,schoolid):
+    user = volnteer.objects.get(username=response.session['voulnteerkey'])
+    sch=School.objects.get(id=schoolid)
+
+    events = list(volinstances.objects.filter(school_id=schoolid))
+    c=[]
+    for i in events:
+        if user in i.volnteers.all():
+            c.append(i)
+    return render(response, 'voulnteers/show_school_events.html', {'events': c,'school':sch})
+
+
+
+
+

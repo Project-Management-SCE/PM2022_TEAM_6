@@ -1,0 +1,36 @@
+{% extends 'voulnteers/base.html' %}
+{%load static %}
+{% load cor_funcs %}
+
+{% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <br>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="add_school">
+
+            <div class="twobes"><h5>Start time:</h5>{{ event.starttime }}</div>
+            <div class="twobes"><h5>End time to:</h5>{{ event.endttime }}</div>
+            <div class="twobes"><input name="header" type="text" value="{{ event.title }}" style="width:400px;" readonly></div>
+
+
+            <div class="twobes"><textarea readonly style="height:200px;width:400px;"> {{ event.description }}</textarea>
+            </div>
+
+
+
+
+        </div>
+
+    </form>
+    <br>
+
+
+
+{% endblock %}

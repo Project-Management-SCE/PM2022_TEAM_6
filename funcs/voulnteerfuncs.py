@@ -16,3 +16,9 @@ def checkpic(type):
     if type in list:
         return True
     return False
+
+def idstovols(arr):
+    z=[]
+    for i in arr:
+          z.append(volnteer.objects.get(id=i))
+    return z

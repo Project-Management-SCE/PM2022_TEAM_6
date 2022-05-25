@@ -1,7 +1,7 @@
 from django import template
 
 from funcs.voulnteerfuncs import getvolname
-
+from manager.models import volinstances
 register = template.Library()
 
 
@@ -31,3 +31,19 @@ def volname(value):
     if int(value)==-1:
         return 'Admin'
     return getvolname(int(value))
+@register.filter(name='totime')
+def totime(value):
+    return value.strftime("%Y-%m-%dT%H:%M")
+
+@register.simple_tag(name='inevent')
+def inevent(eventid,volid):
+    ins=volinstances.objects.get(id=eventid)
+    try:
+        vols = ins.volnteers.get(id=volid)
+        print(vols)
+    except:
+        return 'unchecked'
+
+    return 'checked'
+
+

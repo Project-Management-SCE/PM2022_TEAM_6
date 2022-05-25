@@ -24,6 +24,8 @@
       <th scope="col">#</th>
       <th scope="col">School name</th>
       <th scope="col">more info</th>
+        <th scope="col">Voulnteering events</th>
+
     </tr>
   </thead>
   <tbody>
@@ -31,7 +33,8 @@
     <tr>
       <th scope="row">{{forloop.counter}}</th>
       <td>{{i.name}}</td>
-      <td>  <a href="/voulnteer/schools/{{i.id}}">{{i.name}} info</a>
+      <td>  <a href="/voulnteer/schools/{{i.id}}">{{i.name}} info</a></td>
+        <td>  <a href="/voulnteer/events/{{i.id}}">{{i.name}} Events</a></td>
     </tr>
   {% endfor %}
   </tbody>

@@ -1,16 +1,16 @@
-{% extends 'coordinator/base.html' %}
+{% extends 'voulnteers/base.html' %}
 {%load static %}
-{% load cor_funcs %}
+
 {% block head %}
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'coordinator/addschool.css' %}">
 
 {% endblock %}
 
 {% block content %}
 <br>
-<h1 class="titles">Booked events</h1>
+<h1 class="titles">All {{school.name}} events</h1>
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -22,13 +22,10 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
+                <th scope="col">Event name</th>
                 <th scope="col">Start Time</th>
                 <th scope="col">End Time</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                 <th scope="col"></th>
-
+                <th scope="col">more info</th>
             </tr>
             </thead>
             <tbody>
@@ -38,9 +35,7 @@
                 <td>{{i.title}}</td>
                 <td>{{i.starttime}}</td>
                 <td>{{i.endttime}}</td>
-                <td><a href="/coordinator/event/{{i.id}}"> Expand...</a>
-                <td><a href="/coordinator/event/{{i.id}}/modify"> Modify...</a>
-                <td><a href="/coordinator/event/{{i.id}}/delete"> Delete...</a>
+                <td><a href="/voulnteer/events/{{school.id}}/{{i.id}}">{{i.name}} info</a>
             </tr>
             {% endfor %}
             </tbody>
@@ -48,7 +43,7 @@
 
 
     </div>
-
+</form>
 
 
 {% endblock %}
