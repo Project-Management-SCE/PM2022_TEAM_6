@@ -98,19 +98,12 @@ class Testview(TestCase):
          self.assertTemplateUsed(response, 'manager/old_feedbacks.html')
          self.assertNotEqual(response.status_code, 234)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+     def test_oldfeedbacks2(self):
+         response = self.client.post(self.login, self.cred, follow=True)
+         response = self.client.get(self.oldfeedbacks)
+         self.assertEqual(response.status_code, 200)
+         self.assertTemplateUsed(response, 'manager/old_feedbacks.html')
+         self.assertNotEqual(response.status_code, 234)
 
 
 if __name__ == '__main__':
