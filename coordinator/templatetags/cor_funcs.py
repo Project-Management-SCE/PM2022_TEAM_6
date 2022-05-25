@@ -30,6 +30,8 @@ def getpic(value):
 def volname(value):
     if int(value)==-1:
         return 'Admin'
+    if int(value)==-5:
+        return ''
     return getvolname(int(value))
 @register.filter(name='totime')
 def totime(value):

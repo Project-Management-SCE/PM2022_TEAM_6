@@ -1,0 +1,53 @@
+{% extends 'manager/base.html' %}
+{% load static %}
+{% load manager_funcs %}
+
+{% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <br>
+    <h1 class="titles">The last changes that I made in the system</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+
+        <div class="add_school">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Activity</th>
+                    <th scope="col">Done By</th>
+                    <th scope="col">Done To</th>
+                    <th scope="col">Activity Date</th>
+                    <th scope="col"></th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in last %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ i.activity }}</td>
+                        <td>{{ i.done_by | getname }}</td>
+                        <td>{{ i.done_to | getname }}</td>
+                        <td>{{ i.activity_date }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </form>
+
+
+{% endblock %}

@@ -12,7 +12,7 @@ from django.db.models import Q
 from django.utils import timezone
 from funcs.managerfuncs import get_data, getemptyschools, getaboutus, changeaboutus
 from funcs.voulnteerfuncs import checkpic
-from manager.models import School, messegerequest, contactus, feedbacks
+from manager.models import School, messegerequest, contactus, feedbacks, logs
 from voulnteers.forms import LoginVoulnteer
 from funcs.managerfuncs import addschooll, addcoordinator, uploadpic, getpicname
 
@@ -35,6 +35,8 @@ def loginPage(response):
 
         message = k
         print(k)
+        k = logs(activity="manager login", done_by=-1, done_to=-5, activity_date=datetime.now())
+        k.save()
     return render(response, "manager/login.html", {"form": form, 'message': message})
 
 
@@ -55,6 +57,8 @@ def addschool(response):
         yaxis = response.POST.get("lng")
         addschooll(name, town, xaxis, yaxis)
         message = 'a school is added!!'
+        k = logs(activity="Adding School", done_by=-1, done_to=-5, activity_date=datetime.now())
+        k.save()
     return render(response, "manager/add_school.html", {'message': message})
 
 
@@ -78,6 +82,7 @@ def add_coordinator(response):
         print(c)
         print("******************************************")
         c.coord_id = user.id
+        c = logs(activity="Adding coordinator ", done_by=-1, done_to=-5, activity_date=datetime.now())
         c.save()
     return render(response, "manager/add_coordinator.html", {'sch': emptyschools, 'message': message})
 
@@ -107,8 +112,9 @@ def urgentrequest(response):
             urg = False
         c = messegerequest(text=text, header='request from the admin', urg=urg, volid=int(coorid),
                            timesent=datetime.now())
-        c.save()
         message = 'an urgent request was sent!'
+        c = logs(activity="Sending Argent request ", done_by=-1, done_to=-5, activity_date=datetime.now())
+        c.save()
 
     return render(response, "manager/urgent.html", {'coor': coor, 'message': message})
 
@@ -118,7 +124,7 @@ def changepic(response):
         image = response.FILES["myfile"]
         fc = FileSystemStorage()
         type = image.name.split('.')[1]
-        if checkpic(type)==False:
+        if checkpic(type) == False:
             return HttpResponse("<strong>FILE FORMAT WRONG</strong>")
 
         imagename = "admin" + "." + type
@@ -126,7 +132,8 @@ def changepic(response):
         filename = fc.save(imagename, image)
 
         upload = fc.url(filename)
-
+        c = logs(activity="changing profile image ", done_by=-1, done_to=-5, activity_date=datetime.now())
+        c.save()
     return render(response, "manager/changepic.html", {'picname': getpicname()})
 
 
@@ -135,6 +142,13 @@ def contact_us(request):
         return HttpResponse("<strong>You are not logged.</strong>")
     req = contactus.objects.all()
     return render(request, 'manager/contactus.html', {'req': req})
+
+
+def last_changes(request):
+    if not request.session.has_key('managerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    last = logs.objects.all()
+    return render(request, 'manager/lastChanges.html', {'last': last})
 
 
 def contactuspage(request, id):
@@ -205,6 +219,7 @@ def feedback_view(request):
 
     return render(request, 'manager/view_feedbacks.html', {'recieved': recievedfeedbacks, 'sent': sentfeedbacks})
 
+
 def oldfeedbacks(request):
     if not request.session.has_key('managerkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
@@ -222,7 +237,7 @@ def spfeedback(request, id):
             feedbacks.objects.get(id=id).delete()
 
         if request.POST.get("mark"):
-            feedback.is_read=True
+            feedback.is_read = True
             feedback.save()
         return redirect('/manager/viewfeedbacks')
 
