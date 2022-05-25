@@ -17,8 +17,8 @@ class TestModel(unittest.TestCase):
         testbase.delete()
 
     def test_getvolname(self):
-        test=getvolname(56)
-        testbase=volnteer.objects.get(id=56)
+        test=getvolname(75)
+        testbase=volnteer.objects.get(id=75)
         self.assertEqual(testbase.username, test)
     def test_checkpic(self):
         self.assertEqual(True,checkpic("jpg"))
