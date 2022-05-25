@@ -41,7 +41,7 @@ def loginPage(response):
 def mainpage(response):
     if not response.session.has_key('managerkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
-    return render(response, "manager/base.html", {})
+    return render(response, "manager/base.html",{})
 
 
 def addschool(response):
@@ -87,7 +87,7 @@ def logoutUser(request):
         del request.session['managerkey']
     except:
         pass
-    return render(request, "manager/logout.html", {})
+    return render(request, "manager/logout.html")
 
 
 def urgentrequest(response):
