@@ -28,7 +28,7 @@ pipeline {
             steps {
                     echo '////Running the project'
                     sh 'wget -O - -q https://checkip.amazonaws.com'
-                    sh 'python manage.py jenkins'
+                    sh 'python manage.py jenkins --keepdb'
                   }
          }
         stage('Test') {
