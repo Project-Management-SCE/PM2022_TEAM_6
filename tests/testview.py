@@ -17,6 +17,7 @@ class Testview(TestCase):
     #
     # def test_logout(self):
     #     response=self.client.get(self.logout)
+
     #     self.assertEqual(response.status_code,200)
     #     self.assertTemplateUsed(response, "manager/logout.html")
     #     self.assertNotEqual(response.status_code,300)

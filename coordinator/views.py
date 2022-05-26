@@ -1,13 +1,13 @@
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from funcs.managerfuncs import getvols,getonlinevols
+from funcs.managerfuncs import getvols, getonlinevols
 from funcs.voulnteerfuncs import idstovols
 from voulnteers.forms import LoginVoulnteer
 from voulnteers.models import volnteer
-from manager.models import School, schoolrequest, messegerequest, feedbacks,volinstances
+from manager.models import School, schoolrequest, messegerequest, feedbacks, volinstances, logs
 from django.db.models import Q
-from coordinator.templatetags.cor_funcs import setname,setpfp
+from coordinator.templatetags.cor_funcs import setname, setpfp
 from datetime import datetime
 # Create your views here.
 
@@ -100,15 +100,19 @@ def mainpage(response):
     sch = School.objects.get(coord_id=coord.id)
 
     return render(response, "coordinator/mainpage.html", {'coord': coord, 'sch': sch})
+
+
 def changepic(response):
     if response.method == "POST":
         user = volnteer.objects.get(username=response.session['coorkey'])
         user.pfp = response.FILES["myfile"]
         user.save()
         return redirect('/coordinator/mainpage')
+    # c = logs(activity="Sending feedback ", done_by=user.id, done_to=int(users), activity_date=datetime.now())
+    # c.save()
 
+    return render(response, "coordinator/changepic.html", {})
 
-    return render(response, "coordinator/changepic.html",{})
 
 def feedback_view(request):
     if not request.session.has_key('coorkey'):
@@ -118,6 +122,7 @@ def feedback_view(request):
     recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=user.id) & Q(is_read__in=[False])))
 
     return render(request, 'coordinator/view_feedbacks.html', {'recieved': recievedfeedbacks, 'sent': sentfeedbacks})
+
 
 def oldfeedbacks(request):
     if not request.session.has_key('coorkey'):
@@ -138,18 +143,19 @@ def spfeedback(request, id):
             feedbacks.objects.get(id=id).delete()
 
         if request.POST.get("mark"):
-            feedback.is_read=True
+            feedback.is_read = True
             feedback.save()
         return redirect('/coordinator/viewfeedbacks')
 
     return render(request, 'coordinator/spcfeedback.html', {'feedback': feedback, 'currentid': user.id})
+
 
 def send_feedback(response):
     if not response.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     message = ''
     user = volnteer.objects.get(username=response.session['coorkey'])
-    vols=getvols(user.school_id) 
+    vols = getvols(user.school_id)
     if response.method == "POST":
         urgency = response.POST.get("urgency")
         users = response.POST.get("users")
@@ -163,9 +169,11 @@ def send_feedback(response):
             urg = False
         c = feedbacks(text=text, header=header, urg=urg, sender_id=user.id, reciever_id=int(users),
                       timesent=datetime.now())
+        c = logs(activity="Sending feedback ", done_by=user.id, done_to=int(users), activity_date=datetime.now())
         c.save()
         message = 'a feedback was sent!'
     return render(response, 'coordinator/send_feedback.html', {'vols': vols, 'message': message})
+
 
 def removeuser(response):
     try:
@@ -184,6 +192,7 @@ def removeuser(response):
 
     return render(response, "coordinator/removeuser.html", {"form": form, 'message': message})
 
+
 def newinstance(response):
     if not response.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
@@ -195,23 +204,31 @@ def newinstance(response):
         text = response.POST.get("textarea")
         header = response.POST.get("header")
         onoff = response.POST.get("flipswitch")
-        k=volinstances(starttime=start,endttime=end,cor_id=user.id,school_id=user.school_id,title=header,description=text)
+        k = volinstances(starttime=start, endttime=end, cor_id=user.id, school_id=user.school_id, title=header,
+                         description=text)
         k.save()
         if onoff:
-         k.volnteers.set(getonlinevols(user.school_id))
+            k.volnteers.set(getonlinevols(user.school_id))
         else:
-         k.volnteers.set(getvols(user.school_id))
+            k.volnteers.set(getvols(user.school_id))
         k.save()
     return render(response, "coordinator/newinstance.html")
 
+
 def event(request, id):
     user = volnteer.objects.get(username=request.session['coorkey'])
-    eventt=volinstances.objects.get(id=id)
-    vols=eventt.volnteers.all()
-    print("*****",vols,"******")
-    return render(request, 'coordinator/event.html', { 'currentid': user.id,'event':eventt,'vols':vols})
+    eventt = volinstances.objects.get(id=id)
+    vols = eventt.volnteers.all()
+    print("*****", vols, "******")
+    return render(request, 'coordinator/event.html', {'currentid': user.id, 'event': eventt, 'vols': vols})
 
 
+def coord_last_changes(request):
+    if not request.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['coorkey'])
+    last = logs.objects.filter(done_by=user.id)
+    return render(request, 'coordinator/CoordLastChanges.html', {'last': last})
 def view_events(request):
     if not request.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
