@@ -43,4 +43,37 @@ class test_urls(TestCase):
         url = reverse('changepic')
         self.assertEqual(resolve(url).func, changepic)
         self.assertNotEqual(resolve(url).func,addschool)
+    def test_send_feedbacks_url_is_resloved(self):
+        url = reverse('send-feedback')
+        self.assertEqual(resolve(url).func,send_feedback)
+        self.assertNotEqual(resolve(url).func, addschool)
+
+    def test_oldfeedbacks_url_is_resloved(self):
+        url = reverse('oldfeedbacks')
+        self.assertEqual(resolve(url).func,oldfeedbacks)
+        self.assertNotEqual(resolve(url).func, addschool)
+
+    def test_viewfeedbacks_url_is_resloved(self):
+        url = reverse('viewfeedbacks')
+        self.assertEqual(resolve(url).func, feedback_view)
+        self.assertNotEqual(resolve(url).func, addschool)
+    def test_aboutus_url_is_resloved(self):
+        url = reverse('aboutus')
+        self.assertEqual(resolve(url).func, about_us)
+        self.assertNotEqual(resolve(url).func, addschool)
+
+    def test_contactus_url_is_resloved(self):
+        url = reverse('contactus')
+        self.assertEqual(resolve(url).func,contact_us)
+        self.assertNotEqual(resolve(url).func, about_us)
+
+    def test_contactuspage_url_is_resloved(self):
+        url = reverse('contactuspage',args=[1])
+        self.assertEqual(resolve(url).func, contactuspage)
+        self.assertNotEqual(resolve(url).func, contact_us)
+
+    def test_spfeedback_url_is_resloved(self):
+        url = reverse('spfeedback',args=[1])
+        self.assertEqual(resolve(url).func, spfeedback)
+        self.assertNotEqual(resolve(url).func, contact_us)
 
