@@ -28,3 +28,5 @@ pyflakes
 django_nose
 decouple
 gunicorn
+celery
+redis

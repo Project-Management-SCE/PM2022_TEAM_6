@@ -19,6 +19,7 @@ urlpatterns = [
     path('event/<int:id>/modify', views.modify, name="modify"),
     path('event/<int:id>/delete', views.deleteevent, name="deleteevent"),
     path('event/', views.view_events, name="view_events"),
+    path('oldevent/', views.view_old_events, name="old_events"),
     path('removeuser/', views.removeuser, name="removeuser"),
     path('newinstance/', views.newinstance, name="newinstance"),
 

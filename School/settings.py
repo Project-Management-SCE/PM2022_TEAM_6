@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +24,7 @@ SECRET_KEY = '9&j%&8jlg6d^r93jmvcyn(7hh5l^bl3ow9w0ep(qu0=7heq(!y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','djang-project.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0', 'djang-project.herokuapp.com', '127.0.0.1']
 JENKINS_TASKS = (
     'django_jenkins.tasks.run_pep8',
     'django_jenkins.tasks.run_pyflakes',
@@ -98,7 +97,7 @@ DATABASES = {
         'USER': 'mo',
         'PASSWORD': 'n799',
         'CLIENT': {
-           'host':  'mongodb+srv://mo:n799@django.bloax.mongodb.net/djangodb?ssl=true&ssl_cert_reqs=CERT_NONE',
+            'host': 'mongodb+srv://mo:n799@django.bloax.mongodb.net/djangodb?ssl=true&ssl_cert_reqs=CERT_NONE',
         }
 
     }
@@ -152,3 +151,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # TEST_RUNNER = 'manager.tests.NoSQLTestRunner'
+
+CELERY_BROKER_URL = 'redis://:p84519757d080fa39e8c4d4806a6c9568747c4180028e701aaed15bb81e3f452e@ec2-54-209-229-1.compute-1.amazonaws.com:20250'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

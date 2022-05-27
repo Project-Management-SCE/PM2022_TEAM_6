@@ -25,6 +25,8 @@ from funcs.voulnteerfuncs import addvoulnteer, checkpic
 
 sys.path.append('/voulnteers')
 
+import pytz
+
 
 # test
 
@@ -280,10 +282,23 @@ def spf_event(response,schoolid,eventid):
     return render(response, 'voulnteers/event.html', { 'currentid': user.id,'event':eventt})
 
 def show_events(response,schoolid):
+    utc = pytz.UTC
     user = volnteer.objects.get(username=response.session['voulnteerkey'])
     sch=School.objects.get(id=schoolid)
 
-    events = list(volinstances.objects.filter(school_id=schoolid))
+    completed = Q(complete__in=[False])
+    matchschool = Q(school_id=schoolid)
+    events = list(volinstances.objects.filter(completed & matchschool))
+    curtime=datetime.now()
+    curtime=utc.localize(curtime)
+    for i in events:
+        if i.endttime < curtime:
+            print(curtime,i.endttime)
+            i.complete=True
+            i.save()
+    completed = Q(complete__in=[False])
+    matchschool = Q(school_id=schoolid)
+    events = list(volinstances.objects.filter(completed & matchschool))
     c=[]
     for i in events:
         if user in i.volnteers.all():

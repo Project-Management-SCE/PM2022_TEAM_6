@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .forms import CreateUserForm
 from .models import *
+import pytz
 
 
 def index(response):
@@ -28,9 +29,13 @@ def index(response):
 
 def logoutUser(request):
     try:
+        coor = volnteer.objects.get(username=request.session['coorkey'])
         del request.session['coorkey']
+        c = logs(activity="Logging out the site", done_by=coor.id, done_to=-5, activity_date=datetime.now())
+        c.save()
     except:
         pass
+
     return render(request, "coordinator/logout.html", {})
 
 
@@ -44,6 +49,8 @@ def loginaccount(response):
         user = volnteer.objects.get(username=form.cleaned_data["username"])
         if k:
             response.session['coorkey'] = form.cleaned_data["username"]
+            c = logs(activity="Logging in the site", done_by=user.id, done_to=-5, activity_date=datetime.now())
+            c.save()
             return redirect('/coordinator/mainpage')
 
         return render(response, "coordinator/loginaccount.html", {"form": form, 'message': message})
@@ -67,6 +74,9 @@ def school_requests(response):
         schh = Q(school_id=schid)
         c = schoolrequest.objects.get(voll & schh)
         c.accepted = True
+        k = logs(activity="Changing profile picture ", done_by=coor.id, done_to=volnteerid,
+                 activity_date=datetime.now())
+        k.save()
         c.save()
 
     return render(response, "coordinator/school_requests.html", {'schreq': requestss})
@@ -79,6 +89,8 @@ def urgentreq(response):
         mark = int(response.POST.get("mark"))
         cc = messegerequest.objects.filter(id=mark)
         print('****', cc)
+        c = logs(activity="Logging in the site", done_by=coor.id, done_to=-5, activity_date=datetime.now())
+        c.save()
         cc.delete()
         # cc.save()
 
@@ -107,9 +119,9 @@ def changepic(response):
         user = volnteer.objects.get(username=response.session['coorkey'])
         user.pfp = response.FILES["myfile"]
         user.save()
+        c = logs(activity="Changing profile picture ", done_by=user.id, done_to=-5, activity_date=datetime.now())
+        c.save()
         return redirect('/coordinator/mainpage')
-    # c = logs(activity="Sending feedback ", done_by=user.id, done_to=int(users), activity_date=datetime.now())
-    # c.save()
 
     return render(response, "coordinator/changepic.html", {})
 
@@ -141,10 +153,17 @@ def spfeedback(request, id):
         if request.POST.get("delete"):
             print('kkk')
             feedbacks.objects.get(id=id).delete()
+            k = logs(activity="Deleting feedback ", done_by=user.id, done_to=feedback.reciever_id,
+                     activity_date=datetime.now())
+            k.save()
 
         if request.POST.get("mark"):
             feedback.is_read = True
             feedback.save()
+            k = logs(activity="Deleting feedback ", done_by=user.id, done_to=feedback.reciever_id,
+                     activity_date=datetime.now())
+            k.save()
+
         return redirect('/coordinator/viewfeedbacks')
 
     return render(request, 'coordinator/spcfeedback.html', {'feedback': feedback, 'currentid': user.id})
@@ -170,8 +189,8 @@ def send_feedback(response):
         c = feedbacks(text=text, header=header, urg=urg, sender_id=user.id, reciever_id=int(users),
                       timesent=datetime.now())
         c.save()
-        c = logs(activity="Sending feedback ", done_by=user.id, done_to=int(users), activity_date=datetime.now())
-        c.save()
+        k = logs(activity="Sending feedback ", done_by=user.id, done_to=int(users), activity_date=datetime.now())
+        k.save()
         message = 'a feedback was sent!'
     return render(response, 'coordinator/send_feedback.html', {'vols': vols, 'message': message})
 
@@ -182,7 +201,7 @@ def removeuser(response):
     except:
         pass
     form = LoginVoulnteer(response.POST)
-    message = "are you shure you want to delete youre account"
+    message = "are you sure you want to delete your account"
     if form.is_valid():
         user = volnteer.objects.get(username=form.cleaned_data["username"])
         if not user.is_verfied:
@@ -213,6 +232,9 @@ def newinstance(response):
         else:
             k.volnteers.set(getvols(user.school_id))
         k.save()
+        eventname = "Made a new event named: " + k.title
+        c = logs(activity=eventname, done_by=user.id, done_to=-5, activity_date=datetime.now())
+        c.save()
     return render(response, "coordinator/newinstance.html")
 
 
@@ -228,35 +250,69 @@ def coord_last_changes(request):
     if not request.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['coorkey'])
-    last = logs.objects.filter(done_by=user.id)
+    last = logs.objects.filter(done_by=user.id).order_by('-activity_date')
     return render(request, 'coordinator/CoordLastChanges.html', {'last': last})
+
+
 def view_events(request):
     if not request.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['coorkey'])
-    events = list(volinstances.objects.filter(school_id=user.school_id))
+    completed = Q(complete__in=[False])
+    matchschool = Q(school_id=user.school_id)
+    events = list(volinstances.objects.filter(completed & matchschool))
+    curtime=datetime.now()
+    curtime=utc.localize(curtime)
+    for i in events:
+        if i.endttime < curtime:
+            print(curtime,i.endttime)
+            i.complete=True
+            i.save()
+    completed = Q(complete__in=[False])
+    matchschool = Q(school_id=user.school_id)
+    events = list(volinstances.objects.filter(completed & matchschool))
 
     return render(request, 'coordinator/showinstances.html', {'events': events})
 
+def view_old_events(request):
+    if not request.session.has_key('coorkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['coorkey'])
+    completed = Q(complete__in=[True])
+    matchschool = Q(school_id=user.school_id)
+    events = list(volinstances.objects.filter(completed & matchschool))
+
+    return render(request, 'coordinator/showoldinstances.html', {'events': events})
+
+
+
 def modify(response, id):
     user = volnteer.objects.get(username=response.session['coorkey'])
-    eventt=volinstances.objects.get(id=id)
-    vols=getvols(user.school_id)
+    eventt = volinstances.objects.get(id=id)
+    vols = getvols(user.school_id)
     if response.method == "POST":
         start = response.POST.get("start")
         end = response.POST.get("end")
         text = response.POST.get("textarea")
         header = response.POST.get("header")
-        eventt.starttime=datetime.strptime(start,"%Y-%m-%dT%H:%M")
-        eventt.endttime=datetime.strptime(end,"%Y-%m-%dT%H:%M")
-        eventt.title=header
-        eventt.description=text
-        k=idstovols(response.POST.getlist("volk"))
+        eventt.starttime = datetime.strptime(start, "%Y-%m-%dT%H:%M")
+        eventt.endttime = datetime.strptime(end, "%Y-%m-%dT%H:%M")
+        eventt.title = header
+        eventt.description = text
+        k = idstovols(response.POST.getlist("volk"))
         eventt.volnteers.set(k)
         eventt.save()
-    return render(response, 'coordinator/modify.html', { 'currentid': user.id,'event':eventt,'vols':vols})
+        eventname="Modfied an event named: "+header
+        c = logs(activity=eventname, done_by=user.id, done_to=-5, activity_date=datetime.now())
+        c.save()
+    return render(response, 'coordinator/modify.html', {'currentid': user.id, 'event': eventt, 'vols': vols})
 
-def deleteevent(response,id):
-    eventt=volinstances.objects.get(id=id)
+
+def deleteevent(response, id):
+    eventt = volinstances.objects.get(id=id)
+    user = volnteer.objects.get(username=response.session['coorkey'])
+    eventname = "deleted an event named: " + eventt.title
+    c = logs(activity=eventname, done_by=user.id, done_to=-5, activity_date=datetime.now())
+    c.save()
     eventt.delete()
     return redirect('/coordinator/event/')

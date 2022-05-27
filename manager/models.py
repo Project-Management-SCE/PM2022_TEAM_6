@@ -46,6 +46,8 @@ class volinstances(models.Model):
     volnteers = models.ManyToManyField('voulnteers.volnteer', related_name='volnteer')
     starttime = models.DateTimeField()
     endttime = models.DateTimeField()
+    complete = models.BooleanField(default=False)
+
 
 
 class contactus(models.Model):
