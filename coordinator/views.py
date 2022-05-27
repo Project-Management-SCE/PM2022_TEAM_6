@@ -169,6 +169,7 @@ def send_feedback(response):
             urg = False
         c = feedbacks(text=text, header=header, urg=urg, sender_id=user.id, reciever_id=int(users),
                       timesent=datetime.now())
+        c.save()
         c = logs(activity="Sending feedback ", done_by=user.id, done_to=int(users), activity_date=datetime.now())
         c.save()
         message = 'a feedback was sent!'
