@@ -1,11 +1,9 @@
-from celery import Celery
+from celery import Celery, shared_task
 from School.celery import app
+from time import sleep
 
-
-
-@app.on_after_configure.connect
-def add_periodic(**kwargs):
-    app.add_periodic_task(2.0, testt(), name='add every 10')
-
-def testt():
+@shared_task
+def sleepy(duration):
+    sleep(duration)
     print('test')
+    return 'kk'

@@ -1,0 +1,43 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Pillow = "*"
+certifi = "==2021.10.8"
+charset-normalizer = "==2.0.12"
+idna = "==3.3"
+MouseInfo = "*"
+pipreqs = "==0.4.11"
+PyAutoGUI = "==0.9.53"
+PyGetWindow = "==0.0.8"
+PyMsgBox = "==1.0.8"
+pynput = "==1.7.1"
+pyperclip = "==1.8.0"
+PyRect = "==0.1.4"
+pyscreeze = "==0.1.26"
+pytweening = "==1.0.3"
+requests = "==2.27.1"
+six = "==1.15.0"
+urllib3 = "==1.26.9"
+yarg = "==0.1.9"
+Django = "==3.2.13"
+django-crispy-forms = "*"
+djongo = "*"
+pymongo = "==3.12.1"
+django-widget-tweaks = "*"
+pytz = "*"
+django-jenkins = "*"
+pep8 = "*"
+pyflakes = "*"
+django-nose = "*"
+decouple = "*"
+gunicorn = "*"
+celery = "*"
+redis = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
