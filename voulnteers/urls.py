@@ -3,10 +3,10 @@ from . import views
 from .views import VerficationView
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.index1, name="index1"),
     path("create", views.createaccount, name="createaccount"),
     path("login", views.loginaccount, name="loginaccount"),
-    path("mainpage", views.mainpage, name="mainpage"),
+    path("mainpage", views.mainpage1, name="mainpage1"),
     path("request", views.requestpage, name="requeset"),
     path("schools", views.showschools, name="schools"),
     path("logout", views.logoutvoulnteer, name="logoutvoulnteer"),

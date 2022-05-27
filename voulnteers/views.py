@@ -37,7 +37,7 @@ def logoutvoulnteer(request):
     return render(request, "voulnteers/logout.html", {})
 
 
-def index(response):
+def index1(response):
     if response.session.has_key('voulnteerkey'):
         return redirect('/voulnteer/mainpage')
     return redirect('/voulnteer/login')
@@ -101,7 +101,7 @@ def loginaccount(response):
     return render(response, "voulnteers/loginaccount.html", {"form": form, 'message': message})
 
 
-def mainpage(response):
+def mainpage1(response):
     user = volnteer.objects.get(username=response.session['voulnteerkey'])
     setname(user.username)
     setpfp(user.pfp)
