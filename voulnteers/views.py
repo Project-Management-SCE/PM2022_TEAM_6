@@ -143,7 +143,7 @@ def requestpage(response):
     return render(response, "voulnteers/requests.html", {'sch': sch, 'message': message})
 
 
-def changepic(response):
+def changepic1(response):
     if response.method == "POST":
         user = volnteer.objects.get(username=response.session['voulnteerkey'])
         image = response.FILES["myfile"]
@@ -157,7 +157,7 @@ def changepic(response):
 
     return render(response, "voulnteers/changepic.html", {})
 
-def feedback_view(request):
+def feedback_view1(request):
     if not request.session.has_key('voulnteerkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['voulnteerkey'])
@@ -166,7 +166,7 @@ def feedback_view(request):
 
     return render(request, 'voulnteers/view_feedbacks.html', {'recieved': recievedfeedbacks, 'sent': sentfeedbacks})
 
-def oldfeedbacks(request):
+def oldfeedbacks1(request):
     if not request.session.has_key('voulnteerkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['voulnteerkey'])
