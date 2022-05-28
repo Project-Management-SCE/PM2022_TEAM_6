@@ -21,7 +21,7 @@ from voulnteers.utils import token_generator
 from funcs.managerfuncs import getschools
 
 sys.path.append('../')
-from funcs.voulnteerfuncs import addvoulnteer, checkpic
+from funcs.voulnteerfuncs import addvoulnteer, checkpic, updateincompletedevents, getincompletedevents
 
 sys.path.append('/voulnteers')
 
@@ -117,11 +117,18 @@ def showschools(response):
         return redirect('/voulnteer/login')
     usr = volnteer.objects.get(username=response.session['voulnteerkey'])
     sch = getschools(usr.id)
-    return render(response, "voulnteers/show_schools.html", {'sch': sch})
+    for i in sch:
+        updateincompletedevents(i.id)
 
-
+    return render(response, "voulnteers/show_schools.html", {'sch': sch,'usrid':usr.id})
+def voldata(response):
+    if not response.session.has_key('voulnteerkey'):
+        return redirect('/voulnteer/login')
+    usr = volnteer.objects.get(username=response.session['voulnteerkey'])
+    sch = getschools(usr.id)
+    return render(response, "voulnteers/voldata.html", {'sch': sch,'usrid':usr.id})
 def schoolinfo(response, id):
-    sch = School.objects.get(coord_id=id)
+    sch = School.objects.get(id=id)
     return render(response, "voulnteers/specific_school.html", {'sch': sch})
 
 
@@ -282,23 +289,10 @@ def spf_event(response,schoolid,eventid):
     return render(response, 'voulnteers/event.html', { 'currentid': user.id,'event':eventt})
 
 def show_events(response,schoolid):
-    utc = pytz.UTC
     user = volnteer.objects.get(username=response.session['voulnteerkey'])
     sch=School.objects.get(id=schoolid)
-
-    completed = Q(complete__in=[False])
-    matchschool = Q(school_id=schoolid)
-    events = list(volinstances.objects.filter(completed & matchschool))
-    curtime=datetime.now()
-    curtime=utc.localize(curtime)
-    for i in events:
-        if i.endttime < curtime:
-            print(curtime,i.endttime)
-            i.complete=True
-            i.save()
-    completed = Q(complete__in=[False])
-    matchschool = Q(school_id=schoolid)
-    events = list(volinstances.objects.filter(completed & matchschool))
+    updateincompletedevents(schoolid)
+    events=getincompletedevents(schoolid)
     c=[]
     for i in events:
         if user in i.volnteers.all():

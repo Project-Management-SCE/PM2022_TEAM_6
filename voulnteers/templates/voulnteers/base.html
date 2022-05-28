@@ -35,6 +35,7 @@
 
 
 
+
     </script>
     <!-- Dashboard Core -->
     <link href="{% static 'core/dashboard.css' %}" rel="stylesheet"/>
@@ -62,7 +63,8 @@
                             <span class="text-default">{{55|loadname}}</span>
                             <small class="text-muted d-block mt-1">Your Account</small>
                             <div class="flipswitch">
-                                <input type="checkbox" name="flipswitch" class="flipswitch-cb" id="fs" {{55|active}} onchange="window.location.href='/voulnteer/base'">
+                                <input type="checkbox" name="flipswitch" class="flipswitch-cb" id="fs" {{55|active}}
+                                       onchange="window.location.href='/voulnteer/base'">
                                 <label class="flipswitch-label" for="fs">
                                     <div class="flipswitch-inner"></div>
                                     <div class="flipswitch-switch"></div>
@@ -98,6 +100,10 @@
                                 <a class="nav-link" href="/voulnteer/request"><i class="fa fa-phone"></i> Apply for a
                                     school </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/voulnteer/voldata"><i class="fa fa-phone"></i>
+                                   Voulnteering Data</a>
+                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="/voulnteer/schools"><i class="fa fa-users"></i> Schools
@@ -127,7 +133,6 @@
                                 <a class="nav-link" href="/voulnteer/removeuser"><i class="fa fa-remove"></i>
                                     remove user</a>
                             </li>
-
 
 
                         </ul>

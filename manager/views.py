@@ -82,8 +82,9 @@ def add_coordinator(response):
         print(c)
         print("******************************************")
         c.coord_id = user.id
-        c = logs(activity="Adding coordinator ", done_by=-1, done_to=-5, activity_date=datetime.now())
         c.save()
+        k = logs(activity="Adding coordinator ", done_by=-1, done_to=-5, activity_date=datetime.now())
+        k.save()
     return render(response, "manager/add_coordinator.html", {'sch': emptyschools, 'message': message})
 
 
@@ -113,6 +114,7 @@ def urgentrequest(response):
         c = messegerequest(text=text, header='request from the admin', urg=urg, volid=int(coorid),
                            timesent=datetime.now())
         message = 'an urgent request was sent!'
+        c.save()
         c = logs(activity="Sending Argent request ", done_by=-1, done_to=-5, activity_date=datetime.now())
         c.save()
 

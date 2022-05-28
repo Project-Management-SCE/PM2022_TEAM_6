@@ -3,10 +3,10 @@ from django.shortcuts import render
 from manager.models import contactus
 from datetime import datetime
 from funcs.managerfuncs import getaboutus
-from coordinator.tasks import sleepy
+
+
 # Create your views here.
 def index(response):
-    sleepy(2)
     return render(response, "mainpage/home.html", {})
 
 def contact_us(response):

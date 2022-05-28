@@ -20,7 +20,7 @@ pipeline {
                   }
          }
 
-        stage('Run') {
+        stage('Integration tests') {
                agent  {
                    docker {
                     image 'djangoproj:$BUILD_ID'}
