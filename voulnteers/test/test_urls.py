@@ -7,7 +7,7 @@ from django.urls import reverse,resolve
 from django.test import TestCase,Client
 
 from voulnteers.views import createaccount, index1, requestpage, showschools, logoutvoulnteer, changepic1, schoolinfo, \
-    feedback_view1,mainpage1
+    feedback_view1, mainpage1, oldfeedbacks1, send_feedback, spfeedback1, show_events
 
 
 class test_urls_voulnteers(TestCase):
@@ -46,4 +46,16 @@ class test_urls_voulnteers(TestCase):
     def test_feedback_view_url_is_resloved(self):
         url=reverse('viewfeedbacks1')
         self.assertEqual(resolve(url).func,feedback_view1)
+        self.assertNotEqual(resolve(url).func,show_events)
+    def test_oldfeedbacks1_url_is_resloved(self):
+        url=reverse('oldfeedbacks1')
+        self.assertEqual(resolve(url).func,oldfeedbacks1)
+        self.assertNotEqual(resolve(url).func,show_events)
+    def test_spfeedback_url_is_resloved(self):
+        url=reverse('spfeedback1',args=[1])
+        self.assertEqual(resolve(url).func,spfeedback1)
+        self.assertNotEqual(resolve(url).func,show_events)
+    def test_show_events_url_is_resloved(self):
+        url=reverse('showevents',args=[1])
+        self.assertEqual(resolve(url).func,show_events)
         self.assertNotEqual(resolve(url).func,createaccount)

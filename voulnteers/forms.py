@@ -15,6 +15,7 @@ class LoginVoulnteer(forms.Form):
     username = forms.CharField(label="Name", max_length=200)
     password = forms.CharField(label="password", widget=forms.PasswordInput)
 
+
     class Meta:
         model = volnteer
         fields = ['username', 'password']
