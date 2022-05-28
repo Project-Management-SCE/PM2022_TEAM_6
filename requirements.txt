@@ -30,5 +30,3 @@ decouple
 gunicorn
 celery
 redis
-fcntl
-django-crontab
