@@ -85,7 +85,9 @@ def loginaccount(response):
     message = "please login"
     if response.session.has_key('voulnteerkey'):
         return redirect('/voulnteer/mainpage')
+
     if form.is_valid():
+
         k = authenticate(response, username=form.cleaned_data["username"], psw=form.cleaned_data["password"])
         user = volnteer.objects.get(username=form.cleaned_data["username"])
         if not user.is_verfied:
@@ -182,8 +184,7 @@ def oldfeedbacks1(request):
     recievedfeedbacks = list(feedbacks.objects.filter(~Q(sender_id=user.id) & Q(is_read__in=[True])))
     return render(request, 'voulnteers/old_feedbacks.html', {'recieved': recievedfeedbacks})
 
-
-def spfeedback(request, id):
+def spfeedback1(request, id):
     if not request.session.has_key('voulnteerkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     feedback = feedbacks.objects.get(id=id)
