@@ -9,6 +9,9 @@ urlpatterns = [
     path("mainpage", views.mainpage1, name="mainpage1"),
     path("request", views.requestpage, name="requeset"),
     path("schools", views.showschools, name="schools"),
+    path("voldata", views.voldata, name="voldata"),
+
+
     path("logout", views.logoutvoulnteer, name="logoutvoulnteer"),
     path('changepic/', views.changepic1, name="changepic1"),
     path('activate/<uidb64>/<token>', VerficationView.as_view(), name="activate"),

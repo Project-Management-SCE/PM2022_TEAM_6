@@ -153,5 +153,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # TEST_RUNNER = 'manager.tests.NoSQLTestRunner'
 
 CELERY_BROKER_URL = 'rediss://:p84519757d080fa39e8c4d4806a6c9568747c4180028e701aaed15bb81e3f452e@ec2-54-209-229-1.compute-1.amazonaws.com:20250'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'

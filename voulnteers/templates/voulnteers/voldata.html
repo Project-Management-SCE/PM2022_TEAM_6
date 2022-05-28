@@ -1,0 +1,61 @@
+{% extends 'voulnteers/base.html' %}
+{%load static %}
+{% load vol_funcs %}
+
+
+    {% block head %}
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'coordinator/addschool.css' %}">
+
+    {% endblock %}
+
+   {% block content %}
+<br>
+<h1 class="titles">All schools</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+
+<div class="add_school">
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">School name</th>
+      <th scope="col">Voulnteering hours this month:</th>
+        <th scope="col"> Total Voulnteering hours</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {{55|resetcounter}}
+  {% for i in sch %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i.name}}</td>
+       <td>{% getmonthlyhours usrid i.id %}</td>
+        <td>{% gettotalhours usrid i.id %}</td>
+      <td>  <a href="/voulnteer/schools/{{i.id}}">{{i.name}} info</a></td>
+    </tr>
+  {% endfor %}
+      <tr>
+      <th scope="row">#</th>
+      <td>Total hours</td>
+       <td>  {{55 | getmon}}</td>
+        <td>  {{55 | gettot}}</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+</div>
+</form>
+
+
+
+    {% endblock %}

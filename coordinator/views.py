@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from funcs.managerfuncs import getvols, getonlinevols
-from funcs.voulnteerfuncs import idstovols
+from funcs.voulnteerfuncs import idstovols, getincompletedevents, updateincompletedevents, getcompletedevents
 from voulnteers.forms import LoginVoulnteer
 from voulnteers.models import volnteer
 from manager.models import School, schoolrequest, messegerequest, feedbacks, volinstances, logs
@@ -109,7 +109,7 @@ def mainpage(response):
     coord = volnteer.objects.get(username=response.session['coorkey'])
     setname(coord.username)
     setpfp(coord.pfp)
-    sch = School.objects.get(coord_id=coord.id)
+    sch = School.objects.get(id=coord.school_id)
 
     return render(response, "coordinator/mainpage.html", {'coord': coord, 'sch': sch})
 
@@ -258,19 +258,8 @@ def view_events(request):
     if not request.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['coorkey'])
-    completed = Q(complete__in=[False])
-    matchschool = Q(school_id=user.school_id)
-    events = list(volinstances.objects.filter(completed & matchschool))
-    curtime=datetime.now()
-    curtime=utc.localize(curtime)
-    for i in events:
-        if i.endttime < curtime:
-            print(curtime,i.endttime)
-            i.complete=True
-            i.save()
-    completed = Q(complete__in=[False])
-    matchschool = Q(school_id=user.school_id)
-    events = list(volinstances.objects.filter(completed & matchschool))
+    updateincompletedevents(user.school_id)
+    events=getincompletedevents(user.school_id)
 
     return render(request, 'coordinator/showinstances.html', {'events': events})
 
@@ -278,9 +267,7 @@ def view_old_events(request):
     if not request.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['coorkey'])
-    completed = Q(complete__in=[True])
-    matchschool = Q(school_id=user.school_id)
-    events = list(volinstances.objects.filter(completed & matchschool))
+    events=getcompletedevents(user.school_id)
 
     return render(request, 'coordinator/showoldinstances.html', {'events': events})
 
