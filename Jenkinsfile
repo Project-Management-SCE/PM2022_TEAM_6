@@ -53,7 +53,7 @@ pipeline {
 
                     echo '////Test Coverage'
 
-						sh "python -m coverage run manage.py test"
+						sh "python -m coverage run manage.py test --keepdb -v 2  && coverage report"
 						sh "python -m coverage report --fail-under=50"
 
 
