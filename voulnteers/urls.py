@@ -22,5 +22,7 @@ urlpatterns = [
     path('events/<int:schoolid>/<int:eventid>', views.spf_event, name="showevent"),
     path('removeuser/',views.removeuser,name="removeuser"),
     path('base/',views.online,name="online"),
+    path('lastChanges/', views.vol_last_changes, name="LastChanges"),
+
 
 ]

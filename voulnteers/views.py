@@ -10,7 +10,7 @@ from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeErr
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from funcs.managerfuncs import getfullschools, requestnondub, getcoords
-from manager.models import School, schoolrequest, feedbacks, volinstances
+from manager.models import School, schoolrequest, feedbacks, volinstances, logs
 from voulnteers.templatetags.vol_funcs import setname, setpfp,setactive
 from datetime import datetime
 
@@ -94,6 +94,9 @@ def loginaccount(response):
 
         if k:
             response.session['voulnteerkey'] = form.cleaned_data["username"]
+            user = volnteer.objects.get(username=response.session['voulnteerkey'])
+            c = logs(activity="Logging in the site", done_by=user.id, done_to=-5, activity_date=datetime.now())
+            c.save()
             return redirect('/voulnteer/mainpage')
 
         return render(response, "voulnteers/loginaccount.html", {"form": form, 'message': message})
@@ -147,6 +150,8 @@ def requestpage(response):
 
         cc = schoolrequest(school_id=schh, volnteer_id=k.id, volnteer_name=k.username, accepted=False)
         cc.save()
+        c = logs(activity="Sent a school request", done_by=k.id, done_to=-5, activity_date=datetime.now())
+        c.save()
         message = 'a request got sent!'
 
     return render(response, "voulnteers/requests.html", {'sch': sch, 'message': message})
@@ -162,6 +167,8 @@ def changepic1(response):
         user.pfp=image
 
         user.save()
+        c = logs(activity="Changed a profile picture", done_by=user.id, done_to=-5, activity_date=datetime.now())
+        c.save()
         return redirect('/coordinator/mainpage')
 
     return render(response, "voulnteers/changepic.html", {})
@@ -193,10 +200,17 @@ def spfeedback1(request, id):
         if request.POST.get("delete"):
             print('kkk')
             feedbacks.objects.get(id=id).delete()
+            k = logs(activity="Deleting feedback ", done_by=user.id, done_to=feedback.reciever_id,
+                     activity_date=datetime.now())
+            k.save()
 
         if request.POST.get("mark"):
             feedback.is_read=True
             feedback.save()
+            k = logs(activity="Read a feedback ", done_by=user.id, done_to=feedback.reciever_id,
+                     activity_date=datetime.now())
+            k.save()
+
         return redirect('/voulnteers/viewfeedbacks')
 
     return render(request, 'voulnteers/spcfeedback.html', {'feedback': feedback, 'currentid': user.id})
@@ -222,6 +236,8 @@ def send_feedback(response):
         c = feedbacks(text=text, header=header, urg=urg, sender_id=user.id, reciever_id=int(users),
                       timesent=datetime.now())
         c.save()
+        k = logs(activity="Sending feedback ", done_by=user.id, done_to=int(users), activity_date=datetime.now())
+        k.save()
         message = 'a feedback was sent!'
     return render(response, 'voulnteers/send_feedback.html', {'coords': coords, 'message': message})
 
@@ -302,4 +318,22 @@ def show_events(response,schoolid):
 
 
 
+def vol_last_changes(request):
+    if not request.session.has_key('voulnteerkey'):
+        return HttpResponse("<strong>You are not logged.</strong>")
+    user = volnteer.objects.get(username=request.session['voulnteerkey'])
+    last=[]
+    for i in list(logs.objects.filter(done_by=user.id)):
+        last.append(i.id)
+    coords=getcoords(user.id)
+    for i in coords:
+        for j in list(logs.objects.filter(done_by=i.id)):
+            k=j.activity
+            k=k.split(' ')[0]
+            if k=="Modfied" or k=="deleted" or k=="Made":
+              last.append(j.id)
+
+    last=logs.objects.filter(pk__in=last)
+    last=last.order_by('-activity_date')
+    return render(request, 'voulnteers/VolLastChanges.html', {'last': last})
 

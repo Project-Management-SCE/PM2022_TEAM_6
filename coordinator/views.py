@@ -160,7 +160,7 @@ def spfeedback(request, id):
         if request.POST.get("mark"):
             feedback.is_read = True
             feedback.save()
-            k = logs(activity="Deleting feedback ", done_by=user.id, done_to=feedback.reciever_id,
+            k = logs(activity="Read a feedback ", done_by=user.id, done_to=feedback.reciever_id,
                      activity_date=datetime.now())
             k.save()
 
