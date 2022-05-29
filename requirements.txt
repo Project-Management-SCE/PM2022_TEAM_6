@@ -28,7 +28,5 @@ pyflakes
 django_nose
 decouple
 gunicorn
-celery
-redisp
 coverage
 pylint-django

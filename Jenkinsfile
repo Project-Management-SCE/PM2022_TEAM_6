@@ -42,6 +42,23 @@ pipeline {
                     sh 'python manage.py test tests.voulntererfuncs'
                   }
          }
+           stage(' Test Coverage') {
+        agent {
+                docker {
+                     image 'djangoproj:$BUILD_ID'
+                }
+            }
+			steps {
+
+
+                    echo '////Test Coverage'
+
+						sh "python -m coverage run manage.py test"
+						sh "python -m coverage report --fail-under=50"
+
+
+			}
+		}
         stage('Deploy to Heroku') {
                  agent {
                 docker {
