@@ -259,18 +259,18 @@ def view_events(request):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['coorkey'])
     updateincompletedevents(user.school_id)
-    events=getincompletedevents(user.school_id)
+    events = getincompletedevents(user.school_id)
 
     return render(request, 'coordinator/showinstances.html', {'events': events})
+
 
 def view_old_events(request):
     if not request.session.has_key('coorkey'):
         return HttpResponse("<strong>You are not logged.</strong>")
     user = volnteer.objects.get(username=request.session['coorkey'])
-    events=getcompletedevents(user.school_id)
+    events = getcompletedevents(user.school_id)
 
     return render(request, 'coordinator/showoldinstances.html', {'events': events})
-
 
 
 def modify(response, id):
@@ -289,7 +289,7 @@ def modify(response, id):
         k = idstovols(response.POST.getlist("volk"))
         eventt.volnteers.set(k)
         eventt.save()
-        eventname="Modfied an event named: "+header
+        eventname = "Modfied an event named: " + header
         c = logs(activity=eventname, done_by=user.id, done_to=-5, activity_date=datetime.now())
         c.save()
     return render(response, 'coordinator/modify.html', {'currentid': user.id, 'event': eventt, 'vols': vols})

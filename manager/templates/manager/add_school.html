@@ -1,36 +1,36 @@
 {% extends 'manager/base.html' %}
-{%load static %}
+{% load static %}
 
-    {% block head %}
+{% block head %}
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'manger/addschool.css' %}">
     <script src="{% static 'manger/map.js' %}"></script>
 
-    {% endblock %}
+{% endblock %}
 
-   {% block content %}
-<br>
-<h1 class="titles">Add a new school</h1>
+{% block content %}
+    <br>
+    <h1 class="titles">Add a new school</h1>
 
-<form action="" method="POST">
-    {% csrf_token %}
-<div class="add_school">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="add_school">
 
-<div class="twobes"><h4>School name:</h4> <input name="name" type="text"></div>
- <div class="twobes"><h4>School's town:</h4> <input name="town" type="text"></div>
-    <button class="btn btn-dark" type="submit",name="add">Add school</button>
-    <div class="twobes">     
-    <input type="text" id="lat" name="lat" readonly="yes">
-            <input type="text" id="lng" name="lng" readonly="yes"> </div>
-      <h5>{{message}}</h5>
+            <div class="twobes"><h4>School name:</h4> <input name="name" type="text"></div>
+            <div class="twobes"><h4>School's town:</h4> <input name="town" type="text"></div>
+            <button class="btn btn-dark" type="submit" ,name="add">Add school</button>
+            <div class="twobes">
+                <input type="text" id="lat" name="lat" readonly="yes">
+                <input type="text" id="lng" name="lng" readonly="yes"></div>
+            <h5>{{ message }}</h5>
 
 
+        </div>
+    </form>
 
-</div>
-</form>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsUJ0P3eueaI2IdbInU6P4I6amqPyYHUI&callback=initMap&v=weekly"
+            async></script>
 
-<div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsUJ0P3eueaI2IdbInU6P4I6amqPyYHUI&callback=initMap&v=weekly" async></script>
-
-    {% endblock %}
+{% endblock %}

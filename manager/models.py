@@ -49,7 +49,6 @@ class volinstances(models.Model):
     complete = models.BooleanField(default=False)
 
 
-
 class contactus(models.Model):
     name = models.CharField(max_length=200)
     cons = models.CharField(max_length=200)
