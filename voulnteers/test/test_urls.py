@@ -47,10 +47,6 @@ class test_urls_voulnteers(TestCase):
         url=reverse('viewfeedbacks1')
         self.assertEqual(resolve(url).func,feedback_view1)
         self.assertNotEqual(resolve(url).func,show_events)
-    def test_oldfeedbacks1_url_is_resloved(self):
-        url=reverse('oldfeedbacks1')
-        self.assertEqual(resolve(url).func,oldfeedbacks1)
-        self.assertNotEqual(resolve(url).func,show_events)
     def test_spfeedback_url_is_resloved(self):
         url=reverse('spfeedback1',args=[1])
         self.assertEqual(resolve(url).func,spfeedback1)

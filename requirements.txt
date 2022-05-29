@@ -29,4 +29,6 @@ django_nose
 decouple
 gunicorn
 celery
-redis
+redisp
+coverage
+pylint-django
