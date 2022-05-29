@@ -59,6 +59,24 @@ pipeline {
 
 			}
 		}
+
+           stage(' PyLint Tests') {
+        agent {
+                docker {
+                     image 'djangoproj:$BUILD_ID'
+                }
+            }
+			steps {
+
+
+                    echo '////PyLint tests:'
+
+						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y managers.views"
+						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y voulnteers.views"
+						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y managers.views"
+
+			}
+		}
         stage('Deploy to Heroku') {
                  agent {
                 docker {
