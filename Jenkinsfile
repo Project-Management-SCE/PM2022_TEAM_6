@@ -71,9 +71,9 @@ pipeline {
 
                     echo '////PyLint tests:'
 
-						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y managers.views"
+						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y manager.views"
 						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y voulnteers.views"
-						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y managers.views"
+						sh "python -m pylint --fail-under=6.5 --load-plugins pylint_django --django-settings-module=School.settings --reports=y coordinator.views"
 
 			}
 		}
